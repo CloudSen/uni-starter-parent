@@ -7,11 +7,7 @@
   <groupId>cn.unic.starter</groupId>
   <artifactId>parent</artifactId>
   <version>2021.1</version>
-
-  <properties>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-  </properties>
+  <packaging>pom</packaging>
 
   <developers>
     <developer>
@@ -21,4 +17,46 @@
     </developer>
   </developers>
 
+  <properties>
+    <encoding>UTF-8</encoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <!--  apache commons  -->
+    <commons.lang3.version>3.12.0</commons.lang3.version>
+    <commons.io.version>2.9.0</commons.io.version>
+    <commons.collections.version>4.4</commons.collections.version>
+    <commons.codec.version>1.15</commons.codec.version>
+    <!--  db  -->
+    <oracle.driver.version>11.2.0.1.0</oracle.driver.version>
+    <!--  mybatis  -->
+    <mybatis.plus.version>3.4.3</mybatis.plus.version>
+    <p6spy.version>3.9.1</p6spy.version>
+    <!--  tools  -->
+    <lombok.version>1.18.20</lombok.version>
+    <hutool.version>5.6.7</hutool.version>
+    <fastjson.version>1.2.75</fastjson.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>2021.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>uni-snapshot</id>
+      <url>http://172.20.216.43:8081/repository/uni-snapshot/</url>
+    </snapshotRepository>
+    <repository>
+      <id>uni-release</id>
+      <url>http://172.20.216.43:8081/repository/uni-release/</url>
+    </repository>
+  </distributionManagement>
 </project>
