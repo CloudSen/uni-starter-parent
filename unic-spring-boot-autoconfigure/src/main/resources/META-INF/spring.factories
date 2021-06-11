@@ -1,0 +1,7 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    cn.unic.starter.autoconfigure.es.EsAutoConfiguration\
+    cn.unic.starter.autoconfigure.exception.DefaultExceptionHandlerWithOldResAutoConfiguration\
+    cn.unic.starter.autoconfigure.threadpool.ThreadPoolAutoConfiguration\
+    cn.unic.starter.autoconfigure.mybatis.transaction.MpTransactionAutoConfiguration\
+    cn.unic.starter.autoconfigure.mybatis.DefaultMybatisPlusAutoConfiguration\
+    cn.unic.starter.autoconfigure.redis.DefaultRedisOldAutoConfiguration

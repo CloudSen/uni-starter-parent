@@ -8,7 +8,7 @@
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
 
-  <version>2021.1</version>
+  <version>2021.1-SNAPSHOT</version>
   <modules>
     <module>unic-spring-boot-autoconfigure</module>
   </modules>
@@ -35,7 +35,7 @@
     <commons.collections.version>4.4</commons.collections.version>
     <commons.codec.version>1.15</commons.codec.version>
     <!--  db  -->
-      <oracle.driver.version>21.1.0.0</oracle.driver.version>
+    <oracle.driver.version>21.1.0.0</oracle.driver.version>
     <!--  mybatis  -->
     <mybatis.plus.version>3.4.3</mybatis.plus.version>
     <mybatis.plus.generator.version>3.5.0</mybatis.plus.generator.version>
@@ -44,6 +44,8 @@
     <lombok.version>1.18.20</lombok.version>
     <hutool.version>5.6.7</hutool.version>
     <fastjson.version>1.2.76</fastjson.version>
+    <swagger.version>3.0.0</swagger.version>
+    <redisson.version>3.15.6</redisson.version>
   </properties>
 
   <dependencyManagement>
@@ -133,6 +135,16 @@
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
         <version>${commons.codec.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-boot-starter</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson-spring-boot-starter</artifactId>
+        <version>${redisson.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
