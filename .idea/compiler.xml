@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="unic-spring-boot-autoconfigure" />
         <module name="unic-spring-boot-web-starter" />
+        <module name="unic-spring-boot-redis-starter" />
       </profile>
     </annotationProcessing>
   </component>
