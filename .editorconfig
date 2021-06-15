@@ -9,5 +9,5 @@ max_line_length = 80
 end_of_line = LF
 charset = utf-8
 
-[*.{yml, properties, xml, json}]
+[*.{yml, properties, xml, json, factories}]
 indent_size = 2
