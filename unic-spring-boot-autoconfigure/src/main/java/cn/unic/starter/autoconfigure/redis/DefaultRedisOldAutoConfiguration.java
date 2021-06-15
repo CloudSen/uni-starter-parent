@@ -34,9 +34,10 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @EnableConfigurationProperties(UnicRedisProperties.class)
 @ConditionalOnBean(RedisConnectionFactory.class)
-@ConditionalOnProperty(name = "unic.config.starter.enable-old-redis", havingValue = "true")
+@ConditionalOnProperty(name = "unic.config.starter.enable-redis", havingValue = "true")
 public class DefaultRedisOldAutoConfiguration {
 
     private final UnicRedisProperties unicRedisProperties;

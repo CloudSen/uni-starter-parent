@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @ControllerAdvice
-@ConditionalOnProperty(name = "unic.config.starter.enable-old-res-exception-handler", havingValue = "true")
-public class DefaultExceptionHandlerWithOldResAutoConfiguration {
+@ConditionalOnProperty(name = "unic.config.starter.enable-exception-handler", havingValue = "true")
+public class DefaultExceptionHandlerAutoConfiguration {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Response<?> validationExceptionHandler(MethodArgumentNotValidException e) {
