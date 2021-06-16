@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,9 @@ import java.util.Map;
 public class UnicRedisProperties {
 
     /**
-     * 过期时间
+     * <p>自定义不同的cache manager过期时间</p>
+     * <p>KEY: cache manager名字</p>
+     * <p>VALUE: 过期时间Duration</p>
      */
-    private Map<String, Long> expires = new HashMap<>();
+    private Map<String, Duration> expires = new HashMap<>(16);
 }

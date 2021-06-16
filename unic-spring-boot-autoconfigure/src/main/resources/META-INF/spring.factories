@@ -4,7 +4,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   cn.unic.starter.autoconfigure.threadpool.ThreadPoolAutoConfiguration, \
   cn.unic.starter.autoconfigure.mybatis.transaction.MpTransactionAutoConfiguration, \
   cn.unic.starter.autoconfigure.mybatis.DefaultMybatisPlusAutoConfiguration, \
-  cn.unic.starter.autoconfigure.redis.DefaultRedisOldAutoConfiguration, \
+  cn.unic.starter.autoconfigure.redis.DefaultOldRedisAutoConfiguration, \
   cn.unic.starter.autoconfigure.mvc.DefaultMvcAutoConfiguration, \
   cn.unic.starter.autoconfigure.security.ResourceServerAutoConfiguration, \
-  cn.unic.starter.autoconfigure.security.DefaultWebSecurityAutoConfiguration
+  cn.unic.starter.autoconfigure.security.DefaultWebSecurityAutoConfiguration, \
+  cn.unic.starter.autoconfigure.redis.DefaultRedissonAutoConfiguration
