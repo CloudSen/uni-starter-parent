@@ -1,7 +1,6 @@
 package cn.unic.starter.autoconfigure.es.properties;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -16,9 +15,8 @@ import java.util.List;
  * @author CloudS3n
  * @date 2021-06-11 09:55
  */
-@Validated
 @Data
-@Accessors(chain = true)
+@Validated
 @Component
 @ConfigurationProperties(prefix = "unic.config.es")
 public class EsProperties {

@@ -13,6 +13,8 @@
     <module>unic-spring-boot-autoconfigure</module>
     <module>unic-spring-boot-web-starter</module>
     <module>unic-spring-boot-redis-starter</module>
+    <module>unic-spring-boot-redisson-starter</module>
+    <module>unic-spring-boot-es-starter</module>
   </modules>
 
   <developers>

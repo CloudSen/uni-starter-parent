@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Accessors(chain = true)
 @Component
-@ConfigurationProperties(prefix = "config.thread-pool.scheduler", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "unic.config.thread-pool.scheduler", ignoreUnknownFields = false)
 public class CommonTaskSchedulerProperties {
 
     @NotBlank

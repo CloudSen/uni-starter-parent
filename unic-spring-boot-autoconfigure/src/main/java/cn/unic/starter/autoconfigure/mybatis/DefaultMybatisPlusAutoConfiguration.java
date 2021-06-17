@@ -26,6 +26,7 @@ import java.util.Arrays;
 @Configuration
 @ConditionalOnProperty(name = "unic.config.starter.enable-mybatis-plus", havingValue = "true")
 @ConditionalOnBean(HikariDataSource.class)
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class DefaultMybatisPlusAutoConfiguration {
 
     public DefaultMybatisPlusAutoConfiguration() {

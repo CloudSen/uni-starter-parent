@@ -39,7 +39,7 @@ public class EsAutoConfiguration {
         try {
             return InetAddress.getByName(s);
         } catch (UnknownHostException e) {
-            log.error(ExceptionUtils.getStackTrace(e));
+            log.error(AutoConfigConstants.ERROR_ES_CAN_NOT_PARSE_ADDRESS, ExceptionUtils.getStackTrace(e));
         }
         return null;
     }

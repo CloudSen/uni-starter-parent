@@ -20,7 +20,7 @@ import java.time.Duration;
 @Data
 @Accessors(chain = true)
 @Component
-@ConfigurationProperties(prefix = "config.thread-pool.executor", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "unic.config.thread-pool.executor", ignoreUnknownFields = false)
 public class CommonTaskExecutorProperties {
 
     @NotBlank

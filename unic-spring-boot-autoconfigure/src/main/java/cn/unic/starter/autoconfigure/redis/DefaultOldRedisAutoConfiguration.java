@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 没有使用Redisson客户端的Redis配置
+ * 老系统的Redis配置（无Redisson）
  *
  * @author CloudS3n
  * @date 2021-06-11 12:01

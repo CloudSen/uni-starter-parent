@@ -1,9 +1,6 @@
-package cn.unic.starter.autoconfigure;
+package cn.unic.starter.web.properties;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +13,9 @@ import javax.validation.constraints.NotNull;
  * @date 2021-06-15 14:12
  */
 @Data
-@Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
 @Component
 @ConfigurationProperties(prefix = "unic.config.starter", ignoreUnknownFields = false)
-public class UnicStarterProperties {
+public class WebStarterProperties {
 
     @NotNull
     private Boolean enableMvc = true;
@@ -37,9 +31,6 @@ public class UnicStarterProperties {
 
     @NotNull
     private Boolean enableThreadPool = true;
-
-    @NotNull
-    private Boolean enableRedis = true;
 
     @NotNull
     private Boolean enableSecurity = true;

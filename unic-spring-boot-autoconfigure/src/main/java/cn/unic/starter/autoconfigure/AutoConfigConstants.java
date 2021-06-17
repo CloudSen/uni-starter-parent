@@ -6,8 +6,9 @@ package cn.unic.starter.autoconfigure;
  */
 public final class AutoConfigConstants {
 
-    public static final String PREFIX = "[AUTO-CONFIG] ";
+    public static final String PREFIX = "[ 自动装配 ] ";
     public static final String LOADING_ES_AUTO_CONFIGURE = PREFIX + "加载ES配置";
+    public static final String ERROR_ES_CAN_NOT_PARSE_ADDRESS = PREFIX + "解析ES地址异常, {}";
     public static final String LOADING_THREAD_POOL_AUTO_CONFIGURE = PREFIX + "加载默认线程池配置";
     public static final String LOADING_TRANSACTION_AUTO_CONFIGURE = PREFIX + "加载MP事务配置";
     public static final String LOADING_MYBATIS_PLUS_AUTO_CONFIGURE = PREFIX + "加载MP配置";
