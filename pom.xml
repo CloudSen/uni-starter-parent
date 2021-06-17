@@ -16,6 +16,7 @@
     <module>unic-spring-boot-redisson-starter</module>
     <module>unic-spring-boot-es-starter</module>
     <module>unic-spring-boot-jpa-starter</module>
+    <module>unic-spring-boot-mp-starter</module>
   </modules>
 
   <developers>

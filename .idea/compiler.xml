@@ -7,12 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="unic-spring-boot-web-starter" />
-        <module name="unic-spring-boot-redisson-starter" />
         <module name="unic-spring-boot-autoconfigure" />
         <module name="unic-spring-boot-redis-starter" />
+        <module name="unic-spring-boot-mp-starter" />
         <module name="unic-spring-boot-es-starter" />
         <module name="unic-spring-boot-jpa-starter" />
+        <module name="unic-spring-boot-web-starter" />
+        <module name="unic-spring-boot-redisson-starter" />
       </profile>
     </annotationProcessing>
   </component>

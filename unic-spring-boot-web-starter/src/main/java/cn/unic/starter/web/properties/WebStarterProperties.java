@@ -24,9 +24,6 @@ public class WebStarterProperties {
     private Boolean enableExceptionHandler = true;
 
     @NotNull
-    private Boolean enableMybatisPlus = true;
-
-    @NotNull
     private Boolean enableEs = true;
 
     @NotNull

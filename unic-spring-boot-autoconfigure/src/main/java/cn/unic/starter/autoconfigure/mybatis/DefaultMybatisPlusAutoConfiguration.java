@@ -1,6 +1,7 @@
 package cn.unic.starter.autoconfigure.mybatis;
 
 import cn.unic.starter.autoconfigure.AutoConfigConstants;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
@@ -9,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -24,8 +24,7 @@ import java.util.Arrays;
  */
 @Slf4j
 @Configuration
-@ConditionalOnProperty(name = "unic.config.starter.enable-mybatis-plus", havingValue = "true")
-@ConditionalOnBean(HikariDataSource.class)
+@ConditionalOnBean({HikariDataSource.class, MybatisConfiguration.class})
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class DefaultMybatisPlusAutoConfiguration {
 
