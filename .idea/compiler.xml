@@ -12,6 +12,7 @@
         <module name="unic-spring-boot-autoconfigure" />
         <module name="unic-spring-boot-redis-starter" />
         <module name="unic-spring-boot-es-starter" />
+        <module name="unic-spring-boot-jpa-starter" />
       </profile>
     </annotationProcessing>
   </component>

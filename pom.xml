@@ -15,6 +15,7 @@
     <module>unic-spring-boot-redis-starter</module>
     <module>unic-spring-boot-redisson-starter</module>
     <module>unic-spring-boot-es-starter</module>
+    <module>unic-spring-boot-jpa-starter</module>
   </modules>
 
   <developers>
@@ -38,6 +39,7 @@
     <spring.cloud.oauth2.version>2.2.5.RELEASE</spring.cloud.oauth2.version>
     <spring.cloud.security.version>2.2.5.RELEASE</spring.cloud.security.version>
     <!--  apache commons  -->
+    <commons.text.version>1.9</commons.text.version>
     <commons.lang3.version>3.12.0</commons.lang3.version>
     <commons.io.version>2.9.0</commons.io.version>
     <commons.collections.version>4.4</commons.collections.version>
@@ -136,6 +138,11 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${commons.lang3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>${commons.text.version}</version>
       </dependency>
       <dependency>
         <groupId>commons-io</groupId>
