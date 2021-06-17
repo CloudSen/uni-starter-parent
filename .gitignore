@@ -1,5 +1,7 @@
 ### uml
 **/*.plantuml
+### JRebel
+**/rebel.xml
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json
