@@ -1,8 +1,8 @@
-package cn.unic.starter.autoconfigure.security;
+package cn.unic.starter.autoconfigure.security.oauth;
 
 import cn.unic.starter.autoconfigure.security.properties.SpringSecurityProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +34,8 @@ import java.util.Collections;
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(SpringSecurityProperties.class)
-@ConditionalOnProperty(name = "unic.config.starter.enable-oauth", havingValue = "true")
-@ConditionalOnBean(ResourceServerConfigurerAdapter.class)
+@ConditionalOnProperty(name = "unic.config.default.enable-oauth", havingValue = "true")
+@ConditionalOnClass(ResourceServerConfigurerAdapter.class)
 public class ResourceServerAutoConfiguration extends ResourceServerConfigurerAdapter {
 
     private final SpringSecurityProperties springSecurityProperties;

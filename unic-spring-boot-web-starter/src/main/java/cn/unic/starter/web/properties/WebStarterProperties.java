@@ -3,18 +3,20 @@ package cn.unic.starter.web.properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 
 /**
- * Starter启用参数
+ * 默认配置开关
  *
  * @author CloudS3n
  * @date 2021-06-15 14:12
  */
 @Data
+@Validated
 @Component
-@ConfigurationProperties(prefix = "unic.config.starter", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "unic.config.default", ignoreUnknownFields = false)
 public class WebStarterProperties {
 
     @NotNull
@@ -34,4 +36,7 @@ public class WebStarterProperties {
 
     @NotNull
     private Boolean enableOauth = true;
+
+    @NotNull
+    private Boolean enableSerializer = true;
 }
