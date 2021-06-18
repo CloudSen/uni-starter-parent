@@ -17,6 +17,9 @@
     <module>unic-spring-boot-es-starter</module>
     <module>unic-spring-boot-jpa-starter</module>
     <module>unic-spring-boot-mp-starter</module>
+    <module>unic-spring-boot-oauth-starter</module>
+      <module>unic-spring-cloud-old-eas-starter</module>
+    <module>unic-spring-cloud-stream-starter</module>
   </modules>
 
   <developers>

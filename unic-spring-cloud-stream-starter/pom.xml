@@ -10,9 +10,8 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>jar</packaging>
 
-  <description>Redis相关的依赖和配置（客户端为Lettuce）</description>
-
-  <artifactId>unic-spring-boot-redis-starter</artifactId>
+  <description>Spring Cloud Stream配置</description>
+  <artifactId>unic-spring-cloud-stream-starter</artifactId>
 
   <properties>
     <encoding>UTF-8</encoding>
@@ -27,24 +26,12 @@
       <version>${unic.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-redis</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-stream-kafka</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-validation</artifactId>
-      <optional>true</optional>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
     </dependency>
   </dependencies>
-
 </project>

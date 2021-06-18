@@ -10,9 +10,8 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>jar</packaging>
 
-  <description>Redis相关的依赖和配置（客户端为Lettuce）</description>
-
-  <artifactId>unic-spring-boot-redis-starter</artifactId>
+  <description>旧的教务系统配置</description>
+  <artifactId>unic-spring-cloud-old-eas-starter</artifactId>
 
   <properties>
     <encoding>UTF-8</encoding>
@@ -27,23 +26,19 @@
       <version>${unic.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-redis</artifactId>
+      <groupId>cn.unic.starter</groupId>
+      <artifactId>unic-spring-boot-web-starter</artifactId>
+      <version>${unic.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <optional>true</optional>
+      <groupId>cn.unic.starter</groupId>
+      <artifactId>unic-spring-boot-jpa-starter</artifactId>
+      <version>${unic.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-validation</artifactId>
-      <optional>true</optional>
+      <groupId>cn.unic.starter</groupId>
+      <artifactId>unic-spring-boot-redis-starter</artifactId>
+      <version>${unic.version}</version>
     </dependency>
   </dependencies>
 
