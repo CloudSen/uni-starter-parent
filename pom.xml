@@ -20,6 +20,7 @@
     <module>unic-spring-boot-oauth-starter</module>
       <module>unic-spring-cloud-old-eas-starter</module>
     <module>unic-spring-cloud-stream-starter</module>
+      <module>unic-spring-boot-easyexcel-starter</module>
   </modules>
 
   <developers>
@@ -61,6 +62,7 @@
     <swagger.version>3.0.0</swagger.version>
     <redisson.version>3.15.6</redisson.version>
     <jcip.annotation.version>1.0</jcip.annotation.version>
+    <easyexcel.version>2.2.10</easyexcel.version>
     <!--  plugins  -->
     <spring.boot.maven.plugin.version>2.4.4</spring.boot.maven.plugin.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -188,6 +190,11 @@
         <groupId>net.jcip</groupId>
         <artifactId>jcip-annotations</artifactId>
         <version>${jcip.annotation.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>easyexcel</artifactId>
+        <version>${easyexcel.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

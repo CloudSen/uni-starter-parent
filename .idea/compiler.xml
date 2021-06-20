@@ -11,6 +11,7 @@
         <module name="unic-spring-boot-redis-starter" />
         <module name="unic-spring-boot-mp-starter" />
         <module name="unic-spring-cloud-stream-starter" />
+        <module name="unic-spring-boot-easyexcel-starter" />
         <module name="unic-spring-boot-es-starter" />
         <module name="unic-spring-boot-jpa-starter" />
         <module name="unic-spring-boot-oauth-starter" />

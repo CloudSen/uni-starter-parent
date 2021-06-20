@@ -27,7 +27,7 @@ import java.util.TimeZone;
  * @author zhanhaoyang
  */
 @Slf4j
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes", "unchecked", "deprecation"})
 public class QueryUtil {
 
     private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
