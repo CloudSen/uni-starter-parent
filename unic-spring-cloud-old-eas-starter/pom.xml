@@ -40,6 +40,11 @@
       <artifactId>unic-spring-boot-redis-starter</artifactId>
       <version>${unic.version}</version>
     </dependency>
+    <dependency>
+      <groupId>cn.unic.starter</groupId>
+      <artifactId>unic-common-util</artifactId>
+      <version>${unic.version}</version>
+    </dependency>
   </dependencies>
 
 </project>

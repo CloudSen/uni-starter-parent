@@ -22,7 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SpringSecurityProperties.class)
 @ConditionalOnProperty(name = AutoConfigConstants.UNIC_DEFAULT_CONFIG_SECURITY, havingValue = AutoConfigConstants.TRUE)
-@ConditionalOnClass(SecurityAutoConfiguration.class)
+@ConditionalOnClass(WebSecurityConfigurerAdapter.class)
 @AutoConfigureBefore(SecurityAutoConfiguration.class)
 public class DefaultWebSecurityAutoConfiguration extends WebSecurityConfigurerAdapter {
 

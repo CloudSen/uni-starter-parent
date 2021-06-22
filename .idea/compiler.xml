@@ -18,6 +18,7 @@
         <module name="unic-spring-boot-web-starter" />
         <module name="unic-spring-boot-redisson-starter" />
         <module name="unic-spring-cloud-old-eas-starter" />
+        <module name="unic-common-util" />
       </profile>
     </annotationProcessing>
   </component>

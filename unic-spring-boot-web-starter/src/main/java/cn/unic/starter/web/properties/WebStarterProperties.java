@@ -26,16 +26,7 @@ public class WebStarterProperties {
     private Boolean enableExceptionHandler = true;
 
     @NotNull
-    private Boolean enableEs = true;
-
-    @NotNull
     private Boolean enableThreadPool = true;
-
-    @NotNull
-    private Boolean enableSecurity = true;
-
-    @NotNull
-    private Boolean enableOauth = true;
 
     @NotNull
     private Boolean enableSerializer = true;

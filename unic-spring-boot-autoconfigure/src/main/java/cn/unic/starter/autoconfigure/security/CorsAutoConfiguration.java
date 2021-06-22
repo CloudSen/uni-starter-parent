@@ -3,7 +3,7 @@ package cn.unic.starter.autoconfigure.security;
 import cn.unic.starter.autoconfigure.security.oauth.ResourceServerAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -20,7 +20,7 @@ import java.util.Collections;
  */
 @Slf4j
 @Configuration
-@ConditionalOnClass(CorsConfigurationSource.class)
+@ConditionalOnBean(DefaultWebSecurityAutoConfiguration.class)
 @AutoConfigureBefore({DefaultWebSecurityAutoConfiguration.class, ResourceServerAutoConfiguration.class})
 public class CorsAutoConfiguration {
 
