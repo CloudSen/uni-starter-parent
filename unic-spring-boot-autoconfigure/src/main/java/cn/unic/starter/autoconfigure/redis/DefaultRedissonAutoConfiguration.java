@@ -32,7 +32,7 @@ import java.util.Map;
 @Configuration
 @EnableConfigurationProperties(UnicRedissonProperties.class)
 @ConditionalOnBean({RedisOperations.class, RedissonClient.class})
-@ConditionalOnProperty(name = "unic.config.starter.enable-redisson-cache-manager", havingValue = "true")
+@ConditionalOnProperty(name = "unic.config.default.enable-redisson-cache-manager", havingValue = "true")
 @AutoConfigureAfter(RedissonAutoConfiguration.class)
 @SuppressWarnings("RedundantThrows")
 public class DefaultRedissonAutoConfiguration {

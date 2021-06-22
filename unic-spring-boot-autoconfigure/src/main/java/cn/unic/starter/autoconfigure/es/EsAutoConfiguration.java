@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableConfigurationProperties({EsProperties.class})
 @ConditionalOnClass(RestHighLevelClient.class)
-@ConditionalOnProperty(name = "unic.config.starter.enable-es", havingValue = "true")
+@ConditionalOnProperty(name = "unic.config.default.enable-es", havingValue = "true")
 public class EsAutoConfiguration {
 
     public EsAutoConfiguration() {

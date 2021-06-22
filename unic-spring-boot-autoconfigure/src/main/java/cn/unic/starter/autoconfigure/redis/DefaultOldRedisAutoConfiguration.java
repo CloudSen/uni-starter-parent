@@ -44,7 +44,7 @@ import java.util.Set;
 @EnableConfigurationProperties(UnicRedisProperties.class)
 @ConditionalOnBean(RedisOperations.class)
 @ConditionalOnMissingBean(RedissonAutoConfiguration.class)
-@ConditionalOnProperty(name = "unic.config.starter.enable-old-redis", havingValue = "true")
+@ConditionalOnProperty(name = "unic.config.default.enable-old-redis", havingValue = "true")
 @AutoConfigureBefore(RedisAutoConfiguration.class)
 public class DefaultOldRedisAutoConfiguration {
 

@@ -18,7 +18,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({CommonTaskExecutorProperties.class, CommonTaskSchedulerProperties.class})
-@ConditionalOnProperty(name = "unic.config.starter.enable-thread-pool", havingValue = "true")
+@ConditionalOnProperty(name = "unic.config.default.enable-thread-pool", havingValue = "true")
 public class ThreadPoolAutoConfiguration {
 
     public ThreadPoolAutoConfiguration() {
@@ -26,7 +26,7 @@ public class ThreadPoolAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "unic.config.starter.enable-thread-pool", havingValue = "true")
+    @ConditionalOnProperty(name = "unic.config.default.enable-thread-pool", havingValue = "true")
     public ThreadPoolTaskExecutor commonTaskExecutor(CommonTaskExecutorProperties properties) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(properties.getCorePoolSize());
@@ -40,7 +40,7 @@ public class ThreadPoolAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "unic.config.starter.enable-thread-pool", havingValue = "true")
+    @ConditionalOnProperty(name = "unic.config.default.enable-thread-pool", havingValue = "true")
     public ThreadPoolTaskScheduler commonTaskScheduler(CommonTaskSchedulerProperties properties) {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setPoolSize(properties.getPoolSize());

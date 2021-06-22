@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @ControllerAdvice
-@ConditionalOnProperty(name = "unic.config.starter.enable-exception-handler", havingValue = "true")
+@ConditionalOnProperty(name = "unic.config.default.enable-exception-handler", havingValue = "true")
 public class DefaultExceptionHandlerAutoConfiguration {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
