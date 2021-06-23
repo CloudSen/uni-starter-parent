@@ -1,6 +1,4 @@
-package cn.unic.starter.autoconfigure.common;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+package cn.unic.common.util;
 import lombok.Data;
 
 /**
@@ -8,7 +6,6 @@ import lombok.Data;
  * @date 2020-07-31 09:56
  **/
 @Data
-@ApiModel
 public class Response<T> {
 
     public static final String SUCCESS = "success";
@@ -16,16 +13,12 @@ public class Response<T> {
     public static final String VALIDATE_FAILURE = "validateFailure";
     public static final String VALIDATE_SUCCESS = "validateSuccess";
 
-    @ApiModelProperty(value = "状态")
     private String status;
 
-    @ApiModelProperty(value = "消息")
     private String msg;
 
-    @ApiModelProperty(value = "数据")
     private T data;
 
-    @ApiModelProperty(value = "状态码")
     private String code;
 
 
