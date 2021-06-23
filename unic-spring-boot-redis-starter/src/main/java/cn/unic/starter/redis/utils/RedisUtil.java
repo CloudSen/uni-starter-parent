@@ -1,15 +1,13 @@
 package cn.unic.starter.redis.utils;
 
-import cn.unic.starter.redis.dto.RedisFetchDTO;
-import cn.unic.starter.redis.dto.RedisFetchListDTO;
-import cn.unic.starter.redis.dto.RedisFetchMapDTO;
-import cn.unic.starter.redis.dto.RedisFetchSetDTO;
+import cn.unic.starter.redis.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -18,9 +16,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-/**
- * @author younikong
- */
 @Deprecated
 @Service
 public class RedisUtil {
@@ -28,6 +23,8 @@ public class RedisUtil {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    RedisSerializer<Object> redisSerializer;
     /**
      * items和exits 长度要一样 否则会报错
      *
@@ -911,6 +908,31 @@ public class RedisUtil {
             }
             return null;
         });
+    }
+
+    public <V> void multiInsert(List<Pair<String, V>> keyValues, List<Long> timeList) {
+        redisTemplate.executePipelined((RedisCallback<String>) connection -> {
+            int i = 0;
+            for (Pair<String, V> keyValue : keyValues) {
+                byte[] rawVal = rawValue(keyValue.getValue());
+                if (timeList != null) {
+                    connection.setEx(keyValue.getKey().getBytes(), timeList.get(i), rawVal);
+                } else {
+                    connection.set(keyValue.getKey().getBytes(), rawVal);
+                }
+                i++;
+            }
+            return null;
+        });
+    }
+
+    byte[] rawValue(Object value) {
+
+        if (redisSerializer == null && value instanceof byte[]) {
+            return (byte[]) value;
+        }
+
+        return redisSerializer.serialize(value);
     }
 
     /**
