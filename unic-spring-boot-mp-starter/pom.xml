@@ -24,7 +24,7 @@
     <dependency>
       <groupId>cn.unic.starter</groupId>
       <artifactId>autoconfigure</artifactId>
-      <version>${unic.version}</version>
+      <version>${unic.starter.version}</version>
     </dependency>
     <dependency>
       <groupId>com.baomidou</groupId>
