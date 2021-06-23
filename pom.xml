@@ -102,6 +102,12 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- unic -->
+      <dependency>
+        <groupId>cn.unic.common</groupId>
+        <artifactId>unic-common-util</artifactId>
+        <version>${unic.common.util.version}</version>
+      </dependency>
       <!-- others -->
       <dependency>
         <groupId>com.alibaba</groupId>

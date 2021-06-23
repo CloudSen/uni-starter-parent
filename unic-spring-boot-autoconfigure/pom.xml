@@ -23,7 +23,7 @@
     <dependency>
       <groupId>cn.unic.common</groupId>
       <artifactId>unic-common-util</artifactId>
-      <version>${unic.common.util.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
