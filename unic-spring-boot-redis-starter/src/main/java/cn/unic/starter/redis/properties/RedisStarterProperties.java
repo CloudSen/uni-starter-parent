@@ -18,5 +18,5 @@ import javax.validation.constraints.NotNull;
 public class RedisStarterProperties {
 
     @NotNull
-    private Boolean enableOldRedis;
+    private Boolean enableOldRedis = true;
 }
