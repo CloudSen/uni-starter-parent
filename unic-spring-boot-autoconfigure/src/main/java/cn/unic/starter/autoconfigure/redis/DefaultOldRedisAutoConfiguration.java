@@ -8,10 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.redisson.spring.starter.RedissonAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -43,8 +43,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Configuration
 @EnableConfigurationProperties(UnicRedisProperties.class)
-@ConditionalOnBean(RedisOperations.class)
-@ConditionalOnMissingBean(RedissonAutoConfiguration.class)
+@ConditionalOnClass(RedisOperations.class)
+@ConditionalOnMissingClass({"org.redisson.spring.starter.RedissonAutoConfiguration"})
 @ConditionalOnProperty(name = "unic.config.default.enable-old-redis", havingValue = "true")
 @AutoConfigureBefore(RedisAutoConfiguration.class)
 public class DefaultOldRedisAutoConfiguration {
