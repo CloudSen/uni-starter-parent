@@ -2,7 +2,7 @@ package cn.unic.starter.autoconfigure.redis;
 
 import cn.unic.starter.autoconfigure.redis.properties.UnicRedissonProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
 import org.redisson.api.RedissonClient;
 import org.redisson.spring.cache.CacheConfig;
@@ -27,7 +27,7 @@ import java.util.Map;
  * @author CloudS3n
  * @date 2021-06-16 13:31
  */
-@Slf4j
+@Log4j2
 @RequiredArgsConstructor
 @Configuration
 @EnableConfigurationProperties(UnicRedissonProperties.class)

@@ -3,7 +3,9 @@ package cn.unic.starter.autoconfigure.threadpool;
 import cn.unic.starter.autoconfigure.AutoConfigConstants;
 import cn.unic.starter.autoconfigure.threadpool.properties.CommonTaskExecutorProperties;
 import cn.unic.starter.autoconfigure.threadpool.properties.CommonTaskSchedulerProperties;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,36 +17,40 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
  * @author CloudS3n
  * @date 2021-06-11 10:11
  */
-@Slf4j
+@Log4j2
 @Configuration
+@RequiredArgsConstructor
 @EnableConfigurationProperties({CommonTaskExecutorProperties.class, CommonTaskSchedulerProperties.class})
-@ConditionalOnProperty(name = "unic.config.default.enable-thread-pool", havingValue = "true")
+@ConditionalOnProperty(prefix = "unic.config.default", name = "enable-thread-pool", havingValue = "true")
 public class ThreadPoolAutoConfiguration {
 
-    public ThreadPoolAutoConfiguration() {
+    private final CommonTaskExecutorProperties commonTaskExecutorProperties;
+    private final CommonTaskSchedulerProperties commonTaskSchedulerProperties;
+
+    static {
         log.info(AutoConfigConstants.LOADING_THREAD_POOL_AUTO_CONFIGURE);
     }
 
     @Bean
-    @ConditionalOnProperty(name = "unic.config.default.enable-thread-pool", havingValue = "true")
-    public ThreadPoolTaskExecutor commonTaskExecutor(CommonTaskExecutorProperties properties) {
+    @ConditionalOnMissingBean(name = "commonTaskExecutor")
+    public ThreadPoolTaskExecutor commonTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(properties.getCorePoolSize());
-        executor.setMaxPoolSize(properties.getMaxPoolSize());
-        executor.setQueueCapacity(properties.getQueueCapacity());
-        executor.setThreadNamePrefix(properties.getThreadNamePrefix());
-        executor.setAllowCoreThreadTimeOut(properties.getAllowCoreThreadTimeout());
-        executor.setKeepAliveSeconds((int) properties.getKeepAliveSeconds().getSeconds());
+        executor.setCorePoolSize(commonTaskExecutorProperties.getCorePoolSize());
+        executor.setMaxPoolSize(commonTaskExecutorProperties.getMaxPoolSize());
+        executor.setQueueCapacity(commonTaskExecutorProperties.getQueueCapacity());
+        executor.setThreadNamePrefix(commonTaskExecutorProperties.getThreadNamePrefix());
+        executor.setAllowCoreThreadTimeOut(commonTaskExecutorProperties.getAllowCoreThreadTimeout());
+        executor.setKeepAliveSeconds((int) commonTaskExecutorProperties.getKeepAliveSeconds().getSeconds());
         executor.initialize();
         return executor;
     }
 
     @Bean
-    @ConditionalOnProperty(name = "unic.config.default.enable-thread-pool", havingValue = "true")
-    public ThreadPoolTaskScheduler commonTaskScheduler(CommonTaskSchedulerProperties properties) {
+    @ConditionalOnMissingBean(name = "commonTaskScheduler")
+    public ThreadPoolTaskScheduler commonTaskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(properties.getPoolSize());
-        scheduler.setThreadNamePrefix(properties.getThreadNamePrefix());
+        scheduler.setPoolSize(commonTaskSchedulerProperties.getPoolSize());
+        scheduler.setThreadNamePrefix(commonTaskSchedulerProperties.getThreadNamePrefix());
         scheduler.initialize();
         return scheduler;
     }

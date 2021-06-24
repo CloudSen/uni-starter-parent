@@ -1,12 +1,13 @@
 package cn.unic.starter.autoconfigure.redis;
 
+import cn.unic.starter.autoconfigure.AutoConfigConstants;
 import cn.unic.starter.autoconfigure.redis.properties.UnicRedisProperties;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.redisson.spring.starter.RedissonAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -38,7 +39,7 @@ import java.util.Set;
  * @author CloudS3n
  * @date 2021-06-11 12:01
  */
-@Slf4j
+@Log4j2
 @RequiredArgsConstructor
 @Configuration
 @EnableConfigurationProperties(UnicRedisProperties.class)
@@ -49,6 +50,10 @@ import java.util.Set;
 public class DefaultOldRedisAutoConfiguration {
 
     private final UnicRedisProperties unicRedisProperties;
+
+    static {
+        log.info(AutoConfigConstants.LOADING_OLD_REDIS_AUTO_CONFIGURE);
+    }
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")

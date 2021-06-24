@@ -4,7 +4,7 @@ import cn.unic.starter.autoconfigure.AutoConfigConstants;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -23,10 +23,14 @@ import java.time.ZoneId;
  * @author CloudS3n
  * @date 2021-06-17 19:09
  */
-@Slf4j
+@Log4j2
 @Configuration
 @ConditionalOnProperty(name = AutoConfigConstants.UNIC_DEFAULT_CONFIG_SERIALIZER, havingValue = AutoConfigConstants.TRUE)
 public class SerializerAutoConfiguration {
+
+    static {
+        log.info(AutoConfigConstants.LOADING_SERIALIZER_AUTO_CONFIGURE);
+    }
 
     @Bean
     @ConditionalOnMissingBean

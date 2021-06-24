@@ -1,7 +1,7 @@
 package cn.unic.starter.autoconfigure.security;
 
 import cn.unic.starter.autoconfigure.security.oauth.ResourceServerAutoConfiguration;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,7 @@ import java.util.Collections;
  * @author CloudS3n
  * @date 2021-06-17 17:58
  */
-@Slf4j
+@Log4j2
 @Configuration
 @ConditionalOnBean(DefaultWebSecurityAutoConfiguration.class)
 @AutoConfigureBefore({DefaultWebSecurityAutoConfiguration.class, ResourceServerAutoConfiguration.class})

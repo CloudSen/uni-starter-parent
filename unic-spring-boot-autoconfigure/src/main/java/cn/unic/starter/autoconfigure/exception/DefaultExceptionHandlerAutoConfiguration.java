@@ -2,7 +2,7 @@ package cn.unic.starter.autoconfigure.exception;
 
 import cn.unic.common.util.Response;
 import cn.unic.starter.autoconfigure.AutoConfigConstants;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @author CloudS3n
  * @date 2021-06-11 09:57
  */
-@Slf4j
+@Log4j2
 @RestController
 @ControllerAdvice
 @ConditionalOnProperty(name = "unic.config.default.enable-exception-handler", havingValue = "true")
 public class DefaultExceptionHandlerAutoConfiguration {
+
+    static {
+        log.info(AutoConfigConstants.LOADING_EXCEPTION_HANDLER_AUTO_CONFIGURE);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Response<?> validationExceptionHandler(MethodArgumentNotValidException e) {

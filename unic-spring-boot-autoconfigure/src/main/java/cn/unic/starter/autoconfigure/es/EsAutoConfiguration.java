@@ -2,7 +2,7 @@ package cn.unic.starter.autoconfigure.es;
 
 import cn.unic.starter.autoconfigure.AutoConfigConstants;
 import cn.unic.starter.autoconfigure.es.properties.EsProperties;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @author CloudS3n
  * @date 2021-06-11 09:58
  */
-@Slf4j
+@Log4j2
 @Configuration
 @EnableConfigurationProperties({EsProperties.class})
 @ConditionalOnClass(RestHighLevelClient.class)

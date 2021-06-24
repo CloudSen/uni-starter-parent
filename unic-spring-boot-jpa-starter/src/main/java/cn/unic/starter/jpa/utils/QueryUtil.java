@@ -3,7 +3,7 @@ package cn.unic.starter.jpa.utils;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.CaseUtils;
@@ -26,7 +26,7 @@ import java.util.TimeZone;
  *
  * @author zhanhaoyang
  */
-@Slf4j
+@Log4j2
 @SuppressWarnings({"rawtypes", "unchecked", "deprecation"})
 public class QueryUtil {
 

@@ -10,6 +10,10 @@ public final class AutoConfigConstants {
     public static final String LOADING_ES_AUTO_CONFIGURE = PREFIX + "加载ES配置";
     public static final String ERROR_ES_CAN_NOT_PARSE_ADDRESS = PREFIX + "解析ES地址异常, {}";
     public static final String LOADING_THREAD_POOL_AUTO_CONFIGURE = PREFIX + "加载默认线程池配置";
+    public static final String LOADING_MVC_AUTO_CONFIGURE = PREFIX + "加载默认MVC配置";
+    public static final String LOADING_EXCEPTION_HANDLER_AUTO_CONFIGURE = PREFIX + "加载默认全局异常处理配置";
+    public static final String LOADING_SERIALIZER_AUTO_CONFIGURE = PREFIX + "加载默认Jackson序列化配置";
+    public static final String LOADING_OLD_REDIS_AUTO_CONFIGURE = PREFIX + "加载旧的Redis配置";
     public static final String LOADING_TRANSACTION_AUTO_CONFIGURE = PREFIX + "加载MP事务配置";
     public static final String LOADING_MYBATIS_PLUS_AUTO_CONFIGURE = PREFIX + "加载MP配置";
     public static final String MYBATIS_PLUS_MAPPERS = PREFIX + "加载MP Mappers: {}";
