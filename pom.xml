@@ -22,6 +22,7 @@
     <module>unic-spring-cloud-stream-starter</module>
     <module>unic-spring-boot-easyexcel-starter</module>
     <module>unic-common-util</module>
+    <module>unic-spring-cloud-starter</module>
   </modules>
 
   <developers>
