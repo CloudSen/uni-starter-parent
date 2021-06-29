@@ -22,7 +22,7 @@ public final class AutoConfigConstants {
     public static final String SERVER_ERROR = "服务端错误";
     public static final String NO_AUTHORIZATION = "没有权限";
     public static final String TRUE = "true";
-    public static final String UNI_DEFAULT_CONFIG = "uni.autoconfigure";
+    public static final String UNI_DEFAULT_CONFIG = "uni.autoconfigure.";
     public static final String UNI_DEFAULT_CONFIG_SECURITY = UNI_DEFAULT_CONFIG + "enable-security";
     public static final String UNI_DEFAULT_CONFIG_SERIALIZER = UNI_DEFAULT_CONFIG + "enable-serializer";
 }

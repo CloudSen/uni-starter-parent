@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 @RestController
 @ControllerAdvice
-@ConditionalOnProperty(name = "uni.autoconfigureenable-exception-handler", havingValue = "true")
+@ConditionalOnProperty(name = "uni.autoconfigure.enable-exception-handler", havingValue = "true")
 public class DefaultExceptionHandlerAutoConfiguration {
 
     static {

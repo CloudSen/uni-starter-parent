@@ -21,7 +21,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties({CommonTaskExecutorProperties.class, CommonTaskSchedulerProperties.class})
-@ConditionalOnProperty(prefix = "unic.autoconfigure", name = "enable-thread-pool", havingValue = "true")
+@ConditionalOnProperty(prefix = "uni.autoconfigure", name = "enable-thread-pool", havingValue = "true")
 public class ThreadPoolAutoConfiguration {
 
     private final CommonTaskExecutorProperties commonTaskExecutorProperties;

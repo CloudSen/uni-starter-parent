@@ -1,6 +1,6 @@
 package cn.uni.starter.autoconfigure.redis;
 
-import cn.uni.starter.autoconfigure.redis.properties.UnicRedissonProperties;
+import cn.uni.starter.autoconfigure.redis.properties.UniRedissonProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MapUtils;
@@ -30,21 +30,21 @@ import java.util.Map;
 @Log4j2
 @RequiredArgsConstructor
 @Configuration
-@EnableConfigurationProperties(UnicRedissonProperties.class)
+@EnableConfigurationProperties(UniRedissonProperties.class)
 @ConditionalOnBean({RedisOperations.class, RedissonClient.class})
-@ConditionalOnProperty(name = "uni.autoconfigureenable-redisson-cache-manager", havingValue = "true")
+@ConditionalOnProperty(name = "uni.autoconfigure.enable-redisson-cache-manager", havingValue = "true")
 @AutoConfigureAfter(RedissonAutoConfiguration.class)
 @SuppressWarnings("RedundantThrows")
 public class DefaultRedissonAutoConfiguration {
 
-    private final UnicRedissonProperties unicRedissonProperties;
+    private final UniRedissonProperties uniRedissonProperties;
 
     @Bean
     @ConditionalOnProperty(name = "uni.config.redisson.cache-manager-expire-time-map")
     public CacheManager cacheManager(RedissonClient redissonClient) throws IOException {
         Map<String, CacheConfig> cacheConfigMap = new HashMap<>(16);
-        Map<String, UnicRedissonProperties.RedissonCacheManagerExpireTime> cacheManagerExpireTimeMap =
-            unicRedissonProperties.getCacheManagerExpireTimeMap();
+        Map<String, UniRedissonProperties.RedissonCacheManagerExpireTime> cacheManagerExpireTimeMap =
+            uniRedissonProperties.getCacheManagerExpireTimeMap();
         if (MapUtils.isNotEmpty(cacheManagerExpireTimeMap)) {
             cacheManagerExpireTimeMap.forEach((k, v) -> cacheConfigMap.put(k, new CacheConfig(v.getTtl().toMillis(), v.getMaxIdleTime().toMillis())));
         }

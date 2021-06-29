@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Validated
 @Component
-@ConfigurationProperties(prefix = "unic.autoconfigure")
+@ConfigurationProperties(prefix = "uni.autoconfigure")
 public class RedissonStarterProperties {
 
     @NotNull

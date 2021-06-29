@@ -1,7 +1,7 @@
 package cn.uni.starter.autoconfigure.redis;
 
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
-import cn.uni.starter.autoconfigure.redis.properties.UnicRedisProperties;
+import cn.uni.starter.autoconfigure.redis.properties.UniRedisProperties;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,14 +42,14 @@ import java.util.Set;
 @Log4j2
 @RequiredArgsConstructor
 @Configuration
-@EnableConfigurationProperties(UnicRedisProperties.class)
+@EnableConfigurationProperties(UniRedisProperties.class)
 @ConditionalOnClass(RedisOperations.class)
 @ConditionalOnMissingClass({"org.redisson.spring.starter.RedissonAutoConfiguration"})
-@ConditionalOnProperty(name = "uni.autoconfigureenable-old-redis", havingValue = "true")
+@ConditionalOnProperty(name = "uni.autoconfigure.enable-old-redis", havingValue = "true")
 @AutoConfigureBefore(RedisAutoConfiguration.class)
 public class DefaultOldRedisAutoConfiguration {
 
-    private final UnicRedisProperties unicRedisProperties;
+    private final UniRedisProperties uniRedisProperties;
 
     static {
         log.info(AutoConfigConstants.LOADING_OLD_REDIS_AUTO_CONFIGURE);
@@ -89,7 +89,7 @@ public class DefaultOldRedisAutoConfiguration {
             .entryTtl(Duration.ofMillis(10));
         Set<String> cacheNames = new HashSet<>();
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>(16);
-        unicRedisProperties.getExpires()
+        uniRedisProperties.getExpires()
             .forEach((k, d) -> {
                 cacheNames.add(k);
                 configMap.put(k, redisCacheConfiguration.entryTtl(d));

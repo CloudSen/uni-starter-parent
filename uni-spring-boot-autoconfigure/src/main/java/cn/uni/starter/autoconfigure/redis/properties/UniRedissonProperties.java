@@ -14,7 +14,7 @@ import java.util.Map;
 @Data
 @Component
 @ConfigurationProperties(prefix = "uni.config.redisson")
-public class UnicRedissonProperties {
+public class UniRedissonProperties {
 
     private final Map<String, RedissonCacheManagerExpireTime> cacheManagerExpireTimeMap;
 

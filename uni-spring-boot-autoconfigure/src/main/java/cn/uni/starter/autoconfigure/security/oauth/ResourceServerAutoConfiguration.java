@@ -34,7 +34,7 @@ import java.util.Collections;
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(SpringSecurityProperties.class)
-@ConditionalOnProperty(name = "uni.autoconfigureenable-oauth", havingValue = "true")
+@ConditionalOnProperty(name = "uni.autoconfigure.enable-oauth", havingValue = "true")
 @ConditionalOnClass(ResourceServerConfigurerAdapter.class)
 public class ResourceServerAutoConfiguration extends ResourceServerConfigurerAdapter {
 

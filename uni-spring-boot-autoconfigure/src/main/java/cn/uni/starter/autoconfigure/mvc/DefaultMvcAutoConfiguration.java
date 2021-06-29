@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @RequiredArgsConstructor
 @SuppressWarnings("NullableProblems")
-@ConditionalOnProperty(name = "uni.autoconfigureenable-mvc", havingValue = "true")
+@ConditionalOnProperty(name = "uni.autoconfigure.enable-mvc", havingValue = "true")
 public class DefaultMvcAutoConfiguration implements WebMvcConfigurer {
 
     private final DefaultLoggingInterceptor defaultLoggingInterceptor;

@@ -21,7 +21,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Component
 @ConfigurationProperties(prefix = "uni.config.redis")
-public class UnicRedisProperties {
+public class UniRedisProperties {
 
     /**
      * <p>自定义不同的cache manager过期时间</p>
