@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.lang.annotation.*;
 
@@ -19,17 +20,18 @@ import java.lang.annotation.*;
 @EnableJpaRepositories
 @EntityScan
 @SpringBootApplication
+@EnableTransactionManagement
 public @interface SpringCloudApplication {
 
     @AliasFor(annotation = SpringBootApplication.class, attribute = "scanBasePackages")
-    String[] componentBasePackages() default {"cn.unic.*", "cn.uni.*"};
+    String[] componentBasePackages() default {"cn.uni.*"};
 
     @AliasFor(annotation = EntityScan.class, attribute = "basePackages")
-    String[] entityBasePackages() default {"cn.unic.*", "cn.uni.*"};
+    String[] entityBasePackages() default {"cn.uni.*"};
 
     @AliasFor(annotation = EnableJpaRepositories.class, attribute = "basePackages")
-    String[] repositoryBasePackages() default {"cn.unic.*", "cn.uni.*"};
+    String[] repositoryBasePackages() default {"cn.uni.*"};
 
     @AliasFor(annotation = EnableFeignClients.class, attribute = "basePackages")
-    String[] feignBasePackages() default {"cn.unic.*", "cn.uni.*"};
+    String[] feignBasePackages() default {"cn.uni.*"};
 }
