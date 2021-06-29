@@ -1,0 +1,13 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.uni.starter.autoconfigure.es.EsAutoConfiguration, \
+  cn.uni.starter.autoconfigure.exception.DefaultExceptionHandlerAutoConfiguration, \
+  cn.uni.starter.autoconfigure.threadpool.ThreadPoolAutoConfiguration, \
+  cn.uni.starter.autoconfigure.mybatis.transaction.MpTransactionAutoConfiguration, \
+  cn.uni.starter.autoconfigure.mybatis.DefaultMybatisPlusAutoConfiguration, \
+  cn.uni.starter.autoconfigure.redis.DefaultOldRedisAutoConfiguration, \
+  cn.uni.starter.autoconfigure.mvc.DefaultMvcAutoConfiguration, \
+  cn.uni.starter.autoconfigure.security.oauth.ResourceServerAutoConfiguration, \
+  cn.uni.starter.autoconfigure.security.DefaultWebSecurityAutoConfiguration, \
+  cn.uni.starter.autoconfigure.redis.DefaultRedissonAutoConfiguration, \
+  cn.uni.starter.autoconfigure.security.CorsAutoConfiguration, \
+  cn.uni.starter.autoconfigure.serializer.SerializerAutoConfiguration

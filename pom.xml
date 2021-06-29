@@ -4,25 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>cn.unic.starter</groupId>
+  <groupId>cn.uni.starter</groupId>
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
 
   <version>2021.1-SNAPSHOT</version>
   <modules>
-    <module>unic-spring-boot-autoconfigure</module>
-    <module>unic-spring-boot-web-starter</module>
-    <module>unic-spring-boot-redis-starter</module>
-    <module>unic-spring-boot-redisson-starter</module>
-    <module>unic-spring-boot-es-starter</module>
-    <module>unic-spring-boot-jpa-starter</module>
-    <module>unic-spring-boot-mp-starter</module>
-    <module>unic-spring-boot-oauth-starter</module>
-    <module>unic-spring-cloud-old-eas-starter</module>
-    <module>unic-spring-cloud-stream-starter</module>
-    <module>unic-spring-boot-easyexcel-starter</module>
-    <module>unic-common-util</module>
-    <module>unic-spring-cloud-starter</module>
+    <module>uni-spring-boot-autoconfigure</module>
+    <module>uni-spring-boot-web-starter</module>
+    <module>uni-spring-boot-redis-starter</module>
+    <module>uni-spring-boot-redisson-starter</module>
+    <module>uni-spring-boot-es-starter</module>
+    <module>uni-spring-boot-jpa-starter</module>
+    <module>uni-spring-boot-mp-starter</module>
+    <module>uni-spring-boot-oauth-starter</module>
+    <module>uni-spring-cloud-old-eas-starter</module>
+    <module>uni-spring-cloud-stream-starter</module>
+    <module>uni-spring-boot-easyexcel-starter</module>
+    <module>uni-common-util</module>
+    <module>uni-spring-cloud-starter</module>
   </modules>
 
   <developers>
@@ -37,9 +37,9 @@
     <encoding>UTF-8</encoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <!--   unic   -->
-    <unic.starter.version>2021.1-SNAPSHOT</unic.starter.version>
-    <unic.common.util.version>1.0.0-SNAPSHOT</unic.common.util.version>
+    <!--   uni   -->
+    <uni.starter.version>2021.1-SNAPSHOT</uni.starter.version>
+    <uni.common.util.version>1.0.0-SNAPSHOT</uni.common.util.version>
     <!--  spring  -->
     <spring.boot.version>2.4.2</spring.boot.version>
     <spring.cloud.version>2020.0.3</spring.cloud.version>
@@ -104,11 +104,11 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- unic -->
+      <!-- uni -->
       <dependency>
-        <groupId>cn.unic.common</groupId>
-        <artifactId>unic-common-util</artifactId>
-        <version>${unic.common.util.version}</version>
+        <groupId>cn.uni.common</groupId>
+        <artifactId>uni-common-util</artifactId>
+        <version>${uni.common.util.version}</version>
       </dependency>
       <!-- others -->
       <dependency>
