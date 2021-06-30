@@ -67,6 +67,7 @@
     <redisson.version>3.15.6</redisson.version>
     <jcip.annotation.version>1.0</jcip.annotation.version>
     <easyexcel.version>2.2.10</easyexcel.version>
+    <disruptor.version>3.4.4</disruptor.version>
     <!--  plugins  -->
     <spring.boot.maven.plugin.version>2.4.4</spring.boot.maven.plugin.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -111,6 +112,11 @@
         <version>${uni.common.util.version}</version>
       </dependency>
       <!-- others -->
+      <dependency>
+        <groupId>com.lmax</groupId>
+        <artifactId>disruptor</artifactId>
+        <version>${disruptor.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>fastjson</artifactId>
