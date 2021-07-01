@@ -4,6 +4,7 @@ import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import cn.uni.starter.autoconfigure.redis.properties.UniRedisProperties;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,7 @@ public class DefaultOldRedisAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        log.info(AutoConfigConstants.LOADING_OLD_REDIS_TEMPLATE);
         RedisSerializer<Object> serializer = redisSerializer();
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
@@ -72,9 +74,11 @@ public class DefaultOldRedisAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(name = "redisSerializer")
     public RedisSerializer<Object> redisSerializer() {
+        log.info(AutoConfigConstants.LOADING_OLD_REDIS_SERIALIZER);
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
         serializer.setObjectMapper(objectMapper);
         return serializer;
@@ -83,6 +87,7 @@ public class DefaultOldRedisAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(name = "redisCacheManager")
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
+        log.info(AutoConfigConstants.LOADING_OLD_REDIS_CACHE);
         //设置Redis缓存有效期为1天
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer()))
