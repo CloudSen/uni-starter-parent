@@ -23,6 +23,7 @@
     <module>uni-spring-boot-easyexcel-starter</module>
     <module>uni-common-util</module>
     <module>uni-spring-cloud-starter</module>
+    <module>uni-spring-boot-feign-starter</module>
   </modules>
 
   <developers>

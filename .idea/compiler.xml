@@ -12,6 +12,7 @@
         <module name="uni-spring-boot-redis-starter" />
         <module name="uni-spring-boot-jpa-starter" />
         <module name="autoconfigure" />
+        <module name="uni-spring-boot-feign-starter" />
         <module name="uni-spring-cloud-stream-starter" />
         <module name="uni-spring-cloud-old-eas-starter" />
         <module name="uni-spring-boot-easyexcel-starter" />
