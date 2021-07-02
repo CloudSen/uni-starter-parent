@@ -14,6 +14,9 @@ public final class AutoConfigConstants {
     public static final String LOADING_EXCEPTION_HANDLER_AUTO_CONFIGURE = PREFIX + "加载默认全局异常处理配置";
     public static final String LOADING_SERIALIZER_AUTO_CONFIGURE = PREFIX + "加载默认Jackson序列化配置";
     public static final String LOADING_OLD_REDIS_AUTO_CONFIGURE = PREFIX + "加载旧的Redis配置";
+    public static final String LOADING_OLD_REDIS_TEMPLATE = PREFIX + "加载RedisTemplate配置";
+    public static final String LOADING_OLD_REDIS_SERIALIZER = PREFIX + "加载Redis序列化配置";
+    public static final String LOADING_OLD_REDIS_CACHE = PREFIX + "加载RedisCache配置";
     public static final String LOADING_TRANSACTION_AUTO_CONFIGURE = PREFIX + "加载MP事务配置";
     public static final String LOADING_MYBATIS_PLUS_AUTO_CONFIGURE = PREFIX + "加载MP配置";
     public static final String MYBATIS_PLUS_MAPPERS = PREFIX + "加载MP Mappers: {}";

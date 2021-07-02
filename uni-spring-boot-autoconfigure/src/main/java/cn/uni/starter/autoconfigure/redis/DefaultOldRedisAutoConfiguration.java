@@ -59,6 +59,7 @@ public class DefaultOldRedisAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        log.info(AutoConfigConstants.LOADING_OLD_REDIS_TEMPLATE);
         RedisSerializer<Object> serializer = redisSerializer();
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
@@ -73,6 +74,7 @@ public class DefaultOldRedisAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(name = "redisSerializer")
     public RedisSerializer<Object> redisSerializer() {
+        log.info(AutoConfigConstants.LOADING_OLD_REDIS_SERIALIZER);
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
@@ -85,6 +87,7 @@ public class DefaultOldRedisAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(name = "redisCacheManager")
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
+        log.info(AutoConfigConstants.LOADING_OLD_REDIS_CACHE);
         //设置Redis缓存有效期为1天
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer()))
