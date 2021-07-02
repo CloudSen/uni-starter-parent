@@ -1,6 +1,5 @@
 package cn.uni.starter.autoconfigure.log4j2;
 
-import org.slf4j.MDC;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
@@ -31,6 +30,6 @@ public class Log4j2Initializer {
         } catch (IOException e) {
             throw new RuntimeException("读取配置文件发生异常", e);
         }
-        MDC.put("spring.application.name", String.valueOf(((Map) ((Map) load.get("spring")).get("application")).get("name")));
+        System.setProperty("spring.application.name", String.valueOf(((Map) ((Map) load.get("spring")).get("application")).get("name")));
     }
 }
