@@ -1,4 +1,5 @@
 package cn.uni.common.util;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -6,6 +7,7 @@ import lombok.Data;
  * @date 2020-07-31 09:56
  **/
 @Data
+@Schema(name = "Response", description = "统一响应")
 public class Response<T> {
 
     public static final String SUCCESS = "success";
@@ -13,12 +15,16 @@ public class Response<T> {
     public static final String VALIDATE_FAILURE = "validateFailure";
     public static final String VALIDATE_SUCCESS = "validateSuccess";
 
+    @Schema(description = "状态", required = true)
     private String status;
 
+    @Schema(description = "消息", required = true)
     private String msg;
 
+    @Schema(description = "数据")
     private T data;
 
+    @Schema(description = "响应码", required = true)
     private String code;
 
 
