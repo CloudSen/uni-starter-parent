@@ -1,5 +1,6 @@
 package cn.uni.starter.jpa.utils;
 
+import cn.uni.common.util.CamelUtils;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -14,12 +15,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * JPA native query 查询工具
@@ -114,5 +113,68 @@ public class QueryUtil {
         List<List<String>> partition = ListUtils.partition(ids, 1000);
         partition.forEach(l -> result.addAll(repository.findAllById(l)));
         return result;
+    }
+
+    /**
+     * 反射包含父类
+     *
+     * @param query jpa query对象
+     * @param clazz 要映射的类类型
+     * @param <T>   类型T
+     * @return 类型T列表
+     */
+    public static <T> List<T> queryResultList(Query query, Class<T> clazz) {
+        query.unwrap(SQLQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        List<T> result = new ArrayList<>();
+        List list = query.getResultList();
+        List<Field> fields = getFields(clazz);
+
+        list.forEach(item -> {
+
+            T t = null;
+            try {
+                t = clazz.getDeclaredConstructor().newInstance();
+                Map<String, Object> objectMap = (Map<String, Object>) item;
+                for (Field field : fields) {
+                    String key = CamelUtils.underline(field.getName()).toUpperCase();
+                    if (objectMap.get(key) != null) {
+                        field.setAccessible(true);
+                        setValue(field, t, objectMap.get(key));
+                    }
+                }
+
+                result.add(t);
+
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                log.warn(e.getMessage());
+            }
+        });
+        return result;
+    }
+
+    private static List<Field> getFields(Class<?> clazz) {
+        List<Field> list = new ArrayList<>();
+        Set<String> fields = new HashSet<>();
+        if ("object".equals(clazz.getSimpleName())) {
+            return list;
+        } else {
+            for (Field field : clazz.getDeclaredFields()) {
+                if (!fields.contains(field.getName())) {
+                    list.add(field);
+                    fields.add(field.getName());
+                }
+            }
+            Class<?> superClass = clazz.getSuperclass();
+            while (superClass != null && !"object".equals(superClass.getSimpleName())) {
+                for (Field field : superClass.getDeclaredFields()) {
+                    if (!fields.contains(field.getName())) {
+                        list.add(field);
+                        fields.add(field.getName());
+                    }
+                }
+                superClass = superClass.getSuperclass();
+            }
+        }
+        return list;
     }
 }

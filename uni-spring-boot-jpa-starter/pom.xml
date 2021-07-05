@@ -27,6 +27,11 @@
       <version>${uni.starter.version}</version>
     </dependency>
     <dependency>
+      <groupId>cn.uni.common</groupId>
+      <artifactId>uni-common-util</artifactId>
+      <version>${uni.common.util.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
