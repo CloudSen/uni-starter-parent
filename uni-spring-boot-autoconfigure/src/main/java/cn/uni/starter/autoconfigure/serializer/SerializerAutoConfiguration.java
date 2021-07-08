@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -16,6 +17,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 序列化设置
@@ -31,6 +33,10 @@ public class SerializerAutoConfiguration {
     static {
         log.info(AutoConfigConstants.LOADING_SERIALIZER_AUTO_CONFIGURE);
     }
+
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_TIME_WITH_T_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    private static final String STR_T = "'T'";
 
     @Bean
     @ConditionalOnMissingBean
@@ -51,8 +57,12 @@ public class SerializerAutoConfiguration {
             long timestamp = p.getValueAsLong();
             if (timestamp > 0) {
                 return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
+            }
+            String strTime = p.getValueAsString();
+            if (StringUtils.isNotBlank(strTime) && strTime.contains(STR_T)) {
+                return LocalDateTime.parse(strTime, DateTimeFormatter.ofPattern(DATE_TIME_WITH_T_FORMAT));
             } else {
-                return null;
+                return LocalDateTime.parse(strTime, DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
             }
         }
     }
@@ -67,8 +77,12 @@ public class SerializerAutoConfiguration {
             long timestamp = p.getValueAsLong();
             if (timestamp > 0) {
                 return Instant.ofEpochMilli(timestamp).atZone(ZoneId.systemDefault()).toLocalDate();
+            }
+            String strDate = p.getValueAsString();
+            if (StringUtils.isNotBlank(strDate) && strDate.contains(STR_T)) {
+                return LocalDate.parse(strDate, DateTimeFormatter.ofPattern(DATE_TIME_WITH_T_FORMAT));
             } else {
-                return null;
+                return LocalDate.parse(strDate, DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
             }
         }
     }
