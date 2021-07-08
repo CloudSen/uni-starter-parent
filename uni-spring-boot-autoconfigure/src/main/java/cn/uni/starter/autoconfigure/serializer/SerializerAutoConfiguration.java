@@ -34,6 +34,7 @@ public class SerializerAutoConfiguration {
         log.info(AutoConfigConstants.LOADING_SERIALIZER_AUTO_CONFIGURE);
     }
 
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String DATE_TIME_WITH_T_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private static final String STR_T = "'T'";
@@ -79,11 +80,10 @@ public class SerializerAutoConfiguration {
                 return Instant.ofEpochMilli(timestamp).atZone(ZoneId.systemDefault()).toLocalDate();
             }
             String strDate = p.getValueAsString();
-            if (StringUtils.isNotBlank(strDate) && strDate.contains(STR_T)) {
-                return LocalDate.parse(strDate, DateTimeFormatter.ofPattern(DATE_TIME_WITH_T_FORMAT));
-            } else {
-                return LocalDate.parse(strDate, DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
+            if (StringUtils.isNotBlank(strDate)) {
+                return LocalDate.parse(strDate, DateTimeFormatter.ofPattern(DATE_FORMAT));
             }
+            return null;
         }
     }
 }
