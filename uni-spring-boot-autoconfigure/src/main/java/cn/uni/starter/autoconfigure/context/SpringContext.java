@@ -3,6 +3,7 @@ package cn.uni.starter.autoconfigure.context;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ import java.util.Objects;
  * @author CloudS3n
  * @date 2021-07-08 18:15
  */
+@Component
 public class SpringContext implements ApplicationContextAware {
 
     private static ApplicationContext context;
