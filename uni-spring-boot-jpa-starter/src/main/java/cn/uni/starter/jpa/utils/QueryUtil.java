@@ -1,23 +1,19 @@
 package cn.uni.starter.jpa.utils;
 
 import cn.uni.common.util.CamelUtils;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.text.CaseUtils;
 import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.Query;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -29,16 +25,6 @@ import java.util.*;
 @SuppressWarnings({"rawtypes", "unchecked", "deprecation"})
 public class QueryUtil {
 
-    private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    static {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-        OBJECT_MAPPER.registerModule(new JavaTimeModule());
-        OBJECT_MAPPER.setDateFormat(dateFormat);
-        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
-
     public static <T> List<T> queryResult(Query query, Class<T> clazz) {
         query.unwrap(SQLQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
         List queryList = query.getResultList();
@@ -46,9 +32,9 @@ public class QueryUtil {
         queryList
             .forEach(r -> {
                 try {
-                    resultList.add(OBJECT_MAPPER.readValue(OBJECT_MAPPER.writeValueAsString(r), clazz));
-                } catch (IOException e) {
-                    log.warn(e.getMessage());
+                    resultList.add(JSON.parseObject(JSON.toJSONString(r), clazz));
+                } catch (Exception e) {
+                    log.error("序列化异常\n{}" + ExceptionUtils.getStackTrace(e));
                 }
             });
         return resultList;
