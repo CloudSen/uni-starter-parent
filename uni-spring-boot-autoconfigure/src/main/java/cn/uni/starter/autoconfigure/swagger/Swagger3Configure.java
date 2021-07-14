@@ -24,7 +24,7 @@ import java.util.function.Predicate;
  * @author CloudS3n
  * @date 2021-07-14 15:36
  */
-public interface SwaggerConfigure {
+public interface Swagger3Configure {
 
     Map<String, Contact> CONTACT_MAP = new HashMap<>(16);
     List<SecurityScheme> SECURITY_SCHEMAS = Collections.singletonList(
