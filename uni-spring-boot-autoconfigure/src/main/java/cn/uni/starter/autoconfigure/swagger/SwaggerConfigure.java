@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.apache.commons.collections4.CollectionUtils;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.*;
@@ -48,12 +49,15 @@ public interface SwaggerConfigure {
      * @return Docket对象
      */
     default Docket buildDocketNoAuth(DocketProperty property) {
+        ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
+        if (CollectionUtils.isNotEmpty(property.getContacts())) {
+            property.getContacts().forEach(c -> apiInfoBuilder.contact(CONTACT_MAP.get(c)));
+        }
         return new Docket(DocumentationType.OAS_30)
             .groupName(property.getGroupName())
             .apiInfo(
                 new ApiInfoBuilder()
                     .title(property.getTitle())
-                    .contact(CONTACT_MAP.get(property.getContact()))
                     .description(property.getDescription())
                     .version(property.getVersion())
                     .build()
@@ -71,12 +75,15 @@ public interface SwaggerConfigure {
      * @return Docket对象
      */
     default Docket buildDocket(DocketProperty property) {
+        ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
+        if (CollectionUtils.isNotEmpty(property.getContacts())) {
+            property.getContacts().forEach(c -> apiInfoBuilder.contact(CONTACT_MAP.get(c)));
+        }
         return new Docket(DocumentationType.OAS_30)
             .groupName(property.getGroupName())
             .apiInfo(
-                new ApiInfoBuilder()
+                apiInfoBuilder
                     .title(property.getTitle())
-                    .contact(CONTACT_MAP.get(property.getContact()))
                     .description(property.getDescription())
                     .version(property.getVersion())
                     .build()
@@ -96,7 +103,7 @@ public interface SwaggerConfigure {
     class DocketProperty {
         private String groupName;
         private String title;
-        private String contact;
+        private List<String> contacts;
         private String description;
         private String version;
         private Predicate<RequestHandler> apis;
