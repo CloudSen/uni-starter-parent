@@ -42,7 +42,30 @@ public interface SwaggerConfigure {
     );
 
     /**
-     * 创建Docket对象
+     * 创建没有使用认证服务的Docket对象
+     *
+     * @param property docket属性
+     * @return Docket对象
+     */
+    default Docket buildDocketNoAuth(DocketProperty property) {
+        return new Docket(DocumentationType.OAS_30)
+            .groupName(property.getGroupName())
+            .apiInfo(
+                new ApiInfoBuilder()
+                    .title(property.getTitle())
+                    .contact(CONTACT_MAP.get(property.getContact()))
+                    .description(property.getDescription())
+                    .version(property.getVersion())
+                    .build()
+            )
+            .select()
+            .apis(property.getApis())
+            .paths(property.getPaths())
+            .build();
+    }
+
+    /**
+     * 创建启用了认证服务的Docket对象
      *
      * @param property docket属性
      * @return Docket对象
