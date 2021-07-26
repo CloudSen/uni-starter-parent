@@ -10,7 +10,7 @@
 
   <version>2021.1-SNAPSHOT</version>
   <modules>
-    <module>uni-spring-boot-autoconfigure</module>
+    <module>autoconfigure</module>
     <module>uni-spring-boot-web-starter</module>
     <module>uni-spring-boot-redis-starter</module>
     <module>uni-spring-boot-redisson-starter</module>
