@@ -21,7 +21,7 @@ import java.time.Duration;
 @Data
 @Accessors(chain = true)
 @Component
-@ConfigurationProperties(prefix = "uni.config.thread-pool.async-executor", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "uni.config.thread-pool.async-executor")
 public class AsyncTaskExecutorProperties {
 
     @NotBlank
