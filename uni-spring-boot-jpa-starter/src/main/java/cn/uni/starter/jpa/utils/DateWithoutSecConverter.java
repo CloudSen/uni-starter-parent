@@ -1,5 +1,7 @@
 package cn.uni.starter.jpa.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.text.ParseException;
@@ -9,17 +11,17 @@ import java.util.Date;
 /**
  * @author CloudS3n
  */
-@Converter(autoApply = true)
-public class StringDateConverter implements AttributeConverter<String, Date> {
+@Converter
+public class DateWithoutSecConverter implements AttributeConverter<String, Date> {
+
     @Override
     public Date convertToDatabaseColumn(String objectValue) {
-        if (objectValue == null || "".equals(objectValue)) {
+        if (StringUtils.isBlank(objectValue)) {
             return null;
         }
 
         try {
-            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(objectValue);
-            return date;
+            return new SimpleDateFormat("yyyy-MM-dd").parse(objectValue);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -32,6 +34,6 @@ public class StringDateConverter implements AttributeConverter<String, Date> {
         if (dateValue == null) {
             return "";
         }
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(dateValue);
+        return new SimpleDateFormat("yyyy-MM-dd").format(dateValue);
     }
 }

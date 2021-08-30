@@ -10,8 +10,7 @@ import java.util.Date;
  * @author CloudS3n
  */
 @Converter(autoApply = true)
-public class StringDateWithYear implements AttributeConverter<String, Date> {
-
+public class DateConverter implements AttributeConverter<String, Date> {
     @Override
     public Date convertToDatabaseColumn(String objectValue) {
         if (objectValue == null || "".equals(objectValue)) {
@@ -19,8 +18,7 @@ public class StringDateWithYear implements AttributeConverter<String, Date> {
         }
 
         try {
-            Date date = new SimpleDateFormat("yyyy").parse(objectValue);
-            return date;
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(objectValue);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -30,9 +28,9 @@ public class StringDateWithYear implements AttributeConverter<String, Date> {
 
     @Override
     public String convertToEntityAttribute(Date dateValue) {
-        if (dateValue == null || "".equals(dateValue)) {
+        if (dateValue == null) {
             return "";
         }
-        return new SimpleDateFormat("yyyy").format(dateValue);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(dateValue);
     }
 }

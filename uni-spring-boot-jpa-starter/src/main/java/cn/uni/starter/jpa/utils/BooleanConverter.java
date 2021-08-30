@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Converter(autoApply = true)
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
-public class BooleanYNConverter implements AttributeConverter<Boolean, String> {
+public class BooleanConverter implements AttributeConverter<Boolean, String> {
     private static final Set<String> YES_VALUES = new HashSet<>(){{
         add("Y");
         add("y");
