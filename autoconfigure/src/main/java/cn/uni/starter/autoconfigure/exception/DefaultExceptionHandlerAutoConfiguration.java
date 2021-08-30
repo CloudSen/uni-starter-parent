@@ -36,17 +36,12 @@ public class DefaultExceptionHandlerAutoConfiguration {
     @ExceptionHandler(UniException.class)
     public Response<?> uniExceptionHandler(UniException e) {
         log.error(ExceptionUtils.getStackTrace(e));
-        String msg = ExceptionUtils.getRootCauseMessage(e);
-        return Response.resp(Response.ERROR, StringUtils.isBlank(msg) ? AutoConfigConstants.SERVER_ERROR : msg.substring(msg.indexOf(": ") + 1));
+        return Response.resp(Response.ERROR, AutoConfigConstants.ERROR_OPERATE);
     }
 
     @ExceptionHandler(Exception.class)
     public Response<?> otherExceptionHandler(Exception e) {
         log.error(ExceptionUtils.getStackTrace(e));
-        String msg = ExceptionUtils.getRootCauseMessage(e);
-        if (StringUtils.isBlank(msg)) {
-            msg = AutoConfigConstants.SERVER_ERROR;
-        }
-        return Response.resp(Response.ERROR, msg.substring(msg.indexOf(": ") + 1));
+        return Response.resp(Response.ERROR, AutoConfigConstants.ERROR_OPERATE);
     }
 }

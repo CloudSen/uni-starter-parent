@@ -23,7 +23,7 @@ public final class AutoConfigConstants {
     public static final String LOADING_MYBATIS_PLUS_AUTO_CONFIGURE = PREFIX + "加载MP配置";
     public static final String MYBATIS_PLUS_MAPPERS = PREFIX + "加载MP Mappers: {}";
     public static final String SUCCESS_OPERATE = "操作成功";
-    public static final String ERROR_OPERATE = "操作异常";
+    public static final String ERROR_OPERATE = "操作失败";
     public static final String SERVER_ERROR = "服务端错误";
     public static final String NO_AUTHORIZATION = "没有权限";
     public static final String TRUE = "true";
