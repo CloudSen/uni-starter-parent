@@ -26,11 +26,11 @@ public class CommonTaskExecutorProperties {
     @NotBlank
     private String threadNamePrefix = "common-executor-";
 
-    @Range(min = 10, max = Integer.MAX_VALUE)
-    private Integer corePoolSize = 15;
+    @Range(min = 1, max = Integer.MAX_VALUE)
+    private Integer corePoolSize = 5;
 
-    @Range(min = 50, max = Integer.MAX_VALUE)
-    private Integer maxPoolSize = 50;
+    @Range(min = 1, max = Integer.MAX_VALUE)
+    private Integer maxPoolSize = 20;
 
     @Range(min = 0, max = Integer.MAX_VALUE)
     private Integer queueCapacity = 30;

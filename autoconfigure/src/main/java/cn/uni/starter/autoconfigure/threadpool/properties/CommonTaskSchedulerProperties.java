@@ -23,6 +23,6 @@ public class CommonTaskSchedulerProperties {
     @NotBlank
     private String threadNamePrefix = "common-scheduler-";
 
-    @Range(min = 10, max = Integer.MAX_VALUE)
+    @Range(min = 1, max = Integer.MAX_VALUE)
     private Integer poolSize = 10;
 }
