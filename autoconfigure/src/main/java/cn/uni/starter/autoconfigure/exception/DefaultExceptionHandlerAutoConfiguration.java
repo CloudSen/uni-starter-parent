@@ -36,7 +36,8 @@ public class DefaultExceptionHandlerAutoConfiguration {
     @ExceptionHandler(UniException.class)
     public Response<?> uniExceptionHandler(UniException e) {
         log.error(ExceptionUtils.getStackTrace(e));
-        return Response.resp(Response.ERROR, AutoConfigConstants.ERROR_OPERATE);
+        String message = e.getMessage();
+        return Response.resp(Response.ERROR, StringUtils.isBlank(message) ? AutoConfigConstants.ERROR_OPERATE : message);
     }
 
     @ExceptionHandler(Exception.class)
