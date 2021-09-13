@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 /**
  * @author CloudS3n
  * @date 2021-06-11 09:57
@@ -37,7 +39,8 @@ public class DefaultExceptionHandlerAutoConfiguration {
     public Response<?> uniExceptionHandler(UniException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         String message = e.getMessage();
-        return Response.resp(Response.ERROR, StringUtils.isBlank(message) ? AutoConfigConstants.ERROR_OPERATE : message);
+        String code = Optional.ofNullable(e.getCode()).orElse(Response.ERROR);
+        return Response.resp(Response.ERROR, code, StringUtils.isBlank(message) ? AutoConfigConstants.ERROR_OPERATE : message, null);
     }
 
     @ExceptionHandler(Exception.class)
