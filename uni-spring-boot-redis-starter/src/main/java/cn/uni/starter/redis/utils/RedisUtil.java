@@ -20,7 +20,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@Deprecated
 @Component
 public class RedisUtil {
 
@@ -98,14 +97,11 @@ public class RedisUtil {
             return false;
         }
         try {
-            if (redisTemplate.isExposeConnection()) {
-                return redisTemplate.hasKey(key);
-            }
+            return redisTemplate.hasKey(key);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return false;
     }
 
     /**
