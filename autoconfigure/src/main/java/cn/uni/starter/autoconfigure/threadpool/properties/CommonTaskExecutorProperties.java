@@ -29,7 +29,7 @@ public class CommonTaskExecutorProperties {
     @Range(min = 10, max = Integer.MAX_VALUE)
     private Integer corePoolSize = 15;
 
-    @Range(min = 50, max = Integer.MAX_VALUE)
+    @Range(min = 10, max = Integer.MAX_VALUE)
     private Integer maxPoolSize = 50;
 
     @Range(min = 0, max = Integer.MAX_VALUE)
