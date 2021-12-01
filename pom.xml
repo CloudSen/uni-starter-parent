@@ -247,11 +247,11 @@
   <distributionManagement>
     <snapshotRepository>
       <id>uni-snapshot</id>
-      <url>http://192.168.2.157:8081/repository/uni-snapshot/</url>
+      <url>http://172.20.216.43:8081/repository/uni-snapshot/</url>
     </snapshotRepository>
     <repository>
       <id>uni-release</id>
-      <url>http://192.168.2.157:8081/repository/uni-release/</url>
+      <url>http://172.20.216.43:8081/repository/uni-release/</url>
     </repository>
   </distributionManagement>
 </project>
