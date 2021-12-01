@@ -7,6 +7,16 @@
       <option name="url" value="http://172.20.216.43:8081/repository/maven-public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="uni-release" />
+      <option name="name" value="uni-release" />
+      <option name="url" value="http://x454262h22.qicp.vip:8081/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="uni-snapshot" />
+      <option name="name" value="uni-snapshot" />
+      <option name="url" value="http://x454262h22.qicp.vip:8081/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
@@ -20,6 +30,11 @@
       <option name="id" value="uni-snapshot" />
       <option name="name" value="uni-snapshot" />
       <option name="url" value="http://172.20.216.43:8081/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="http://x454262h22.qicp.vip:8081/repository/maven-public/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
