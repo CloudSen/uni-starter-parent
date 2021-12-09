@@ -24,5 +24,8 @@
         <module name="uni-spring-cloud-starter" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="unic-starter-parent" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

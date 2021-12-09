@@ -11,14 +11,17 @@
 ```
 
 ## 版本说明
-此版本（2021.1-SNAPSHOT）是***使用JPA的教务系统专用。***
+此版本（2021.1-mybatis-SNAPSHOT）是***使用MybatisPlus的系统专用。***
 
 ## 依赖列表
 
-| SpringCloudAlibaba  | SpringCloud  | SpringBoot  | Sentinel  | Nacos  |
-|:-------------------:|:------------:|:-----------:|:---------:|:------:|
-|       2021.1        |    2020.0    |    2.4.2    |   1.8.0   | 1.4.1  |
+| SpringCloudAlibaba  | SpringCloud | SpringBoot | Sentinel  | Nacos  |
+|:-------------------:|:-----------:|:----------:|:---------:|:------:|
+|       2021.1        | 2021.0.0GA  |  2.6.1GA   |   1.8.0   | 1.4.1  |
 
+| mybatis-plus-boot-starter | mybatis-plus-generator |
+|:-------------------------:|:----------------------:|
+|          3.4.3.4          |         3.5.1          |
 
 ## 目录说明
 
