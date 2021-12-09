@@ -3,6 +3,7 @@ package cn.uni.starter.feign;
 import cn.uni.starter.feign.properties.AsyncTaskExecutorProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,7 +17,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  * @author CloudS3n
  * @date 2021-07-26 14:15
  */
-@Log4j2
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties({AsyncTaskExecutorProperties.class})

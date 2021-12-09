@@ -20,6 +20,9 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+/**
+ * @author younikong
+ */
 @Component
 public class RedisUtil {
 
@@ -28,6 +31,7 @@ public class RedisUtil {
 
     @Autowired
     RedisSerializer<Object> redisSerializer;
+
     /**
      * items和exits 长度要一样 否则会报错
      *
@@ -500,7 +504,7 @@ public class RedisUtil {
      * @param item
      * @return
      */
-    public boolean HasKey(String key, String item) {
+    public boolean hasKey(String key, String item) {
         if (key == null || item == null) {
             return false;
         }
@@ -640,7 +644,9 @@ public class RedisUtil {
         }
         try {
             Long count = redisTemplate.opsForSet().add(key, values.toArray());
-            if (time > 0) expire(key, time);
+            if (time > 0) {
+                expire(key, time);
+            }
             return count;
         } catch (Exception e) {
             e.printStackTrace();
@@ -765,7 +771,9 @@ public class RedisUtil {
         }
         try {
             redisTemplate.opsForList().rightPush(key, value);
-            if (time > 0) expire(key, time);
+            if (time > 0) {
+                expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -786,7 +794,9 @@ public class RedisUtil {
         }
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
-            if (time > 0) expire(key, time);
+            if (time > 0) {
+                expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -809,7 +819,9 @@ public class RedisUtil {
         try {
             redisTemplate.delete(key);
             redisTemplate.opsForList().rightPushAll(key, value);
-            if (time > 0) expire(key, time);
+            if (time > 0) {
+                expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -868,8 +880,8 @@ public class RedisUtil {
      * @author xiaoyin
      * @date 2019/5/6 16:39
      */
-    public Map<String, Object> getHKeyValueMap(String key, ScanOptions options) {
-        Map<String, Object> keyValueMap = new HashMap<>();
+    public Map<String, Object> getHashKeyValueMap(String key, ScanOptions options) {
+        Map<String, Object> keyValueMap = new HashMap<>(16);
         Cursor<Map.Entry<Object, Object>> cursor = redisTemplate.opsForHash().scan(key, options);
         while (cursor.hasNext()) {
             Map.Entry<Object, Object> entry = cursor.next();
@@ -970,7 +982,7 @@ public class RedisUtil {
     public Set<String> scan(String matchKey, int count) {
         return (Set<String>) redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
             Set<String> keysTmp = new HashSet<>();
-            Cursor<byte[]> cursor = connection.scan(new ScanOptions.ScanOptionsBuilder().match(matchKey).count(count).build());
+            Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions().match(matchKey).count(count).build());
             while (cursor.hasNext()) {
                 keysTmp.add(new String(cursor.next()));
             }

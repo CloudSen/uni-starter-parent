@@ -4,6 +4,7 @@ import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import cn.uni.starter.autoconfigure.mvc.intercepter.DefaultLoggingInterceptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author CloudS3n
  * @date 2021-06-15 12:06
  */
-@Log4j2
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @SuppressWarnings("NullableProblems")

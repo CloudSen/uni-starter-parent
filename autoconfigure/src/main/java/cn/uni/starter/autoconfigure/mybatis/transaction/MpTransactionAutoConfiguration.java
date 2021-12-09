@@ -3,6 +3,7 @@ package cn.uni.starter.autoconfigure.mybatis.transaction;
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import cn.uni.starter.autoconfigure.mybatis.DefaultMybatisPlusAutoConfiguration;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -18,7 +19,7 @@ import javax.sql.DataSource;
  * @author CloudS3n
  * @date 2021-06-11 10:23
  */
-@Log4j2
+@Slf4j
 @Configuration
 @ConditionalOnBean(DefaultMybatisPlusAutoConfiguration.class)
 @AutoConfigureAfter(DefaultMybatisPlusAutoConfiguration.class)

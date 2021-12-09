@@ -2,6 +2,7 @@ package cn.uni.starter.autoconfigure.mvc.intercepter;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.http.HttpMethod;
@@ -21,7 +22,7 @@ import java.util.Enumeration;
  * @author CloudS3n
  * @date 2021-06-15 11:42
  */
-@Log4j2
+@Slf4j
 @Component
 @SuppressWarnings({"NullableProblems", "RedundantThrows"})
 public class DefaultLoggingInterceptor implements HandlerInterceptor {

@@ -5,6 +5,7 @@ import cn.uni.starter.autoconfigure.threadpool.properties.CommonTaskExecutorProp
 import cn.uni.starter.autoconfigure.threadpool.properties.CommonTaskSchedulerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,7 +18,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
  * @author CloudS3n
  * @date 2021-06-11 10:11
  */
-@Log4j2
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties({CommonTaskExecutorProperties.class, CommonTaskSchedulerProperties.class})

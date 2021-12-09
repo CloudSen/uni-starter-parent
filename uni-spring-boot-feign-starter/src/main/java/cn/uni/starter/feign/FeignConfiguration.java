@@ -3,6 +3,7 @@ package cn.uni.starter.feign;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -16,7 +17,7 @@ import java.util.Objects;
  *
  * @author younikong
  */
-@Log4j2
+@Slf4j
 @Configuration
 @SuppressWarnings("SpringFacetCodeInspection")
 public class FeignConfiguration implements RequestInterceptor {

@@ -3,6 +3,7 @@ package cn.uni.starter.autoconfigure.exception;
 import cn.uni.common.util.Response;
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,7 +18,7 @@ import java.util.Optional;
  * @author CloudS3n
  * @date 2021-06-11 09:57
  */
-@Log4j2
+@Slf4j
 @RestController
 @ControllerAdvice
 @ConditionalOnProperty(name = "uni.autoconfigure.enable-exception-handler", havingValue = "true")

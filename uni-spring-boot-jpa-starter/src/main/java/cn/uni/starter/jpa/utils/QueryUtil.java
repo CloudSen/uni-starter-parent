@@ -3,6 +3,7 @@ package cn.uni.starter.jpa.utils;
 import cn.uni.common.util.CamelUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -21,9 +22,11 @@ import java.util.*;
  *
  * @author zhanhaoyang
  */
-@Log4j2
+@Slf4j
 @SuppressWarnings({"rawtypes", "unchecked", "deprecation"})
 public class QueryUtil {
+
+    public static final String OBJECT = "object";
 
     public static <T> List<T> queryResult(Query query, Class<T> clazz) {
         query.unwrap(SQLQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
@@ -141,7 +144,7 @@ public class QueryUtil {
     private static List<Field> getFields(Class<?> clazz) {
         List<Field> list = new ArrayList<>();
         Set<String> fields = new HashSet<>();
-        if ("object".equals(clazz.getSimpleName())) {
+        if (OBJECT.equals(clazz.getSimpleName())) {
             return list;
         } else {
             for (Field field : clazz.getDeclaredFields()) {
@@ -151,7 +154,7 @@ public class QueryUtil {
                 }
             }
             Class<?> superClass = clazz.getSuperclass();
-            while (superClass != null && !"object".equals(superClass.getSimpleName())) {
+            while (superClass != null && !OBJECT.equals(superClass.getSimpleName())) {
                 for (Field field : superClass.getDeclaredFields()) {
                     if (!fields.contains(field.getName())) {
                         list.add(field);

@@ -17,10 +17,8 @@
     <module>uni-spring-boot-es-starter</module>
     <module>uni-spring-boot-jpa-starter</module>
     <module>uni-spring-boot-mp-starter</module>
-    <module>uni-spring-boot-oauth-starter</module>
     <module>uni-spring-cloud-old-eas-starter</module>
     <module>uni-spring-cloud-stream-starter</module>
-    <module>uni-spring-boot-easyexcel-starter</module>
     <module>uni-common-util</module>
     <module>uni-spring-cloud-starter</module>
     <module>uni-spring-boot-feign-starter</module>
@@ -39,14 +37,12 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <!--   uni   -->
-    <uni.starter.version>2021.1-SNAPSHOT</uni.starter.version>
+    <uni.starter.version>2021.1-mybatis-SNAPSHOT</uni.starter.version>
     <uni.common.util.version>1.0.0-SNAPSHOT</uni.common.util.version>
     <!--  spring  -->
-    <spring.boot.version>2.4.2</spring.boot.version>
-    <spring.cloud.version>2020.0.3</spring.cloud.version>
+    <spring.boot.version>2.6.1</spring.boot.version>
+    <spring.cloud.version>2021.0.0</spring.cloud.version>
     <spring.cloud.alibaba.version>2021.1</spring.cloud.alibaba.version>
-    <spring.cloud.oauth2.version>2.2.5.RELEASE</spring.cloud.oauth2.version>
-    <spring.cloud.security.version>2.2.5.RELEASE</spring.cloud.security.version>
     <!--  apache commons  -->
     <commons.text.version>1.9</commons.text.version>
     <commons.lang3.version>3.12.0</commons.lang3.version>
@@ -57,19 +53,18 @@
     <!--  db  -->
     <oracle.driver.version>21.1.0.0</oracle.driver.version>
     <pgsql.version>42.2.23</pgsql.version>
+    <mysql.version>8.0.27</mysql.version>
     <!--  mybatis  -->
-    <mybatis.plus.version>3.4.3</mybatis.plus.version>
-    <mybatis.plus.generator.version>3.5.0</mybatis.plus.generator.version>
-    <p6spy.version>3.9.1</p6spy.version>
+    <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
+    <mybatis.plus.generator.version>3.5.1</mybatis.plus.generator.version>
     <!--  tools  -->
     <lombok.version>1.18.20</lombok.version>
     <hutool.version>5.6.7</hutool.version>
-    <fastjson.version>1.2.76</fastjson.version>
+    <fastjson.version>1.2.78</fastjson.version>
     <swagger.version>3.0.0</swagger.version>
     <redisson.version>3.15.6</redisson.version>
     <jcip.annotation.version>1.0</jcip.annotation.version>
-    <easyexcel.version>2.2.10</easyexcel.version>
-    <disruptor.version>3.4.4</disruptor.version>
+    <easypoi.version>4.4.0</easypoi.version>
     <!--  plugins  -->
     <spring.boot.maven.plugin.version>2.4.4</spring.boot.maven.plugin.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -115,11 +110,6 @@
       </dependency>
       <!-- others -->
       <dependency>
-        <groupId>com.lmax</groupId>
-        <artifactId>disruptor</artifactId>
-        <version>${disruptor.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>fastjson</artifactId>
         <version>${fastjson.version}</version>
@@ -133,11 +123,6 @@
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <version>${lombok.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>p6spy</groupId>
-        <artifactId>p6spy</artifactId>
-        <version>${p6spy.version}</version>
       </dependency>
       <dependency>
         <groupId>com.baomidou</groupId>
@@ -200,29 +185,19 @@
         <version>${redisson.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-oauth2</artifactId>
-        <version>${spring.cloud.oauth2.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-security</artifactId>
-        <version>${spring.cloud.security.version}</version>
-      </dependency>
-      <dependency>
         <groupId>net.jcip</groupId>
         <artifactId>jcip-annotations</artifactId>
         <version>${jcip.annotation.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>easyexcel</artifactId>
-        <version>${easyexcel.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>${pgsql.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -22,7 +23,7 @@ import java.util.Arrays;
  * @author CloudS3n
  * @date 2021-06-11 09:59
  */
-@Log4j2
+@Slf4j
 @Configuration
 @ConditionalOnBean({HikariDataSource.class, MybatisConfiguration.class})
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

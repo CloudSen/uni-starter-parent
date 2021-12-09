@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,7 +26,7 @@ import java.time.format.DateTimeFormatter;
  * @author CloudS3n
  * @date 2021-06-17 19:09
  */
-@Log4j2
+@Slf4j
 @Configuration
 @ConditionalOnProperty(name = AutoConfigConstants.UNI_DEFAULT_CONFIG_SERIALIZER, havingValue = AutoConfigConstants.TRUE)
 public class SerializerAutoConfiguration {
