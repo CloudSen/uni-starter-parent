@@ -6,6 +6,11 @@ public class RedisFetchMapDTO<K, T> {
     private Map<K, T> result;
     private boolean goOnFetch;
 
+    public RedisFetchMapDTO(Map<K, T> result, boolean goOnFetch) {
+        this.result = result;
+        this.goOnFetch = goOnFetch;
+    }
+
     public Map<K, T> getResult() {
         return result;
     }
@@ -19,11 +24,6 @@ public class RedisFetchMapDTO<K, T> {
     }
 
     public void setGoOnFetch(boolean goOnFetch) {
-        this.goOnFetch = goOnFetch;
-    }
-
-    public RedisFetchMapDTO(Map<K, T> result, boolean goOnFetch) {
-        this.result = result;
         this.goOnFetch = goOnFetch;
     }
 }

@@ -17,7 +17,6 @@
     <module>uni-spring-boot-es-starter</module>
     <module>uni-spring-boot-jpa-starter</module>
     <module>uni-spring-boot-mp-starter</module>
-    <module>uni-spring-cloud-old-eas-starter</module>
     <module>uni-spring-cloud-stream-starter</module>
     <module>uni-common-util</module>
     <module>uni-spring-cloud-starter</module>
@@ -51,6 +50,7 @@
     <commons.codec.version>1.15</commons.codec.version>
     <commons.pool2.version>2.10.0</commons.pool2.version>
     <!--  db  -->
+    <hikaricp.version>5.0.0</hikaricp.version>
     <oracle.driver.version>21.1.0.0</oracle.driver.version>
     <pgsql.version>42.2.23</pgsql.version>
     <mysql.version>8.0.27</mysql.version>
@@ -198,6 +198,11 @@
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
         <version>${mysql.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>${hikaricp.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

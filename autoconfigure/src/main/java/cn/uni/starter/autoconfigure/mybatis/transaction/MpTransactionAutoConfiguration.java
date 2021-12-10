@@ -2,7 +2,6 @@ package cn.uni.starter.autoconfigure.mybatis.transaction;
 
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import cn.uni.starter.autoconfigure.mybatis.DefaultMybatisPlusAutoConfiguration;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

@@ -2,7 +2,6 @@ package cn.uni.starter.feign;
 
 import cn.uni.starter.feign.properties.AsyncTaskExecutorProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,11 +24,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @ConditionalOnClass(FeignClient.class)
 public class AsyncTaskThreadPoolAutoConfiguration {
 
-    private final AsyncTaskExecutorProperties asyncTaskExecutorProperties;
-
     static {
         log.info("[ 自动装配 ] 加载异步任务线程池配置...");
     }
+
+    private final AsyncTaskExecutorProperties asyncTaskExecutorProperties;
 
     @Bean
     @ConditionalOnMissingBean(name = "asyncTaskExecutor")

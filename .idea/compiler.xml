@@ -13,7 +13,6 @@
         <module name="autoconfigure" />
         <module name="uni-spring-boot-feign-starter" />
         <module name="uni-spring-cloud-stream-starter" />
-        <module name="uni-spring-cloud-old-eas-starter" />
         <module name="uni-spring-boot-mp-starter" />
         <module name="uni-common-util" />
         <module name="uni-spring-boot-redisson-starter" />
@@ -25,6 +24,7 @@
     <bytecodeTargetLevel>
       <module name="uni-spring-boot-easyexcel-starter" target="11" />
       <module name="uni-spring-boot-oauth-starter" target="11" />
+      <module name="uni-spring-cloud-old-eas-starter" target="11" />
       <module name="unic-starter-parent" target="11" />
     </bytecodeTargetLevel>
   </component>

@@ -2,7 +2,6 @@ package cn.uni.starter.autoconfigure.exception;
 
 import cn.uni.common.util.Response;
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;

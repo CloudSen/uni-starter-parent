@@ -3,7 +3,6 @@ package cn.uni.starter.autoconfigure.redis;
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import cn.uni.starter.autoconfigure.redis.properties.UniRedissonProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.redisson.api.RedissonClient;
@@ -39,11 +38,11 @@ import java.util.Map;
 @SuppressWarnings({"RedundantThrows", "SpringJavaInjectionPointsAutowiringInspection"})
 public class DefaultRedissonAutoConfiguration {
 
-    private final UniRedissonProperties uniRedissonProperties;
-
     static {
         log.info(AutoConfigConstants.LOADING_REDISSON_AUTO_CONFIGURE);
     }
+
+    private final UniRedissonProperties uniRedissonProperties;
 
     @Bean
     public CacheManager cacheManager(RedissonClient redissonClient) throws IOException {

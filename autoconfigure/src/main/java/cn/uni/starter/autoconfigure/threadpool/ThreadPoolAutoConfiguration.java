@@ -4,7 +4,6 @@ import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import cn.uni.starter.autoconfigure.threadpool.properties.CommonTaskExecutorProperties;
 import cn.uni.starter.autoconfigure.threadpool.properties.CommonTaskSchedulerProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,12 +24,12 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @ConditionalOnProperty(prefix = "uni.autoconfigure", name = "enable-thread-pool", havingValue = "true")
 public class ThreadPoolAutoConfiguration {
 
-    private final CommonTaskExecutorProperties commonTaskExecutorProperties;
-    private final CommonTaskSchedulerProperties commonTaskSchedulerProperties;
-
     static {
         log.info(AutoConfigConstants.LOADING_THREAD_POOL_AUTO_CONFIGURE);
     }
+
+    private final CommonTaskExecutorProperties commonTaskExecutorProperties;
+    private final CommonTaskSchedulerProperties commonTaskSchedulerProperties;
 
     @Bean
     @ConditionalOnMissingBean(name = "commonTaskExecutor")

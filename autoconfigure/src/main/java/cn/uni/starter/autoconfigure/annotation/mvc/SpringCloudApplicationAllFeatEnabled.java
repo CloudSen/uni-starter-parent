@@ -1,5 +1,6 @@
 package cn.uni.starter.autoconfigure.annotation.mvc;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cache.annotation.EnableCaching;
@@ -40,4 +41,7 @@ public @interface SpringCloudApplicationAllFeatEnabled {
 
     @AliasFor(annotation = EnableFeignClients.class, attribute = "basePackages")
     String[] feignBasePackages() default {"cn.uni.*"};
+
+    @AliasFor(annotation = MapperScan.class, attribute = "basePackages")
+    String[] mybatisBasePackages() default {"cn.uni.*"};
 }

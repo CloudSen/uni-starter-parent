@@ -6,6 +6,11 @@ public class RedisFetchSetDTO<T> {
     private Set<T> result;
     private boolean goOnFetch;
 
+    public RedisFetchSetDTO(Set<T> result, boolean goOnFetch) {
+        this.result = result;
+        this.goOnFetch = goOnFetch;
+    }
+
     public Set<T> getResult() {
         return result;
     }
@@ -19,11 +24,6 @@ public class RedisFetchSetDTO<T> {
     }
 
     public void setGoOnFetch(boolean goOnFetch) {
-        this.goOnFetch = goOnFetch;
-    }
-
-    public RedisFetchSetDTO(Set<T> result, boolean goOnFetch) {
-        this.result = result;
         this.goOnFetch = goOnFetch;
     }
 }

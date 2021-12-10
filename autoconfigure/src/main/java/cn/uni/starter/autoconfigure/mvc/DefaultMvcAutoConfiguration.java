@@ -3,7 +3,6 @@ package cn.uni.starter.autoconfigure.mvc;
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import cn.uni.starter.autoconfigure.mvc.intercepter.DefaultLoggingInterceptor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
@@ -21,11 +20,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ConditionalOnProperty(name = "uni.autoconfigure.enable-mvc", havingValue = "true")
 public class DefaultMvcAutoConfiguration implements WebMvcConfigurer {
 
-    private final DefaultLoggingInterceptor defaultLoggingInterceptor;
-
     static {
         log.info(AutoConfigConstants.LOADING_MVC_AUTO_CONFIGURE);
     }
+
+    private final DefaultLoggingInterceptor defaultLoggingInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

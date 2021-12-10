@@ -4,7 +4,6 @@ import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -31,14 +30,14 @@ import java.time.format.DateTimeFormatter;
 @ConditionalOnProperty(name = AutoConfigConstants.UNI_DEFAULT_CONFIG_SERIALIZER, havingValue = AutoConfigConstants.TRUE)
 public class SerializerAutoConfiguration {
 
-    static {
-        log.info(AutoConfigConstants.LOADING_SERIALIZER_AUTO_CONFIGURE);
-    }
-
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String DATE_TIME_WITH_T_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private static final String STR_T = "'T'";
+
+    static {
+        log.info(AutoConfigConstants.LOADING_SERIALIZER_AUTO_CONFIGURE);
+    }
 
     @Bean
     @ConditionalOnMissingBean

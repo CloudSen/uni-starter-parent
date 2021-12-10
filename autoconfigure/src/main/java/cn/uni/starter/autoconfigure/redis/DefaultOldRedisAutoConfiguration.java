@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -51,11 +50,11 @@ import java.util.Set;
 @AutoConfigureBefore(RedisAutoConfiguration.class)
 public class DefaultOldRedisAutoConfiguration {
 
-    private final UniRedisProperties uniRedisProperties;
-
     static {
         log.info(AutoConfigConstants.LOADING_OLD_REDIS_AUTO_CONFIGURE);
     }
+
+    private final UniRedisProperties uniRedisProperties;
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")

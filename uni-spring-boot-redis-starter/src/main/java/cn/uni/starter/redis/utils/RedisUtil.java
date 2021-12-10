@@ -27,10 +27,9 @@ import java.util.stream.Collectors;
 public class RedisUtil {
 
     @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
     RedisSerializer<Object> redisSerializer;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * items和exits 长度要一样 否则会报错

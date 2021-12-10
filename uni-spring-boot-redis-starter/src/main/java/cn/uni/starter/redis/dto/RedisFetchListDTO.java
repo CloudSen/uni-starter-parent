@@ -6,6 +6,11 @@ public class RedisFetchListDTO<T> {
     private List<T> result;
     private boolean goOnFetch;
 
+    public RedisFetchListDTO(List<T> result, boolean goOnFetch) {
+        this.result = result;
+        this.goOnFetch = goOnFetch;
+    }
+
     public List<T> getResult() {
         return result;
     }
@@ -19,11 +24,6 @@ public class RedisFetchListDTO<T> {
     }
 
     public void setGoOnFetch(boolean goOnFetch) {
-        this.goOnFetch = goOnFetch;
-    }
-
-    public RedisFetchListDTO(List<T> result, boolean goOnFetch) {
-        this.result = result;
         this.goOnFetch = goOnFetch;
     }
 }

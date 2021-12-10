@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import java.time.Duration;
 
 /**
- *
  * @author CloudS3n
  * @date 2021-06-11 10:11
  */
