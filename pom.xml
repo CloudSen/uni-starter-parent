@@ -70,6 +70,7 @@
     <jcip.annotation.version>1.0</jcip.annotation.version>
     <easyexcel.version>2.2.10</easyexcel.version>
     <disruptor.version>3.4.4</disruptor.version>
+    <log4j2.version>2.15.0</log4j2.version>
     <!--  plugins  -->
     <spring.boot.maven.plugin.version>2.4.4</spring.boot.maven.plugin.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -223,6 +224,16 @@
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>${pgsql.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>${log4j2.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
