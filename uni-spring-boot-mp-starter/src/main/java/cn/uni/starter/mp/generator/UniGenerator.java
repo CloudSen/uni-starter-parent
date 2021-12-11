@@ -14,6 +14,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -78,6 +81,7 @@ public class UniGenerator {
             .templateEngine(new FreemarkerTemplateEngine())
             .templateConfig((string, builder) -> builder.entity("tpl/entity.java").controller("tpl/controller.java"))
             .execute();
+        createMustDirectories(property);
     }
 
     /**
@@ -85,6 +89,7 @@ public class UniGenerator {
      *
      * @return 文件对应的路径map
      */
+    @SuppressWarnings("DuplicatedCode")
     public static Map<OutputFile, String> buildPathInfo(GeneratorProperty property) {
         Map<OutputFile, String> pathInfo = new HashMap<>(16);
         String userDir = System.getProperty("user.dir");
@@ -111,6 +116,49 @@ public class UniGenerator {
         pathInfo.put(OutputFile.mapper, mapperPath);
         pathInfo.put(OutputFile.mapperXml, mapperXmlPath);
         return pathInfo;
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    public static void createMustDirectories(GeneratorProperty property) {
+        String userDir = System.getProperty("user.dir");
+        String projectName = property.getProjectName();
+        String businessDomain = property.getBusinessDomain();
+        String modulePathPrefix = userDir + File.separator + projectName;
+        String businessModuleJavaPath = modulePathPrefix + "-business" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
+        String businessPkgPath = "cn" + File.separator + "uni" + File.separator + projectName + File.separator + "business" + File.separator + businessDomain + File.separator;
+        String businessPath = businessModuleJavaPath + businessPkgPath;
+
+        String modelDirPath = businessPath + "model" + File.separator;
+        String dtoDirPath = businessPath + "model" + File.separator + "dto" + File.separator;
+        String voDirPath = businessPath + "model" + File.separator + "vo" + File.separator;
+        String enumsDirPath = businessPath + "model" + File.separator + "enums" + File.separator;
+        String converterDirPath = businessPath + "converter" + File.separator;
+
+        String modelDirKeepFile = modelDirPath + ".gitkeep";
+        String dtoDirKeepFile = dtoDirPath+ ".gitkeep";
+        String voDirKeepFile = voDirPath + ".gitkeep";
+        String enumsDirKeepFile = enumsDirPath + ".gitkeep";
+        String converterDirKeepFile = converterDirPath + ".gitkeep";
+
+        createFileOrPath(Path.of(modelDirKeepFile));
+        createFileOrPath(Path.of(dtoDirKeepFile));
+        createFileOrPath(Path.of(voDirKeepFile));
+        createFileOrPath(Path.of(enumsDirKeepFile));
+        createFileOrPath(Path.of(converterDirKeepFile));
+    }
+
+    private static void createFileOrPath(Path path) {
+        if (path == null) {
+            return;
+        }
+        if (Files.notExists(path)) {
+            try {
+                Files.createDirectories(path.getParent());
+                Files.createFile(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void checkProperty(GeneratorProperty property) {
