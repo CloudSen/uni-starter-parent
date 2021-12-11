@@ -80,6 +80,9 @@ public class UniGenerator {
             })
             .templateEngine(new FreemarkerTemplateEngine())
             .templateConfig((string, builder) -> builder.entity("tpl/entity.java").controller("tpl/controller.java"))
+            .injectionConfig(builder -> builder.customMap(new HashMap<>(1){{
+                put("businessDomain", businessDomain);
+            }}))
             .execute();
         createMustDirectories(property);
     }
