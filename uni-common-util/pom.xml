@@ -52,9 +52,5 @@
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-boot-starter</artifactId>
-    </dependency>
   </dependencies>
 </project>

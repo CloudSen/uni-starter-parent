@@ -61,7 +61,6 @@
     <lombok.version>1.18.20</lombok.version>
     <hutool.version>5.6.7</hutool.version>
     <fastjson.version>1.2.78</fastjson.version>
-    <swagger.version>3.0.0</swagger.version>
     <redisson.version>3.15.6</redisson.version>
     <jcip.annotation.version>1.0</jcip.annotation.version>
     <easypoi.version>4.4.0</easypoi.version>
@@ -177,11 +176,6 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-pool2</artifactId>
         <version>${commons.pool2.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-boot-starter</artifactId>
-        <version>${swagger.version}</version>
       </dependency>
       <dependency>
         <groupId>org.redisson</groupId>

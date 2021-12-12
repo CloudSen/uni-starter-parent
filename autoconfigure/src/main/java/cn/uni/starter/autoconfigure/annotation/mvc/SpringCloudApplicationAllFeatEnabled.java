@@ -20,6 +20,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@MapperScan
 @EnableFeignClients
 @EnableJpaRepositories
 @EntityScan
@@ -43,5 +44,5 @@ public @interface SpringCloudApplicationAllFeatEnabled {
     String[] feignBasePackages() default {"cn.uni.*"};
 
     @AliasFor(annotation = MapperScan.class, attribute = "basePackages")
-    String[] mybatisBasePackages() default {"cn.uni.*"};
+    String[] mybatisBasePackages() default {"cn.uni.**.mapper"};
 }

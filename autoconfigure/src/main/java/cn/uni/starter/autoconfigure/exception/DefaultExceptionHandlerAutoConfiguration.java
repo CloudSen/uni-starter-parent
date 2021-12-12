@@ -1,6 +1,7 @@
 package cn.uni.starter.autoconfigure.exception;
 
-import cn.uni.common.util.Response;
+import cn.hutool.http.HttpStatus;
+import cn.uni.common.util.Res;
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -28,24 +29,24 @@ public class DefaultExceptionHandlerAutoConfiguration {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Response<?> validationExceptionHandler(MethodArgumentNotValidException e) {
+    public Res<?> validationExceptionHandler(MethodArgumentNotValidException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         StringBuilder msg = new StringBuilder();
         e.getBindingResult().getAllErrors().forEach(error -> msg.append(error.getDefaultMessage()).append(","));
-        return Response.resp(Response.ERROR, StringUtils.isBlank(msg.toString()) ? AutoConfigConstants.SERVER_ERROR : msg.toString());
+        return Res.error(StringUtils.isBlank(msg.toString()) ? AutoConfigConstants.SERVER_ERROR : msg.toString());
     }
 
     @ExceptionHandler(UniException.class)
-    public Response<?> uniExceptionHandler(UniException e) {
+    public Res<?> uniExceptionHandler(UniException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         String message = e.getMessage();
-        String code = Optional.ofNullable(e.getCode()).orElse(Response.ERROR);
-        return Response.resp(Response.ERROR, code, StringUtils.isBlank(message) ? AutoConfigConstants.ERROR_OPERATE : message, null);
+        int code = Optional.ofNullable(e.getCode()).filter(StringUtils::isNotBlank).map(Integer::parseInt).orElse(HttpStatus.HTTP_INTERNAL_ERROR);
+        return Res.error(code, StringUtils.isBlank(message) ? AutoConfigConstants.ERROR_OPERATE : message);
     }
 
     @ExceptionHandler(Exception.class)
-    public Response<?> otherExceptionHandler(Exception e) {
+    public Res<?> otherExceptionHandler(Exception e) {
         log.error(ExceptionUtils.getStackTrace(e));
-        return Response.resp(Response.ERROR, AutoConfigConstants.ERROR_OPERATE);
+        return Res.error(AutoConfigConstants.ERROR_OPERATE);
     }
 }
