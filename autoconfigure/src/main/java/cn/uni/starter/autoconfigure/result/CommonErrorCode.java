@@ -17,13 +17,13 @@ import java.util.Arrays;
 public enum CommonErrorCode implements ErrorCode {
 
     /**
-     * 系统未知错误 COMMON00000
+     * 系统未知错误 COMMON_00000
      */
     INTERNAL_ERROR(COMMON_CODE, COMMON_MSG),
     /**
-     * 系统未知错误 COMMON00001
+     * 系统未知错误 COMMON_00001
      */
-    UNAUTHORIZED("COMMON00001", "无操作权限"),
+    UNAUTHORIZED("COMMON_00001", "无操作权限"),
     ;
 
     private final String code;

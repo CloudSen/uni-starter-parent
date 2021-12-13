@@ -9,7 +9,7 @@ package cn.uni.starter.autoconfigure.result;
  */
 public interface ErrorCode {
 
-    public static final String COMMON_CODE = "COMMON00000";
+    public static final String COMMON_CODE = "COMMON_00000";
     public static final String COMMON_MSG = "系统错误";
 
     /**
