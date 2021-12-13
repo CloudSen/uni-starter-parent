@@ -1,9 +1,13 @@
 package cn.uni.starter.autoconfigure.serializer;
 
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -42,10 +46,25 @@ public class SerializerAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return builder -> {
-            builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer());
-            builder.deserializerByType(LocalDate.class, new LocalDateDeserializer());
-        };
+        return builder -> builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer())
+            .deserializerByType(LocalDate.class, new LocalDateDeserializer())
+            .deserializerByType(Long.class, new LongDeserializer())
+            .serializerByType(Long.class, new LongSerializer());
+    }
+
+    public static class LongDeserializer extends JsonDeserializer<Long> {
+        @Override
+        public Long deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+            return jsonParser.getValueAsLong();
+        }
+    }
+
+    public static class LongSerializer extends JsonSerializer<Long> {
+
+        @Override
+        public void serialize(Long aLong, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+            jsonGenerator.writeString(String.valueOf(aLong));
+        }
     }
 
     /**

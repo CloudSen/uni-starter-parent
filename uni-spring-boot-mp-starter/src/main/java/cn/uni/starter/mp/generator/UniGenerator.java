@@ -79,7 +79,7 @@ public class UniGenerator {
                 ).build();
             })
             .templateEngine(new FreemarkerTemplateEngine())
-            .templateConfig((string, builder) -> builder.entity("tpl/entity.java").controller("tpl/controller.java"))
+            .templateConfig((string, builder) -> builder.entity("tpl/entity.java").controller("tpl/controller.java").serviceImpl("tpl/serviceImpl.java"))
             .injectionConfig(builder -> builder.customMap(new HashMap<>(1){{
                 put("businessDomain", businessDomain);
             }}))

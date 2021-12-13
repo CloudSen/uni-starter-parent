@@ -15,18 +15,18 @@ import ${superControllerClassPackage};
 
 /**
  * <p>
- * ${table.comment!} 前端控制器
+ * ${table.comment!}
  * </p>
  *
  * @author ${author}
  * @since ${date}
  */
-@RequiredArgsConstructor
 <#if restControllerStyle>
 @RestController
 <#else>
 @Controller
 </#if>
+@RequiredArgsConstructor
 @RequestMapping("<#if businessDomain??>/${businessDomain}</#if><#if package.ModuleName?? && package.ModuleName != "">/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen?remove_ending("-do")}<#else>${table.entityPath?remove_ending("-do")}</#if>")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>

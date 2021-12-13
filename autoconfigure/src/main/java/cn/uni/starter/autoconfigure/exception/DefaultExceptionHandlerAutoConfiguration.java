@@ -1,8 +1,8 @@
 package cn.uni.starter.autoconfigure.exception;
 
-import cn.hutool.http.HttpStatus;
-import cn.uni.common.util.Res;
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
+import cn.uni.starter.autoconfigure.result.CommonErrorCode;
+import cn.uni.starter.autoconfigure.result.Res;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -40,8 +40,8 @@ public class DefaultExceptionHandlerAutoConfiguration {
     public Res<?> uniExceptionHandler(UniException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         String message = e.getMessage();
-        int code = Optional.ofNullable(e.getCode()).filter(StringUtils::isNotBlank).map(Integer::parseInt).orElse(HttpStatus.HTTP_INTERNAL_ERROR);
-        return Res.error(code, StringUtils.isBlank(message) ? AutoConfigConstants.ERROR_OPERATE : message);
+        CommonErrorCode commonErrorCode = Optional.ofNullable(e.getCode()).filter(StringUtils::isNotBlank).map(CommonErrorCode::parseEnum).orElse(CommonErrorCode.INTERNAL_ERROR);
+        return Res.error(commonErrorCode.getCode(), commonErrorCode.getMsg());
     }
 
     @ExceptionHandler(Exception.class)
