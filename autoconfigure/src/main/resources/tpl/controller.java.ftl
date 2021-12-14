@@ -14,9 +14,7 @@ import ${superControllerClassPackage};
 </#if>
 
 /**
- * <p>
  * ${table.comment!}
- * </p>
  *
  * @author ${author}
  * @since ${date}
