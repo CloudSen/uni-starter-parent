@@ -37,7 +37,6 @@
     <maven.compiler.target>11</maven.compiler.target>
     <!--   uni   -->
     <uni.starter.version>2021.1-mybatis-SNAPSHOT</uni.starter.version>
-    <uni.common.util.version>1.0.0-SNAPSHOT</uni.common.util.version>
     <!--  spring  -->
     <spring.boot.version>2.6.1</spring.boot.version>
     <spring.cloud.version>2021.0.0</spring.cloud.version>
@@ -109,7 +108,7 @@
       <dependency>
         <groupId>cn.uni.common</groupId>
         <artifactId>uni-common-util</artifactId>
-        <version>${uni.common.util.version}</version>
+        <version>${uni.starter.version}</version>
       </dependency>
       <!-- others -->
       <dependency>
