@@ -37,7 +37,7 @@ public enum CommonErrorCode implements ErrorCode {
             .orElse(COMMON_MSG);
     }
 
-    public static CommonErrorCode parseEnum(String code) {
+    public static ErrorCode parseEnum(String code) {
         return Arrays.stream(values())
             .filter(e -> StringUtils.equals(e.code, code))
             .findAny()

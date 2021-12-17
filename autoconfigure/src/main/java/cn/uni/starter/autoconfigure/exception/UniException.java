@@ -1,5 +1,6 @@
 package cn.uni.starter.autoconfigure.exception;
 
+import cn.uni.starter.autoconfigure.result.CommonErrorCode;
 import cn.uni.starter.autoconfigure.result.ErrorCode;
 import lombok.Getter;
 
@@ -10,28 +11,20 @@ import lombok.Getter;
 @Getter
 public class UniException extends RuntimeException {
 
-    private String code;
+    private final ErrorCode errorCode;
 
     public UniException(String msg) {
         super(msg);
+        this.errorCode = CommonErrorCode.INTERNAL_ERROR;
     }
 
-    public UniException(ErrorCode code) {
-        super(code.getMsg());
-        this.code = code.getCode();
+    public UniException(ErrorCode errorCode) {
+        super(errorCode.getMsg());
+        this.errorCode = errorCode;
     }
 
-    public UniException(String msg, String code) {
-        super(msg);
-        this.code = code;
-    }
-
-    public UniException(String msg, Throwable e) {
-        super(msg, e);
-    }
-
-    public UniException(String msg, Throwable e, String code) {
-        super(msg, e);
-        this.code = code;
+    public UniException(ErrorCode errorCode, Throwable e) {
+        super(errorCode.getMsg(), e);
+        this.errorCode = errorCode;
     }
 }

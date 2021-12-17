@@ -2,6 +2,7 @@ package cn.uni.starter.autoconfigure.exception;
 
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
 import cn.uni.starter.autoconfigure.result.CommonErrorCode;
+import cn.uni.starter.autoconfigure.result.ErrorCode;
 import cn.uni.starter.autoconfigure.result.Res;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -39,8 +40,7 @@ public class DefaultExceptionHandlerAutoConfiguration {
     @ExceptionHandler(UniException.class)
     public Res<?> uniExceptionHandler(UniException e) {
         log.error(ExceptionUtils.getStackTrace(e));
-        String message = e.getMessage();
-        CommonErrorCode commonErrorCode = Optional.ofNullable(e.getCode()).filter(StringUtils::isNotBlank).map(CommonErrorCode::parseEnum).orElse(CommonErrorCode.INTERNAL_ERROR);
+        ErrorCode commonErrorCode = Optional.ofNullable(e.getErrorCode()).orElse(CommonErrorCode.INTERNAL_ERROR);
         return Res.error(commonErrorCode.getCode(), commonErrorCode.getMsg());
     }
 
