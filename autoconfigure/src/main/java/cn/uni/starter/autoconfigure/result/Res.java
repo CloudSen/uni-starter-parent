@@ -65,7 +65,7 @@ public class Res<T> implements Serializable {
     }
 
     public static <T> Res<T> error(String msg) {
-        return error(CommonErrorCode.INTERNAL_ERROR.getCode(), OPT_ERROR);
+        return error(CommonErrorCode.INTERNAL_ERROR.getCode(), msg);
     }
 
     public static <T> Res<T> error(T data) {

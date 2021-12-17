@@ -1,5 +1,6 @@
 package cn.uni.starter.autoconfigure.exception;
 
+import cn.uni.starter.autoconfigure.result.ErrorCode;
 import lombok.Getter;
 
 /**
@@ -13,6 +14,11 @@ public class UniException extends RuntimeException {
 
     public UniException(String msg) {
         super(msg);
+    }
+
+    public UniException(ErrorCode code) {
+        super(code.getMsg());
+        this.code = code.getCode();
     }
 
     public UniException(String msg, String code) {
