@@ -1,6 +1,7 @@
 package cn.uni.starter.autoconfigure.mvc;
 
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
+import cn.uni.starter.autoconfigure.mvc.intercepter.DefaultAsyncHeaderInterceptor;
 import cn.uni.starter.autoconfigure.mvc.intercepter.DefaultLoggingInterceptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class DefaultMvcAutoConfiguration implements WebMvcConfigurer {
 
     private final DefaultLoggingInterceptor defaultLoggingInterceptor;
+    private final DefaultAsyncHeaderInterceptor defaultAsyncHeaderInterceptor;
 
     static {
         log.info(AutoConfigConstants.LOADING_MVC_AUTO_CONFIGURE);
@@ -30,6 +32,12 @@ public class DefaultMvcAutoConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(defaultLoggingInterceptor)
+            .excludePathPatterns("/*/*.html",
+                "/*/*.css",
+                "/*/*.js",
+                "/*/*.png",
+                "/swagger*/**");
+        registry.addInterceptor(defaultAsyncHeaderInterceptor)
             .excludePathPatterns("/*/*.html",
                 "/*/*.css",
                 "/*/*.js",

@@ -71,6 +71,7 @@
     <easyexcel.version>2.2.10</easyexcel.version>
     <disruptor.version>3.4.4</disruptor.version>
     <log4j2.version>2.15.0</log4j2.version>
+    <ttl.version>2.12.2</ttl.version>
     <!--  plugins  -->
     <spring.boot.maven.plugin.version>2.4.4</spring.boot.maven.plugin.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -234,6 +235,11 @@
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
         <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>transmittable-thread-local</artifactId>
+        <version>${ttl.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

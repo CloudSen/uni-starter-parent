@@ -20,6 +20,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>cn.uni.starter</groupId>
+      <artifactId>autoconfigure</artifactId>
+      <version>${uni.starter.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>

@@ -20,6 +20,7 @@ import java.util.Objects;
 @Configuration
 @SuppressWarnings("SpringFacetCodeInspection")
 public class FeignConfiguration implements RequestInterceptor {
+
     private static final String AUTHORIZATION = "Authorization";
 
     @Override
@@ -27,7 +28,7 @@ public class FeignConfiguration implements RequestInterceptor {
         ServletRequestAttributes attributes = (ServletRequestAttributes)
             RequestContextHolder.getRequestAttributes();
         if (Objects.isNull(attributes)) {
-            log.warn("Feign请求未获取到Header参数, 请注意上下文是否正确传递！");
+            log.warn("Feign请求未获取到Header Authorization参数, 请注意上下文是否正确传递！");
             return;
         }
         HttpServletRequest request = attributes.getRequest();
