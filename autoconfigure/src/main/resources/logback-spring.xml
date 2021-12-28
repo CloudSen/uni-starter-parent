@@ -59,7 +59,7 @@
   </springProfile>
 
   <!-- 测试环境 -->
-  <springProfile name="prod">
+  <springProfile name="dev">
     <!-- INFO输出到文件 -->
     <appender name="info_file"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
