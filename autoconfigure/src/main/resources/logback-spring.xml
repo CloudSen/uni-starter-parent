@@ -8,7 +8,7 @@
                   source="spring.application.name"/>
   <property name="log.charset" value="UTF-8"/>
   <property name="log.path"
-            value="./log"/>
+            value="${user.dir}/logs/"/>
   <property name="log.pattern"
             value="${CONSOLE_LOG_PATTERN:-%clr(${LOG_LEVEL_PATTERN:-%p})-%clr(%d{yyyy-MM-dd HH:mm:ss}){faint}-%clr([%thread]){magenta}-%clr(%logger{40}){cyan}:%msg%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
   <property name="log.error.pattern"
