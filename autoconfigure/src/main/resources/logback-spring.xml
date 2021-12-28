@@ -8,7 +8,7 @@
                   source="spring.application.name"/>
   <property name="log.charset" value="UTF-8"/>
   <property name="log.path"
-            value="${user.dir}/logs/"/>
+            value="${user.dir}/logs"/>
   <property name="log.pattern"
             value="${CONSOLE_LOG_PATTERN:-%clr(${LOG_LEVEL_PATTERN:-%p})-%clr(%d{yyyy-MM-dd HH:mm:ss}){faint}-%clr([%thread]){magenta}-%clr(%logger{40}){cyan}:%msg%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
   <property name="log.error.pattern"
@@ -63,13 +63,14 @@
     <!-- INFO输出到文件 -->
     <appender name="info_file"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${log.path}/info/info.log</file>
       <!-- 忽略INFO以下级别的日志 -->
       <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         <level>INFO</level>
       </filter>
       <rollingPolicy
         class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-        <fileNamePattern>${log.path}</fileNamePattern>
+        <fileNamePattern>${log.path}/info/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
         <maxFileSize>100MB</maxFileSize>
         <maxHistory>5</maxHistory>
         <totalSizeCap>500MB</totalSizeCap>
@@ -81,13 +82,14 @@
     <!-- ERROR输出到文件 -->
     <appender name="error_file"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${log.path}/error/error.log</file>
       <!-- 忽略ERROR以下级别的日志 -->
       <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         <level>ERROR</level>
       </filter>
       <rollingPolicy
         class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-        <fileNamePattern>${log.path}</fileNamePattern>
+        <fileNamePattern>${log.path}/error/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
         <maxFileSize>100MB</maxFileSize>
         <maxHistory>5</maxHistory>
         <totalSizeCap>500MB</totalSizeCap>
@@ -107,13 +109,14 @@
     <!-- INFO输出到文件 -->
     <appender name="info_file"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${log.path}/info/info.log</file>
       <!-- 忽略INFO以下级别的日志 -->
       <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         <level>INFO</level>
       </filter>
       <rollingPolicy
         class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-        <fileNamePattern>${log.path}</fileNamePattern>
+        <fileNamePattern>${log.path}/info/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
         <maxFileSize>100MB</maxFileSize>
         <maxHistory>30</maxHistory>
         <totalSizeCap>3GB</totalSizeCap>
@@ -125,13 +128,14 @@
     <!-- ERROR输出到文件 -->
     <appender name="error_file"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${log.path}/error/error.log</file>
       <!-- 忽略ERROR以下级别的日志 -->
       <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         <level>ERROR</level>
       </filter>
       <rollingPolicy
         class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-        <fileNamePattern>${log.path}</fileNamePattern>
+        <fileNamePattern>${log.path}/error/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
         <maxFileSize>100MB</maxFileSize>
         <maxHistory>30</maxHistory>
         <totalSizeCap>3GB</totalSizeCap>
