@@ -87,4 +87,8 @@ public class Res<T> implements Serializable {
     public static <T> Res<T> unauthorized() {
         return new Res<T>().setSuccess(false).setCode(CommonErrorCode.UNAUTHORIZED.getCode()).setMsg(CommonErrorCode.UNAUTHORIZED.getMsg());
     }
+
+    public static <T> Res<T> accessDenied() {
+        return new Res<T>().setSuccess(false).setCode(CommonErrorCode.ACCESS_DENIED.getCode()).setMsg(CommonErrorCode.ACCESS_DENIED.getMsg());
+    }
 }

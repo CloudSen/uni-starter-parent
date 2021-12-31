@@ -20,10 +20,15 @@ public enum CommonErrorCode implements ErrorCode {
      * 系统未知错误 COMMON_00000
      */
     INTERNAL_ERROR(COMMON_CODE, COMMON_MSG),
+    TOKEN_INVALIDED("COMMON_00001", "无法获取用户信息，请确保token的有效性"),
     /**
-     * 系统未知错误 COMMON_00001
+     * 认证失败 COMMON_00401
      */
-    UNAUTHORIZED("COMMON_00001", "无操作权限"),
+    UNAUTHORIZED("COMMON_00401", "认证失败"),
+    /**
+     * 无操作权限 COMMON_00403
+     */
+    ACCESS_DENIED("COMMON_00403", "无操作权限"),
     ;
 
     private final String code;
