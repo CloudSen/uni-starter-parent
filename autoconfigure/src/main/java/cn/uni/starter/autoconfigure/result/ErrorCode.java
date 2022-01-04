@@ -17,16 +17,12 @@ public interface ErrorCode {
      *
      * @return 错误代码
      */
-    default String getCode() {
-        return COMMON_CODE;
-    }
+    String getCode();
 
     /**
      * 错误代码含义
      *
      * @return 错误代码含义
      */
-    default String getMsg() {
-        return COMMON_MSG;
-    }
+    String getMsg();
 }
