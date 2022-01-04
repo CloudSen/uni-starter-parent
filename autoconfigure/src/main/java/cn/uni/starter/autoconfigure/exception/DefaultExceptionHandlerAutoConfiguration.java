@@ -35,7 +35,7 @@ public class DefaultExceptionHandlerAutoConfiguration {
     public Res<?> validationExceptionHandler(MethodArgumentNotValidException e) {
         log.error(ExceptionUtils.getStackTrace(e));
         StringBuilder msg = new StringBuilder();
-        e.getBindingResult().getAllErrors().forEach(error -> msg.append(error.getDefaultMessage()).append(","));
+        e.getBindingResult().getAllErrors().stream().limit(1).forEach(error -> msg.append(error.getDefaultMessage()).append(","));
         return Res.error(StringUtils.isBlank(msg.toString()) ? AutoConfigConstants.SERVER_ERROR : msg.toString());
     }
 
