@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,17 +35,6 @@ public class DefaultExceptionHandlerAutoConfiguration {
         StringBuilder msg = new StringBuilder();
         e.getBindingResult().getAllErrors().stream().limit(1).forEach(error -> msg.append(error.getDefaultMessage()).append(","));
         return Res.error(StringUtils.isBlank(msg.toString()) ? AutoConfigConstants.SERVER_ERROR : msg.toString());
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public Res<?> accessDeniedHandler(AccessDeniedException e) {
-        log.error(ExceptionUtils.getStackTrace(e));
-        return Res.accessDenied();
-    }
-
-    @ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
-    public Res<?> credentialsNotFoundHandler(AuthenticationCredentialsNotFoundException e) {
-        return this.unauthorizedHandler(e);
     }
 
     @ExceptionHandler(UniException.class)
