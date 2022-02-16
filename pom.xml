@@ -57,6 +57,7 @@
     <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
     <mybatis.plus.generator.version>3.5.1</mybatis.plus.generator.version>
     <!--  tools  -->
+    <spring.security.test.version>5.6.1</spring.security.test.version>
     <lombok.version>1.18.20</lombok.version>
     <hutool.version>5.6.7</hutool.version>
     <fastjson.version>1.2.78</fastjson.version>
@@ -213,6 +214,12 @@
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
         <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-test</artifactId>
+        <version>${spring.security.test.version}</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
