@@ -62,6 +62,7 @@
     <mybatis.plus.generator.version>3.5.0</mybatis.plus.generator.version>
     <p6spy.version>3.9.1</p6spy.version>
     <!--  tools  -->
+    <spring.security.test.version>5.6.1</spring.security.test.version>
     <lombok.version>1.18.20</lombok.version>
     <hutool.version>5.6.7</hutool.version>
     <fastjson.version>1.2.76</fastjson.version>
@@ -243,6 +244,12 @@
         <groupId>com.alibaba</groupId>
         <artifactId>transmittable-thread-local</artifactId>
         <version>${ttl.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-test</artifactId>
+        <version>${spring.security.test.version}</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
