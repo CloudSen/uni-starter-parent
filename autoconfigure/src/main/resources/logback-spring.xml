@@ -37,6 +37,7 @@
         <pattern>${log.pattern}</pattern>
       </encoder>
     </appender>
+    <logger name="com.alibaba.nacos" level="info" />
     <root level="debug">
       <appender-ref ref="console"/>
     </root>
@@ -53,6 +54,7 @@
         <pattern>${log.pattern}</pattern>
       </encoder>
     </appender>
+    <logger name="com.alibaba.nacos" level="info" />
     <root level="info">
       <appender-ref ref="console"/>
     </root>
