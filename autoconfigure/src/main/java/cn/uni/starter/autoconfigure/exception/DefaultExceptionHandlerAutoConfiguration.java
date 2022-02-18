@@ -5,14 +5,18 @@ import cn.uni.starter.autoconfigure.result.CommonErrorCode;
 import cn.uni.starter.autoconfigure.result.ErrorCode;
 import cn.uni.starter.autoconfigure.result.Res;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.validation.BindException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -42,6 +46,16 @@ public class DefaultExceptionHandlerAutoConfiguration {
         log.error(ExceptionUtils.getStackTrace(e));
         ErrorCode commonErrorCode = Optional.ofNullable(e.getErrorCode()).orElse(CommonErrorCode.INTERNAL_ERROR);
         return Res.error(commonErrorCode.getCode(), commonErrorCode.getMsg());
+    }
+
+    @ExceptionHandler(BindException.class)
+    public Res<?> bindExceptionHandler(BindException e) {
+        log.error(ExceptionUtils.getStackTrace(e));
+        List<ObjectError> allErrors = e.getAllErrors();
+        if (CollectionUtils.isNotEmpty(allErrors)) {
+            return Res.error(allErrors.get(0).getDefaultMessage());
+        }
+        return Res.error(AutoConfigConstants.ERROR_OPERATE);
     }
 
     @ExceptionHandler(Exception.class)
