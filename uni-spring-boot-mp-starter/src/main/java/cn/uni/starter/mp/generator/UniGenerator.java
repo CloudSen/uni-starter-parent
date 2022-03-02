@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.regex.Matcher;
 
 /**
  * 代码生成器二次封装
@@ -101,7 +102,7 @@ public class UniGenerator {
         String userDir = System.getProperty("user.dir");
         String projectName = property.getProjectName();
         String businessDomain = property.getBusinessDomain();
-        String packagePathPrefix = property.getPackagePrefix().replaceAll("\\.", File.separator);
+        String packagePathPrefix = property.getPackagePrefix().replaceAll("\\.", Matcher.quoteReplacement(File.separator));
         String modulePathPrefix = userDir + File.separator + projectName;
         String businessModuleJavaPath = modulePathPrefix + "-business" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
         String businessModuleResourcePath = modulePathPrefix + "-business" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
@@ -130,7 +131,7 @@ public class UniGenerator {
         String userDir = System.getProperty("user.dir");
         String projectName = property.getProjectName();
         String businessDomain = property.getBusinessDomain();
-        String packagePathPrefix = property.getPackagePrefix().replaceAll("\\.", File.separator);
+        String packagePathPrefix = property.getPackagePrefix().replaceAll("\\.", Matcher.quoteReplacement(File.separator));
         String modulePathPrefix = userDir + File.separator + projectName;
         String businessModuleJavaPath = modulePathPrefix + "-business" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
         String businessPkgPath = packagePathPrefix + File.separator + projectName.replaceAll("-", "") + File.separator + "business" + File.separator + businessDomain + File.separator;
