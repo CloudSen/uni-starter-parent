@@ -24,6 +24,7 @@
     <module>uni-common-util</module>
     <module>uni-spring-cloud-starter</module>
     <module>uni-spring-boot-feign-starter</module>
+    <module>uni-spring-boot-log-starter</module>
   </modules>
 
   <developers>
