@@ -24,6 +24,10 @@ public class SpringContext implements ApplicationContextAware {
         return context.getBean(beanName);
     }
 
+    public static ApplicationContext getContext() {
+        return context;
+    }
+
     @Override
     @SuppressWarnings("NullableProblems")
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
