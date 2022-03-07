@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
+ * 异常日志Api
+ *
  * @author <bailong>
  * @date 2022-03-04
  */
