@@ -27,7 +27,7 @@ public class ApiLogAspect {
     public Object around(ProceedingJoinPoint point, ApiLog apiLog) throws Throwable {
         if (!uniLogEnableProperties.isApiLogEnabled()) {
             log.info("异步写入API日志配置为关闭状态");
-            return log;
+            return point.proceed();
         }
 
         //获取类名
