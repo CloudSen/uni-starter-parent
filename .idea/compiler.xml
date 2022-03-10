@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="uni-spring-boot-oauth-starter" />
         <module name="uni-spring-boot-es-starter" />
+        <module name="uni-spring-boot-log-starter" />
         <module name="uni-spring-boot-redis-starter" />
         <module name="uni-spring-boot-jpa-starter" />
         <module name="autoconfigure" />
