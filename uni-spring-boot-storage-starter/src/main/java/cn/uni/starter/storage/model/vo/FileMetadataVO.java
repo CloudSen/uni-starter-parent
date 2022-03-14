@@ -45,7 +45,14 @@ public class FileMetadataVO implements Serializable {
     private String object;
 
     /**
-     * object name
+     * if object is file then return filename;
+     * if object is path then return full path;
+     * otherwise return bucket name
      */
     private String filename;
+
+    /**
+     * if underlying storage engine support preview, then return preview url; otherwise return empty String
+     */
+    private String previewUrl;
 }

@@ -66,4 +66,6 @@ public class UniMinioStorageProtocolResolverSettings {
      * Will create the bucket if it does not exist on the Minio instance.
      */
     private boolean createBucket = true;
+
+    private Duration duration;
 }

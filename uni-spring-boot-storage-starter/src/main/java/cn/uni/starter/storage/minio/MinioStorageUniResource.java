@@ -1,10 +1,11 @@
 package cn.uni.starter.storage.minio;
 
 import cn.hutool.core.io.FileUtil;
-import cn.uni.starter.storage.model.vo.FileMetadataVO;
 import cn.uni.starter.storage.AbstractUniResource;
 import cn.uni.starter.storage.UniLocation;
+import cn.uni.starter.storage.model.vo.FileMetadataVO;
 import io.minio.*;
+import io.minio.http.Method;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +19,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Represents a MINIO resource
@@ -97,8 +99,17 @@ public class MinioStorageUniResource extends AbstractUniResource {
     @Override
     public Optional<FileMetadataVO> getBlobMetadata() throws Exception {
         StatObjectResponse statObjectResponse;
+        String previewUrl;
         try {
-            statObjectResponse = client.statObject(StatObjectArgs.builder().bucket(getEncodedBucketName()).object(getEncodedBlobName()).build());
+            statObjectResponse = client.statObject(StatObjectArgs.builder()
+                .bucket(getEncodedBucketName())
+                .object(getEncodedBlobName()).build());
+            previewUrl = client.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                .method(Method.GET)
+                .bucket(getEncodedBucketName())
+                .object(getEncodedBlobName())
+                .expiry(10, TimeUnit.MINUTES)
+                .build());
         } catch (Exception e) {
             throw new UniMinioException("Failed to get MINIO object metadata", e);
         }
@@ -107,7 +118,9 @@ public class MinioStorageUniResource extends AbstractUniResource {
         }
         FileMetadataVO metadataVO = new FileMetadataVO();
         BeanUtils.copyProperties(statObjectResponse, metadataVO);
-        metadataVO.setSize(FileUtil.readableFileSize(statObjectResponse.size()));
+        metadataVO.setSize(FileUtil.readableFileSize(statObjectResponse.size()))
+            .setPreviewUrl(previewUrl)
+            .setFilename(getFilename());
         return Optional.of(metadataVO);
     }
 
@@ -172,11 +185,6 @@ public class MinioStorageUniResource extends AbstractUniResource {
             log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
             return 0;
         }
-    }
-
-    @Override
-    public String getFilename() {
-        return isBucket() ? getBucketName() : getBlobName();
     }
 
     @Override

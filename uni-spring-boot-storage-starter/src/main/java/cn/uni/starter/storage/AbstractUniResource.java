@@ -9,6 +9,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Optional;
 
 /**
+ * Represents the customized resource, which extends {@link AbstractResource},
+ * and enhanced some useful methods.
+ *
  * @author clouds3n
  * @since 2022-03-14
  */
@@ -25,6 +28,36 @@ public abstract class AbstractUniResource extends AbstractResource {
      */
     public boolean isBucket() {
         return this.location.isBucket();
+    }
+
+    /**
+     * @return Returns whether this resource represents a file or not
+     */
+    @Override
+    public boolean isFile() {
+        return location.isFile();
+    }
+
+    /**
+     * @return Returns whether this resource represents a folder or not
+     */
+    public boolean isFolder() {
+        return location.isFolder();
+    }
+
+    @Override
+    public String getFilename() {
+        if (isBucket()) {
+            return getBucketName();
+        }
+        if (isFolder()) {
+            return getBlobName();
+        }
+        return parseFileName();
+    }
+
+    private String parseFileName() {
+        return getBlobName().substring(getBlobName().lastIndexOf("/"));
     }
 
     /**
