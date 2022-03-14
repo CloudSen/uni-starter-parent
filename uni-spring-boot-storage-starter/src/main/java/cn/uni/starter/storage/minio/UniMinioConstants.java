@@ -9,4 +9,5 @@ public final class UniMinioConstants {
     private UniMinioConstants() {}
     public static final String MINIO_ERROR = "MINIO error: \n{}";
     public static final String SLASH = "/";
+    public static final String NOT_SUPPORTED = "not support now, coming soon";
 }

@@ -8,13 +8,17 @@ import io.minio.*;
 import io.minio.http.Method;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -99,13 +103,18 @@ public class MinioStorageUniResource extends AbstractUniResource {
      * @throws UniMinioException if an issue occurs getting the Blob
      */
     @Override
-    public Optional<FileMetadataVO> getBlobMetadata() throws Exception {
+    public Optional<FileMetadataVO> getObjectMetadata() throws Exception {
         StatObjectResponse statObjectResponse;
         String previewUrl;
         try {
             statObjectResponse = client.statObject(StatObjectArgs.builder()
                 .bucket(getEncodedBucketName())
                 .object(getEncodedBlobName()).build());
+        } catch (Exception e) {
+            log.error("Failed to get MINIO object metadata", e);
+            statObjectResponse = null;
+        }
+        try {
             previewUrl = client.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .method(Method.GET)
                 .bucket(getEncodedBucketName())
@@ -113,7 +122,8 @@ public class MinioStorageUniResource extends AbstractUniResource {
                 .expiry(Math.toIntExact(preSignedExpire.getSeconds()))
                 .build());
         } catch (Exception e) {
-            throw new UniMinioException("Failed to get MINIO object metadata", e);
+            log.error("Failed to get pre-signed MINIO object", e);
+            previewUrl = StringUtils.EMPTY;
         }
         if (Objects.isNull(statObjectResponse)) {
             return Optional.empty();
@@ -124,6 +134,46 @@ public class MinioStorageUniResource extends AbstractUniResource {
             .setPreviewUrl(previewUrl)
             .setFilename(getFilename());
         return Optional.of(metadataVO);
+    }
+
+    @Override
+    public Optional<FileMetadataVO> copyObject() throws Exception {
+        return Optional.empty();
+    }
+
+    @Override
+    public String getPreSignedUploadUrl() throws Exception {
+        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    }
+
+    @Override
+    public Map<String, String> getPreSignedPostFormData() throws Exception {
+        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    }
+
+    @Override
+    public FileMetadataVO putThenReturnObject() throws Exception {
+        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    }
+
+    @Override
+    public boolean putObject() throws Exception {
+        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    }
+
+    @Override
+    public boolean removeObject() throws Exception {
+        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    }
+
+    @Override
+    public boolean removeObjects() throws Exception {
+        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    }
+
+    @Override
+    public boolean uploadSnowballObjects(List<Resource> otherResources) throws Exception {
+        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
     }
 
     /**
@@ -137,6 +187,11 @@ public class MinioStorageUniResource extends AbstractUniResource {
             log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
             return false;
         }
+    }
+
+    @Override
+    public List<FileMetadataVO> listObjects() throws Exception {
+        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
     }
 
     /**
@@ -165,4 +220,6 @@ public class MinioStorageUniResource extends AbstractUniResource {
         }
         return InputStream.nullInputStream();
     }
+
+
 }

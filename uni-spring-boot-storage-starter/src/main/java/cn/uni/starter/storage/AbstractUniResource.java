@@ -8,11 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.io.AbstractResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -99,21 +102,6 @@ public abstract class AbstractUniResource extends AbstractResource {
     }
 
     /**
-     * Gets the underlying storage object in MINIO Storage.
-     *
-     * @return the storage object metadata, will be null if it does not exist in MINIO Storage.
-     * @throws Exception if an issue occurs getting the Blob
-     */
-    public abstract Optional<FileMetadataVO> getBlobMetadata() throws Exception; // NOSONAR java:S112
-
-    /**
-     * Check bucket exists
-     *
-     * @return true if bucket exists; false otherwise
-     */
-    public abstract boolean isBucketExists();
-
-    /**
      * translates special characters from the URL
      *
      * @param uri uri location for resource
@@ -126,7 +114,7 @@ public abstract class AbstractUniResource extends AbstractResource {
     @Override
     public boolean exists() {
         try {
-            return isBucket() ? isBucketExists() : getBlobMetadata().isPresent();
+            return isBucket() ? isBucketExists() : getObjectMetadata().isPresent();
         } catch (Exception e) {
             log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
             return false;
@@ -156,7 +144,7 @@ public abstract class AbstractUniResource extends AbstractResource {
     @Override
     public long contentLength() throws IOException {
         try {
-            return getBlobMetadata().map(FileMetadataVO::getSize).map(Long::valueOf).orElse(0L);
+            return getObjectMetadata().map(FileMetadataVO::getSize).map(Long::valueOf).orElse(0L);
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
             return 0;
@@ -166,7 +154,7 @@ public abstract class AbstractUniResource extends AbstractResource {
     @Override
     public long lastModified() throws IOException {
         try {
-            return getBlobMetadata().map(f -> f.getLastModified().toEpochSecond()).orElse(0L);
+            return getObjectMetadata().map(f -> f.getLastModified().toEpochSecond()).orElse(0L);
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
             return 0;
@@ -176,10 +164,104 @@ public abstract class AbstractUniResource extends AbstractResource {
     @Override
     public String getDescription() {
         try {
-            return getBlobMetadata().map(FileMetadataVO::toString).orElse(StringUtils.EMPTY);
+            return getObjectMetadata().map(FileMetadataVO::toString).orElse(StringUtils.EMPTY);
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
             return StringUtils.EMPTY;
         }
     }
+
+    //<editor-fold desc="need to customize">
+
+    /**
+     * Gets the underlying storage object metadata in storage.
+     *
+     * @return the storage object metadata, will be null if it does not exist in storage.
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract Optional<FileMetadataVO> getObjectMetadata() throws Exception; // NOSONAR java:S112
+
+    /**
+     * Creates an object by server-side copying data from another object.
+     *
+     * @return copied object metadata
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract Optional<FileMetadataVO> copyObject() throws Exception; // NOSONAR java:S112
+
+    /**
+     * Gets pre-signed URL of an object for HTTP PUT method, expiry time and custom request parameters.
+     *
+     * @return pre-signed PUT URL to upload
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract String getPreSignedUploadUrl() throws Exception; // NOSONAR java:S112
+
+    /**
+     * Gets form-data of PostPolicy of an object to upload its data using POST method.
+     * Used to directly upload big file from front-end
+     *
+     * @return form-data map
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract Map<String, String> getPreSignedPostFormData() throws Exception; // NOSONAR java:S112
+
+    /**
+     * Uploads given stream as object in bucket, and then return the object metadata.
+     * Used to upload normal object stream from backend.
+     *
+     * @return the uploaded object metadata
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract FileMetadataVO putThenReturnObject() throws Exception; // NOSONAR java:S112
+
+    /**
+     * Uploads given stream as object in bucket.
+     * Used to upload normal file stream from backend.
+     *
+     * @return return true if success to upload an object
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract boolean putObject() throws Exception; // NOSONAR java:S112
+
+    /**
+     * Removes an object.
+     *
+     * @return return true if success to remove an object
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract boolean removeObject() throws Exception; // NOSONAR java:S112
+
+    /**
+     * Removes multiple objects.
+     *
+     * @return return true if success to remove all object
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract boolean removeObjects() throws Exception; // NOSONAR java:S112
+
+    /**
+     * Uploads multiple objects
+     *
+     * @param otherResources other resources
+     * @return return true if success to upload
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract boolean uploadSnowballObjects(List<Resource> otherResources) throws Exception; // NOSONAR java:S112
+
+    /**
+     * Check bucket exists.
+     *
+     * @return true if bucket exists; false otherwise
+     */
+    public abstract boolean isBucketExists();
+
+    /**
+     * Lists object information of a bucket.
+     *
+     * @return object metadata list
+     * @throws Exception if any issue occurs operating the object
+     */
+    public abstract List<FileMetadataVO> listObjects() throws Exception; // NOSONAR java:S112
+    //</editor-fold>
 }

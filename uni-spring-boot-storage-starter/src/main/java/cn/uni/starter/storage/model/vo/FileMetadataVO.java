@@ -55,4 +55,9 @@ public class FileMetadataVO implements Serializable {
      * if underlying storage engine support preview, then return preview url; otherwise return empty String
      */
     private String previewUrl;
+
+    /**
+     * if object is directory, then ture; otherwise false or null
+     */
+    private Boolean isDir;
 }
