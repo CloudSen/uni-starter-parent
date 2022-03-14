@@ -14,9 +14,9 @@ import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Represents a MINIO resource
@@ -31,6 +31,7 @@ public class MinioStorageUniResource extends AbstractUniResource {
     private final MinioClient client;
     private final UniLocation location;
     private final boolean autoCreateFiles;
+    private final Duration preSignedExpire;
 
     //<editor-fold desc="Constructors">
 
@@ -43,22 +44,23 @@ public class MinioStorageUniResource extends AbstractUniResource {
      * @param autoCreateFiles determines the auto-creation of the file in MINIO Storage
      *                        if an operation that depends on its existence is triggered (e.g., getting the
      *                        output stream of a file)
+     * @param preSignedExpire Define the expiry time for shared url, defaults 10 min
      * @throws IllegalArgumentException if the location URI is invalid
-     * @see #MinioStorageUniResource(MinioClient, UniMinioStorageLocation, boolean)
+     * @see #MinioStorageUniResource(MinioClient, UniMinioStorageLocation, boolean, Duration)
      */
-    public MinioStorageUniResource(MinioClient client, String locationUri, boolean autoCreateFiles) {
-        this(client, new UniMinioStorageLocation(locationUri), autoCreateFiles);
+    public MinioStorageUniResource(MinioClient client, String locationUri, boolean autoCreateFiles, Duration preSignedExpire) {
+        this(client, new UniMinioStorageLocation(locationUri), autoCreateFiles, preSignedExpire);
     }
 
     /**
-     * Constructor that defaults autoCreateFiles to true.
+     * Constructor that defaults autoCreateFiles to true, and preSignedExpire to 10 min.
      *
      * @param locationUri the cloud storage address
      * @param client      the storage client
-     * @see #MinioStorageUniResource(MinioClient, String, boolean)
+     * @see #MinioStorageUniResource(MinioClient, String, boolean, Duration)
      */
     public MinioStorageUniResource(MinioClient client, String locationUri) {
-        this(client, locationUri, true);
+        this(client, locationUri, true, Duration.ofMinutes(10));
     }
 
     /**
@@ -69,17 +71,20 @@ public class MinioStorageUniResource extends AbstractUniResource {
      * @param autoCreateFiles determines the auto-creation of the file in MINIO Storage
      *                        if an operation that depends on its existence is triggered (e.g., getting the
      *                        output stream of a file)
+     * @param preSignedExpire Define the expiry time for shared url, defaults 10 min
      * @throws IllegalArgumentException if the location is an invalid MINIO Storage location
      */
     public MinioStorageUniResource(
         MinioClient client,
         UniMinioStorageLocation location,
-        boolean autoCreateFiles) {
+        boolean autoCreateFiles,
+        Duration preSignedExpire) {
         super(location);
         Assert.notNull(client, "Storage object can not be null");
         this.client = client;
         this.location = location;
         this.autoCreateFiles = autoCreateFiles;
+        this.preSignedExpire = preSignedExpire;
     }
     //</editor-fold>
 
@@ -105,7 +110,7 @@ public class MinioStorageUniResource extends AbstractUniResource {
                 .method(Method.GET)
                 .bucket(getEncodedBucketName())
                 .object(getEncodedBlobName())
-                .expiry(10, TimeUnit.MINUTES)
+                .expiry(Math.toIntExact(preSignedExpire.getSeconds()))
                 .build());
         } catch (Exception e) {
             throw new UniMinioException("Failed to get MINIO object metadata", e);

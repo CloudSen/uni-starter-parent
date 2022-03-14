@@ -11,6 +11,7 @@ import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 import java.util.Objects;
 
@@ -66,6 +67,9 @@ public class UniMinioStorageProtocolResolver implements ProtocolResolver, BeanFa
         if (!location.startsWith(PROTOCOL)) {
             return null;
         }
-        return new MinioStorageUniResource(getClient(), location, getSettings().isCreateBucket());
+        Assert.notNull(getClient(), "minio client can not null");
+        Assert.notNull(location, "location string can not null");
+        Assert.notNull(getSettings().getPreSignedExpire(), "PreSignedExpire setting can not null");
+        return new MinioStorageUniResource(getClient(), location, getSettings().isCreateBucket(), getSettings().getPreSignedExpire());
     }
 }

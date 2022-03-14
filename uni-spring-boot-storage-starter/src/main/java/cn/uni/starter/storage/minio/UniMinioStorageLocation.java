@@ -133,6 +133,21 @@ public class UniMinioStorageLocation implements UniLocation {
         return String.format(MINIO_URI_FORMAT, bucketName, blobName);
     }
 
+    @Override
+    public String toString() {
+        return uriString();
+    }
+
+    private static String getBlobPathFromUri(URI minioUri) {
+        String uriPath = minioUri.getPath();
+        if (StringUtils.isBlank(uriPath) || uriPath.equals(UniMinioConstants.SLASH)) {
+            // This indicates that the path specifies the root of the bucket
+            return StringUtils.EMPTY;
+        } else {
+            return uriPath.substring(1);
+        }
+    }
+
     /**
      * Returns a {@link UniMinioStorageLocation} to a bucket.
      *
@@ -169,21 +184,5 @@ public class UniMinioStorageLocation implements UniLocation {
             pathToFolder += UniMinioConstants.SLASH;
         }
         return new UniMinioStorageLocation(String.format(MINIO_URI_FORMAT, bucketName, pathToFolder));
-    }
-
-    @Override
-    public String toString() {
-        return uriString();
-    }
-
-
-    private static String getBlobPathFromUri(URI minioUri) {
-        String uriPath = minioUri.getPath();
-        if (StringUtils.isBlank(uriPath) || uriPath.equals(UniMinioConstants.SLASH)) {
-            // This indicates that the path specifies the root of the bucket
-            return StringUtils.EMPTY;
-        } else {
-            return uriPath.substring(1);
-        }
     }
 }

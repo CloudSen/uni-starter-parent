@@ -67,5 +67,8 @@ public class UniMinioStorageProtocolResolverSettings {
      */
     private boolean createBucket = true;
 
-    private Duration duration;
+    /**
+     * Define the expiry time for shared url, defaults 10 min
+     */
+    private Duration preSignedExpire = Duration.ofMinutes(10);
 }
