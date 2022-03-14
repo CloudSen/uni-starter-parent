@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Import;
 
 /**
  * MINIO Spring Boot Auto-Configuration.
- * Also it {@link Import} a {@link UniMinioStorageProtocolResolver} to register
+ * Also, it {@link Import} a {@link UniMinioStorageProtocolResolver} to register
  * it with the {@code DefaultResourceLoader}.
  *
  * @author clouds3n
