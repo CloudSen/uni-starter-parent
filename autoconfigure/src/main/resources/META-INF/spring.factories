@@ -7,4 +7,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   cn.uni.starter.autoconfigure.redis.DefaultOldRedisAutoConfiguration, \
   cn.uni.starter.autoconfigure.mvc.DefaultMvcAutoConfiguration, \
   cn.uni.starter.autoconfigure.redis.DefaultRedissonAutoConfiguration, \
-  cn.uni.starter.autoconfigure.serializer.SerializerAutoConfiguration
+  cn.uni.starter.autoconfigure.serializer.SerializerAutoConfiguration, \
+  cn.uni.starter.autoconfigure.storage.UniMinioAutoConfiguration

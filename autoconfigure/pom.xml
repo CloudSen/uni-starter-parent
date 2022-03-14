@@ -201,5 +201,11 @@
       <artifactId>spring-boot-starter-security</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>cn.uni.starter</groupId>
+      <artifactId>uni-spring-boot-storage-starter</artifactId>
+      <version>${uni.starter.version}</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>

@@ -6,6 +6,9 @@ package cn.uni.starter.autoconfigure;
  */
 public final class AutoConfigConstants {
 
+    private AutoConfigConstants() {
+    }
+
     public static final String PREFIX = "[ 自动装配 ] ";
     public static final String LOADING_ES_AUTO_CONFIGURE = PREFIX + "加载ES配置";
     public static final String ERROR_ES_CAN_NOT_PARSE_ADDRESS = PREFIX + "解析ES地址异常, {}";
@@ -30,4 +33,5 @@ public final class AutoConfigConstants {
     public static final String UNI_DEFAULT_CONFIG = "uni.autoconfigure.";
     public static final String UNI_DEFAULT_CONFIG_SECURITY = UNI_DEFAULT_CONFIG + "enable-security";
     public static final String UNI_DEFAULT_CONFIG_SERIALIZER = UNI_DEFAULT_CONFIG + "enable-serializer";
+    public static final String LOADING_STORAGE_AUTO_CONFIGURE = PREFIX + "加载STORAGE配置";
 }

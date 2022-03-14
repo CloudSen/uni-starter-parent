@@ -22,6 +22,7 @@
     <module>uni-spring-cloud-starter</module>
     <module>uni-spring-boot-feign-starter</module>
     <module>uni-spring-boot-log-starter</module>
+    <module>uni-spring-boot-storage-starter</module>
   </modules>
 
   <developers>
@@ -66,6 +67,8 @@
     <jcip.annotation.version>1.0</jcip.annotation.version>
     <easypoi.version>4.4.0</easypoi.version>
     <log4j2.version>2.17.1</log4j2.version>
+    <minio.version>8.3.7</minio.version>
+    <okhttp.version>4.9.3</okhttp.version>
     <!--  plugins  -->
     <mvn.surefire.version>2.22.2</mvn.surefire.version>
     <spring.boot.maven.plugin.version>2.6.3</spring.boot.maven.plugin.version>
@@ -221,6 +224,16 @@
         <artifactId>spring-security-test</artifactId>
         <version>${spring.security.test.version}</version>
         <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.minio</groupId>
+        <artifactId>minio</artifactId>
+        <version>${minio.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>${okhttp.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
