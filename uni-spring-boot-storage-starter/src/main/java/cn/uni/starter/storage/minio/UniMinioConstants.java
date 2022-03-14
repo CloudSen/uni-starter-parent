@@ -8,4 +8,5 @@ public final class UniMinioConstants {
 
     private UniMinioConstants() {}
     public static final String MINIO_ERROR = "MINIO error: \n{}";
+    public static final String SLASH = "/";
 }

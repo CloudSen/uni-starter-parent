@@ -8,15 +8,12 @@ import io.minio.*;
 import io.minio.http.Method;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -134,66 +131,6 @@ public class MinioStorageUniResource extends AbstractUniResource {
         } catch (Exception e) {
             log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
             return false;
-        }
-    }
-
-    @Override
-    public boolean exists() {
-        try {
-            return isBucket() ? isBucketExists() : getBlobMetadata().isPresent();
-        } catch (Exception e) {
-            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
-            return false;
-        }
-    }
-
-    /**
-     * @return true if resource is not a bucket and exists in MINIO storage; false otherwise
-     */
-    @Override
-    public boolean isReadable() {
-        return !isBucket() && exists();
-    }
-
-    @Override
-    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
-    public URL getURL() throws IOException {
-        return getURI().toURL();
-    }
-
-    @Override
-    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
-    public URI getURI() {
-        return this.location.uri();
-    }
-
-    @Override
-    public long contentLength() throws IOException {
-        try {
-            return getBlobMetadata().map(FileMetadataVO::getSize).map(Long::valueOf).orElse(0L);
-        } catch (Exception e) {
-            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
-            return 0;
-        }
-    }
-
-    @Override
-    public long lastModified() throws IOException {
-        try {
-            return getBlobMetadata().map(f -> f.getLastModified().toEpochSecond()).orElse(0L);
-        } catch (Exception e) {
-            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
-            return 0;
-        }
-    }
-
-    @Override
-    public String getDescription() {
-        try {
-            return getBlobMetadata().map(FileMetadataVO::toString).orElse(StringUtils.EMPTY);
-        } catch (Exception e) {
-            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
-            return StringUtils.EMPTY;
         }
     }
 

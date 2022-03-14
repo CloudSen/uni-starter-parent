@@ -1,11 +1,18 @@
 package cn.uni.starter.storage;
 
+import cn.uni.starter.storage.minio.UniMinioConstants;
 import cn.uni.starter.storage.model.vo.FileMetadataVO;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.io.AbstractResource;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.util.Optional;
 
 /**
@@ -15,6 +22,7 @@ import java.util.Optional;
  * @author clouds3n
  * @since 2022-03-14
  */
+@Slf4j
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
 public abstract class AbstractUniResource extends AbstractResource {
@@ -57,7 +65,7 @@ public abstract class AbstractUniResource extends AbstractResource {
     }
 
     private String parseFileName() {
-        return getBlobName().substring(getBlobName().lastIndexOf("/"));
+        return getBlobName().substring(getBlobName().lastIndexOf(UniMinioConstants.SLASH));
     }
 
     /**
@@ -113,5 +121,65 @@ public abstract class AbstractUniResource extends AbstractResource {
      */
     public String encodeUri(String uri) {
         return UriComponentsBuilder.fromUriString(uri).build().encode().toString();
+    }
+
+    @Override
+    public boolean exists() {
+        try {
+            return isBucket() ? isBucketExists() : getBlobMetadata().isPresent();
+        } catch (Exception e) {
+            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
+            return false;
+        }
+    }
+
+    /**
+     * @return true if resource is not a bucket and exists in MINIO storage; false otherwise
+     */
+    @Override
+    public boolean isReadable() {
+        return !isBucket() && exists();
+    }
+
+    @Override
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
+    public URL getURL() throws IOException {
+        return getURI().toURL();
+    }
+
+    @Override
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
+    public URI getURI() {
+        return this.location.uri();
+    }
+
+    @Override
+    public long contentLength() throws IOException {
+        try {
+            return getBlobMetadata().map(FileMetadataVO::getSize).map(Long::valueOf).orElse(0L);
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return 0;
+        }
+    }
+
+    @Override
+    public long lastModified() throws IOException {
+        try {
+            return getBlobMetadata().map(f -> f.getLastModified().toEpochSecond()).orElse(0L);
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return 0;
+        }
+    }
+
+    @Override
+    public String getDescription() {
+        try {
+            return getBlobMetadata().map(FileMetadataVO::toString).orElse(StringUtils.EMPTY);
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return StringUtils.EMPTY;
+        }
     }
 }

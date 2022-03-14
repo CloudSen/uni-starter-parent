@@ -20,7 +20,6 @@ public class UniMinioStorageLocation implements UniLocation {
      * second argument represent the object(file).
      */
     private static final String MINIO_URI_FORMAT = "minio://%s/%s";
-    private static final String SLASH = "/";
 
     /**
      * MINIO bucket name
@@ -54,8 +53,8 @@ public class UniMinioStorageLocation implements UniLocation {
             this.blobName = getBlobPathFromUri(locationUri);
 
             // ensure that if it's a bucket handle, location ends with a '/'
-            if (StringUtils.isBlank(this.blobName) && !minioLocationUriString.endsWith(SLASH)) {
-                locationUri = new URI(minioLocationUriString + SLASH);
+            if (StringUtils.isBlank(this.blobName) && !minioLocationUriString.endsWith(UniMinioConstants.SLASH)) {
+                locationUri = new URI(minioLocationUriString + UniMinioConstants.SLASH);
             }
             this.uri = locationUri;
         } catch (URISyntaxException e) {
@@ -80,7 +79,7 @@ public class UniMinioStorageLocation implements UniLocation {
      */
     @Override
     public boolean isFile() {
-        return StringUtils.isNotBlank(this.blobName) && !this.blobName.endsWith(SLASH);
+        return StringUtils.isNotBlank(this.blobName) && !this.blobName.endsWith(UniMinioConstants.SLASH);
     }
 
     /**
@@ -90,7 +89,7 @@ public class UniMinioStorageLocation implements UniLocation {
      */
     @Override
     public boolean isFolder() {
-        return StringUtils.isNotBlank(this.blobName) && this.blobName.endsWith(SLASH);
+        return StringUtils.isNotBlank(this.blobName) && this.blobName.endsWith(UniMinioConstants.SLASH);
     }
 
     /**
@@ -166,8 +165,8 @@ public class UniMinioStorageLocation implements UniLocation {
      */
     public static UniMinioStorageLocation forFolder(String bucketName, String pathToFolder) {
         Assert.notNull(pathToFolder, "The path to a MINIO Storage folder must not be null.");
-        if (!pathToFolder.endsWith(SLASH)) {
-            pathToFolder += SLASH;
+        if (!pathToFolder.endsWith(UniMinioConstants.SLASH)) {
+            pathToFolder += UniMinioConstants.SLASH;
         }
         return new UniMinioStorageLocation(String.format(MINIO_URI_FORMAT, bucketName, pathToFolder));
     }
@@ -180,7 +179,7 @@ public class UniMinioStorageLocation implements UniLocation {
 
     private static String getBlobPathFromUri(URI minioUri) {
         String uriPath = minioUri.getPath();
-        if (StringUtils.isBlank(uriPath) || uriPath.equals(SLASH)) {
+        if (StringUtils.isBlank(uriPath) || uriPath.equals(UniMinioConstants.SLASH)) {
             // This indicates that the path specifies the root of the bucket
             return StringUtils.EMPTY;
         } else {

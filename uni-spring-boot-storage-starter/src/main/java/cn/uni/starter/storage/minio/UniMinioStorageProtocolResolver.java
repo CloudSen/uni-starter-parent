@@ -12,6 +12,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.lang.Nullable;
 
+import java.util.Objects;
+
 /**
  * A {@link ProtocolResolver} implementation for the {@code minio://} protocol.
  *
@@ -23,8 +25,11 @@ public class UniMinioStorageProtocolResolver implements ProtocolResolver, BeanFa
 
     public static final String PROTOCOL = "minio://";
 
+    @Nullable
     private MinioClient client;
+    @Nullable
     private ConfigurableListableBeanFactory beanFactory;
+    @Nullable
     private UniMinioStorageProtocolResolverSettings settings;
 
     @Override
@@ -34,14 +39,14 @@ public class UniMinioStorageProtocolResolver implements ProtocolResolver, BeanFa
 
     private MinioClient getClient() {
         if (this.client == null) {
-            this.client = this.beanFactory.getBean(MinioClient.class);
+            this.client = Objects.requireNonNull(this.beanFactory).getBean(MinioClient.class);
         }
         return this.client;
     }
 
     private UniMinioStorageProtocolResolverSettings getSettings() {
         if (this.settings == null) {
-            this.settings = this.beanFactory.getBean("uniMinioStorageProtocolResolverSettings", UniMinioStorageProtocolResolverSettings.class);
+            this.settings = Objects.requireNonNull(this.beanFactory).getBean("uniMinioStorageProtocolResolverSettings", UniMinioStorageProtocolResolverSettings.class);
         }
         return this.settings;
     }
