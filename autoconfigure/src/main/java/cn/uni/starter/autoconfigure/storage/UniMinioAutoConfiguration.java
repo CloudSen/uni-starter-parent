@@ -1,6 +1,8 @@
 package cn.uni.starter.autoconfigure.storage;
 
 import cn.uni.starter.autoconfigure.AutoConfigConstants;
+import cn.uni.starter.storage.local.UniLocalStorageProtocolResolver;
+import cn.uni.starter.storage.local.UniLocalStorageProtocolResolverSettings;
 import cn.uni.starter.storage.minio.UniMinioStorageProtocolResolver;
 import cn.uni.starter.storage.minio.UniMinioStorageProtocolResolverSettings;
 import io.minio.MinioClient;
@@ -24,13 +26,16 @@ import org.springframework.context.annotation.Import;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnClass({MinioClient.class, UniMinioStorageProtocolResolverSettings.class, UniMinioStorageProtocolResolver.class})
+@ConditionalOnClass({MinioClient.class, UniMinioStorageProtocolResolverSettings.class,
+    UniMinioStorageProtocolResolver.class, UniLocalStorageProtocolResolverSettings.class,
+    UniLocalStorageProtocolResolver.class})
 @ConditionalOnProperty(value = "uni.autoconfigure.enable-storage", matchIfMissing = true)
 @EnableConfigurationProperties(UniMinioStorageProtocolResolverSettings.class)
-@Import(UniMinioStorageProtocolResolver.class)
+@Import({UniMinioStorageProtocolResolver.class, UniLocalStorageProtocolResolver.class})
 public class UniMinioAutoConfiguration {
 
     private final UniMinioStorageProtocolResolverSettings uniMinioStorageProtocolResolverSettings;
+    private final UniLocalStorageProtocolResolverSettings uniLocalStorageProtocolResolverSettings;
 
     static {
         log.info(AutoConfigConstants.LOADING_STORAGE_AUTO_CONFIGURE);

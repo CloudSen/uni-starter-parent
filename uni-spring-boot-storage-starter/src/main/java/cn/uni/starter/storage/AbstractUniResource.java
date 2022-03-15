@@ -2,20 +2,22 @@ package cn.uni.starter.storage;
 
 import cn.uni.starter.storage.minio.UniMinioConstants;
 import cn.uni.starter.storage.model.vo.FileMetadataVO;
-import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.io.AbstractResource;
 import org.springframework.core.io.Resource;
+import org.springframework.lang.Nullable;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -26,11 +28,19 @@ import java.util.Optional;
  * @since 2022-03-14
  */
 @Slf4j
-@EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
 public abstract class AbstractUniResource extends AbstractResource {
 
     private final UniLocation location;
+
+    /**
+     * Must set this when upload an object
+     *
+     * @see AbstractUniResource#setObjectStream(InputStream)
+     * @see AbstractUniResource#putObject()
+     */
+    @Nullable
+    private InputStream objectStream;
 
     /**
      * Check location is a bucket
@@ -171,6 +181,25 @@ public abstract class AbstractUniResource extends AbstractResource {
         }
     }
 
+    /**
+     * gets Object Stream
+     *
+     * @return InputStream
+     */
+    public InputStream getObjectStream() {
+        assert objectStream != null;
+        return objectStream;
+    }
+
+    /**
+     * set Object Stream
+     *
+     * @param objectStream stream
+     */
+    public void setObjectStream(InputStream objectStream) {
+        this.objectStream = objectStream;
+    }
+
     //<editor-fold desc="need to customize">
 
     /**
@@ -263,5 +292,26 @@ public abstract class AbstractUniResource extends AbstractResource {
      * @throws Exception if any issue occurs operating the object
      */
     public abstract List<FileMetadataVO> listObjects() throws Exception; // NOSONAR java:S112
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        AbstractUniResource that = (AbstractUniResource) o;
+        return location.equals(that.location) && Objects.equals(objectStream, that.objectStream);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), location, objectStream);
+    }
+
     //</editor-fold>
 }
