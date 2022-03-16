@@ -85,25 +85,25 @@ public class UniLocalStorageUniResource extends AbstractUniResource {
 
     @NotNull
     @Override
-    public Optional<FileMetadataVO> copyObject() throws Exception {
+    public Optional<FileMetadataVO> copyObject() {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 
     @NotNull
     @Override
-    public String getPreSignedUploadUrl() throws Exception {
+    public String getPreSignedUploadUrl() {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 
     @NotNull
     @Override
-    public Map<String, String> getPreSignedPostFormData() throws Exception {
+    public Map<String, String> getPreSignedPostFormData() {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 
     @NotNull
     @Override
-    public FileMetadataVO putThenReturnObject() throws Exception {
+    public FileMetadataVO putThenReturnObject() {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 
@@ -116,17 +116,17 @@ public class UniLocalStorageUniResource extends AbstractUniResource {
     }
 
     @Override
-    public boolean removeObject() throws Exception {
+    public boolean removeObject() {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 
     @Override
-    public boolean removeObjects() throws Exception {
+    public boolean removeObjects() {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 
     @Override
-    public boolean uploadSnowballObjects(@NotNull List<Resource> otherResources) throws Exception {
+    public boolean uploadSnowballObjects(@NotNull List<Resource> otherResources) {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 
@@ -137,12 +137,12 @@ public class UniLocalStorageUniResource extends AbstractUniResource {
     }
 
     @Override
-    public List<FileMetadataVO> listObjects() throws Exception {
+    public List<FileMetadataVO> listObjects() {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 
     @Override
-    public File getFile() throws IOException {
+    public File getFile() {
         Path path = Paths.get(topPath, getBucketName(), getBlobName());
         File file = new File(new String((topPath + File.separator + getBucketName() + File.separator + getBlobName()).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
         Assert.isTrue(

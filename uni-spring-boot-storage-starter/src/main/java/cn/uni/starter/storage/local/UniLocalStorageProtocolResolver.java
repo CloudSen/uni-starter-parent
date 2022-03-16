@@ -12,7 +12,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
@@ -24,7 +23,7 @@ public class UniLocalStorageProtocolResolver implements ProtocolResolver, BeanFa
 
     public static final String PROTOCOL = "file://";
 
-    @NotNull
+    @Nullable
     private UniLocalStorageProtocolResolverSettings settings;
     @Nullable
     private ConfigurableListableBeanFactory beanFactory;
@@ -50,6 +49,7 @@ public class UniLocalStorageProtocolResolver implements ProtocolResolver, BeanFa
         return this.settings;
     }
 
+    @Nullable
     @Override
     public Resource resolve(String location, ResourceLoader resourceLoader) {
         if (!location.startsWith(PROTOCOL)) {
