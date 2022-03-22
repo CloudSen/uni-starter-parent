@@ -3,10 +3,9 @@ package cn.uni.starter.log.utils;
 import cn.uni.starter.log.config.LogToolAutoConfig;
 import cn.uni.starter.log.constant.LogConstant;
 import cn.uni.starter.log.dto.UniLogAbstract;
+import cn.uni.starter.log.filter.ReHttpServletRequestWrapper;
 import cn.uni.starter.log.server.ServerInfo;
 import org.springframework.util.ObjectUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Log 工具类
@@ -22,12 +21,18 @@ public class LogAbstractUtil {
      * @param request        request请求体
      * @param uniLogAbstract 日志基础类
      */
-    public static void addRequestInfoToLog(HttpServletRequest request, UniLogAbstract uniLogAbstract) {
+    public static void addRequestInfoToLog(ReHttpServletRequestWrapper request, UniLogAbstract uniLogAbstract) {
         if (!ObjectUtils.isEmpty(request)) {
             uniLogAbstract.setRemoteIp(WebUtil.getIp(request));
             uniLogAbstract.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
             uniLogAbstract.setMethod(request.getMethod());
-            uniLogAbstract.setParams(WebUtil.getRequestContent(request));
+            if ("POST".equals(request.getMethod())) {
+                uniLogAbstract.setParams(WebUtil.getBodyString(request));
+            } else {
+                uniLogAbstract.setParams(WebUtil.getRequestContent(request));
+            }
+
+
         }
     }
 

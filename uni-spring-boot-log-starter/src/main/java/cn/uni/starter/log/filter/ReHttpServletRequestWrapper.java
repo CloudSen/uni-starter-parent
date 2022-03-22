@@ -1,13 +1,15 @@
 package cn.uni.starter.log.filter;
 
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 过滤构造器
@@ -18,76 +20,104 @@ import java.io.*;
 @Log4j2
 public class ReHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
-    private byte[] bytes;
-    private WrappedServletInputStream wrappedServletInputStream;
+    private final byte[] bytes;
+    private InputStream stream;
 
     public ReHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
+        String sessionStream = getBodyString(request);
+        bytes = sessionStream.getBytes(StandardCharsets.UTF_8);
+    }
+
+
+    /**
+     * 获取请求Body
+     *
+     * @param request
+     * @return
+     */
+    public String getBodyString(final ServletRequest request) {
+        StringBuilder sb = new StringBuilder();
+        InputStream inputStream = null;
+        BufferedReader reader = null;
         try {
-            // 读取输入流里的请求参数，并保存到bytes里
-            bytes = IOUtils.toByteArray(request.getInputStream());
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-            this.wrappedServletInputStream = new WrappedServletInputStream(byteArrayInputStream);
-            reWriteInputStream();
+            inputStream = cloneInputStream(request.getInputStream());
+            reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    log.error(e.getMessage());
+                }
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    log.error(e.getMessage());
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
+    /**
+     * Description: 复制输入流</br>
+     *
+     * @param inputStream
+     * @return</br>
+     */
+    public InputStream cloneInputStream(ServletInputStream inputStream) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        try {
+            while ((len = inputStream.read(buffer)) > -1) {
+                byteArrayOutputStream.write(buffer, 0, len);
+            }
+            byteArrayOutputStream.flush();
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+        InputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+        return byteArrayInputStream;
     }
 
-    /**
-     * 把参数重新写进请求里
-     */
-    public void reWriteInputStream() {
-        wrappedServletInputStream.setStream(new ByteArrayInputStream(bytes != null ? bytes : new byte[0]));
-    }
 
     @Override
-    public ServletInputStream getInputStream() throws IOException {
-        return wrappedServletInputStream;
+    public ServletInputStream getInputStream() {
+
+        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+
+        return new ServletInputStream() {
+
+            @Override
+            public int read() throws IOException {
+                return bais.read();
+            }
+
+            @Override
+            public boolean isFinished() {
+                return false;
+            }
+
+            @Override
+            public boolean isReady() {
+                return false;
+            }
+
+            @Override
+            public void setReadListener(ReadListener readListener) {
+            }
+        };
     }
 
-    @Override
-    public BufferedReader getReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(wrappedServletInputStream));
-    }
-
-    /**
-     * 获取post参数，可以自己再转为相应格式
-     */
-    public String getRequestParams() throws IOException {
-        return new String(bytes, this.getCharacterEncoding());
-    }
-
-    private class WrappedServletInputStream extends ServletInputStream {
-
-        private InputStream stream;
-
-        public WrappedServletInputStream(InputStream stream) {
-            this.stream = stream;
-        }
-
-        public void setStream(InputStream stream) {
-            this.stream = stream;
-        }
-
-        @Override
-        public int read() throws IOException {
-            return stream.read();
-        }
-
-        @Override
-        public boolean isFinished() {
-            return true;
-        }
-
-        @Override
-        public boolean isReady() {
-            return true;
-        }
-
-        @Override
-        public void setReadListener(ReadListener readListener) {
-        }
-
-    }
 }

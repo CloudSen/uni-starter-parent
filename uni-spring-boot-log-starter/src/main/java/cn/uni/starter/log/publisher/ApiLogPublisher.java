@@ -4,11 +4,11 @@ import cn.uni.starter.log.annotation.ApiLog;
 import cn.uni.starter.log.constant.EventConstant;
 import cn.uni.starter.log.dto.UniLogApiDTO;
 import cn.uni.starter.log.event.ApiLogEvent;
+import cn.uni.starter.log.filter.ReHttpServletRequestWrapper;
 import cn.uni.starter.log.utils.LogAbstractUtil;
 import cn.uni.starter.log.utils.SpringEventUtil;
 import cn.uni.starter.log.utils.WebUtil;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +34,7 @@ public class ApiLogPublisher {
      * @param time        执行时间
      */
     public static void publishEvent(String methodName, String methodClass, ApiLog apiLog, long time) {
-        HttpServletRequest request = WebUtil.getRequest();
+        ReHttpServletRequestWrapper request = WebUtil.getRequest();
         UniLogApiDTO logApi = new UniLogApiDTO();
         logApi.setType(LOG_NORMAL_TYPE);
         logApi.setTitle(apiLog.value());

@@ -4,15 +4,13 @@ package cn.uni.starter.log.publisher;
 import cn.uni.starter.log.constant.EventConstant;
 import cn.uni.starter.log.dto.UniLogErrorDTO;
 import cn.uni.starter.log.event.ErrorLogEvent;
+import cn.uni.starter.log.filter.ReHttpServletRequestWrapper;
 import cn.uni.starter.log.utils.LogAbstractUtil;
 import cn.uni.starter.log.utils.SpringEventUtil;
+import cn.uni.starter.log.utils.WebUtil;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,8 +30,7 @@ public class ErrorLogPublisher {
      * @param requestUrl 请求信息
      */
     public static void publishEvent(Throwable error, String requestUrl) {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes == null ? null : ((ServletRequestAttributes) requestAttributes).getRequest();
+        ReHttpServletRequestWrapper request = WebUtil.getRequest();
         UniLogErrorDTO uniLogErrorDTO = new UniLogErrorDTO();
         uniLogErrorDTO.setRequestUri(requestUrl);
         if (!ObjectUtils.isEmpty(error)) {
