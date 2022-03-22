@@ -6,21 +6,19 @@ import cn.uni.starter.storage.UniLocation;
 import cn.uni.starter.storage.model.vo.FileMetadataVO;
 import io.minio.*;
 import io.minio.http.Method;
+import io.minio.messages.DeleteObject;
+import io.minio.messages.Item;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Represents a MINIO resource
@@ -100,10 +98,9 @@ public class MinioStorageUniResource extends AbstractUniResource {
      * Gets the underlying storage object in MINIO Storage.
      *
      * @return the storage object metadata, will be null if it does not exist in MINIO Storage.
-     * @throws UniMinioException if an issue occurs getting the Blob
      */
     @Override
-    public Optional<FileMetadataVO> getObjectMetadata() throws Exception {
+    public Optional<FileMetadataVO> getObjectMetadata() {
         StatObjectResponse statObjectResponse;
         String previewUrl;
         try {
@@ -111,7 +108,7 @@ public class MinioStorageUniResource extends AbstractUniResource {
                 .bucket(getEncodedBucketName())
                 .object(getEncodedBlobName()).build());
         } catch (Exception e) {
-            log.error("Failed to get MINIO object metadata", e);
+            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
             statObjectResponse = null;
         }
         try {
@@ -122,7 +119,7 @@ public class MinioStorageUniResource extends AbstractUniResource {
                 .expiry(Math.toIntExact(preSignedExpire.getSeconds()))
                 .build());
         } catch (Exception e) {
-            log.error("Failed to get pre-signed MINIO object", e);
+            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
             previewUrl = StringUtils.EMPTY;
         }
         if (Objects.isNull(statObjectResponse)) {
@@ -132,47 +129,77 @@ public class MinioStorageUniResource extends AbstractUniResource {
         BeanUtils.copyProperties(statObjectResponse, metadataVO);
         metadataVO.setSize(FileUtil.readableFileSize(statObjectResponse.size()))
             .setPreviewUrl(previewUrl)
-            .setFilename(getFilename());
+            .setFilename(getFilename())
+            .setMimeType(statObjectResponse.headers().get(UniMinioConstants.CONTENT_TYPE));
         return Optional.of(metadataVO);
     }
 
     @Override
-    public Optional<FileMetadataVO> copyObject() throws Exception {
-        return Optional.empty();
-    }
-
-    @Override
-    public String getPreSignedUploadUrl() throws Exception {
+    public Optional<FileMetadataVO> copyObject() {
         throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
     }
 
     @Override
-    public Map<String, String> getPreSignedPostFormData() throws Exception {
+    public String getPreSignedUploadUrl() {
         throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
     }
 
     @Override
-    public FileMetadataVO putThenReturnObject() throws Exception {
+    public Map<String, String> getPreSignedPostFormData() {
         throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
     }
 
     @Override
-    public boolean putObject() throws Exception {
-        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    public FileMetadataVO putThenReturnObject() {
+        putObject();
+        return getObjectMetadata().orElse(FileMetadataVO.NULL_METADATA);
     }
 
     @Override
-    public boolean removeObject() throws Exception {
-        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    public boolean putObject() {
+        try {
+            client.putObject(PutObjectArgs.builder()
+                .bucket(getEncodedBucketName())
+                .stream(getObjectStream(), -1, 5243000L)
+                .build());
+            return true;
+        } catch (Exception e) {
+            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
+            return false;
+        }
     }
 
     @Override
-    public boolean removeObjects() throws Exception {
-        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    public boolean removeObject() {
+        try {
+            client.removeObject(RemoveObjectArgs.builder()
+                .bucket(getEncodedBucketName())
+                .object(getEncodedBlobName()).build());
+            return true;
+        } catch (Exception e) {
+            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
+            return false;
+        }
     }
 
     @Override
-    public boolean uploadSnowballObjects(List<Resource> otherResources) throws Exception {
+    public boolean removeObjects() {
+        try {
+            Set<AbstractUniResource> relatedResources = this.getRelatedResources();
+            List<DeleteObject> objects = new LinkedList<>();
+            objects.add(new DeleteObject(this.getEncodedBlobName()));
+            relatedResources.stream().map(r -> new DeleteObject(r.getEncodedBlobName())).forEach(objects::add);
+            client.removeObjects(RemoveObjectsArgs.builder()
+                .bucket(this.getEncodedBucketName()).objects(objects).build());
+            return true;
+        } catch (Exception e) {
+            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
+            return false;
+        }
+    }
+
+    @Override
+    public boolean uploadSnowballObjects() {
         throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
     }
 
@@ -190,8 +217,29 @@ public class MinioStorageUniResource extends AbstractUniResource {
     }
 
     @Override
-    public List<FileMetadataVO> listObjects() throws Exception {
-        throw new UnsupportedOperationException(UniMinioConstants.MINIO_ERROR);
+    public List<FileMetadataVO> listObjects() {
+        List<FileMetadataVO> metadataList = new ArrayList<>();
+        try {
+            Iterable<Result<Item>> items = client.listObjects(ListObjectsArgs.builder()
+                .bucket(getEncodedBucketName())
+                .maxKeys(20)
+                .build());
+            for (Result<Item> res : items) {
+                Item item = res.get();
+                metadataList.add(
+                    new FileMetadataVO()
+                        .setFilename(item.objectName().substring(getBlobName().lastIndexOf(UniMinioConstants.SLASH)))
+                        .setSize(FileUtil.readableFileSize(item.size()))
+                        .setIsDir(false)
+                        .setBucket(getBucketName())
+                        .setObject(item.objectName())
+                        .setLastModified(item.lastModified())
+                );
+            }
+        } catch (Exception e) {
+            log.error(UniMinioConstants.MINIO_ERROR, ExceptionUtils.getStackTrace(e));
+        }
+        return metadataList;
     }
 
     /**
