@@ -11,10 +11,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.function.Predicate;
@@ -27,6 +30,8 @@ import java.util.function.Predicate;
  */
 @Log4j2
 public class WebUtil extends WebUtils {
+
+    private byte[] bytes;
 
     private static final String[] IP_HEADER_NAMES = new String[]{
         "x-forwarded-for",
@@ -136,10 +141,48 @@ public class WebUtil extends WebUtils {
         return sb.toString();
     }
 
-
-    public static HttpServletRequest getRequest() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        ReHttpServletRequestWrapper requestWrapper = new ReHttpServletRequestWrapper(((ServletRequestAttributes) requestAttributes).getRequest());
-        return requestWrapper;
+    /**
+     * 获取请求Body
+     *
+     * @param request
+     * @return
+     */
+    public static String getBodyString(final ServletRequest request) {
+        StringBuilder sb = new StringBuilder();
+        InputStream inputStream = null;
+        BufferedReader reader = null;
+        try {
+            inputStream = request.getInputStream();
+            reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
     }
+
+
+    public static ReHttpServletRequestWrapper getRequest() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        return (requestAttributes == null) ? null : (ReHttpServletRequestWrapper) ((ServletRequestAttributes) requestAttributes).getRequest();
+    }
+
 }
