@@ -1,5 +1,7 @@
 package cn.uni.starter.log.utils;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -9,6 +11,7 @@ import java.net.URISyntaxException;
  * @author bailong
  * @date 2022-03-02
  */
+@Log4j2
 public class UrlUtil {
 
 
@@ -24,6 +27,7 @@ public class UrlUtil {
         try {
             uri = new URI(uriStr);
         } catch (URISyntaxException var3) {
+            log.error(var3.getMessage());
             throw new RuntimeException(var3);
         }
 

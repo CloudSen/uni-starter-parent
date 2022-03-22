@@ -1,6 +1,8 @@
 package cn.uni.starter.log.utils;
 
 import cn.uni.starter.log.constant.LogConstant;
+import cn.uni.starter.log.filter.ReHttpServletRequestWrapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
@@ -23,7 +25,7 @@ import java.util.function.Predicate;
  * @author <bailong>
  * @date 2022-03-02
  */
-
+@Log4j2
 public class WebUtil extends WebUtils {
 
     private static final String[] IP_HEADER_NAMES = new String[]{
@@ -92,7 +94,7 @@ public class WebUtil extends WebUtils {
             }
             return str.replaceAll("&amp;", "&");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error(ex.getStackTrace());
             return LogConstant.EMPTY;
         }
     }
@@ -114,20 +116,20 @@ public class WebUtil extends WebUtils {
                 sb.append(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getStackTrace());
         } finally {
             if (servletInputStream != null) {
                 try {
                     servletInputStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e.getStackTrace());
                 }
             }
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e.getStackTrace());
                 }
             }
         }
@@ -137,6 +139,7 @@ public class WebUtil extends WebUtils {
 
     public static HttpServletRequest getRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        return (requestAttributes == null) ? null : ((ServletRequestAttributes) requestAttributes).getRequest();
+        ReHttpServletRequestWrapper requestWrapper = new ReHttpServletRequestWrapper(((ServletRequestAttributes) requestAttributes).getRequest());
+        return requestWrapper;
     }
 }
