@@ -60,4 +60,6 @@ public class FileMetadataVO implements Serializable {
      * if object is directory, then ture; otherwise false or null
      */
     private Boolean isDir;
+
+    private String mimeType;
 }

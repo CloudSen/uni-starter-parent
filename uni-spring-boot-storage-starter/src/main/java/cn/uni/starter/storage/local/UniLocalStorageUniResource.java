@@ -8,8 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 
 import java.io.File;
@@ -63,24 +63,28 @@ public class UniLocalStorageUniResource extends AbstractUniResource {
     }
 
     @Override
-    public Optional<FileMetadataVO> getObjectMetadata() throws Exception {
+    public Optional<FileMetadataVO> getObjectMetadata() {
         Assert.isTrue(
             ObjectUtils.isNotEmpty(getBucketName()),
             "A local Storage bucket must exist");
         FileMetadataVO metadataVO = new FileMetadataVO();
-        File file = new File(new String((topPath + File.separator + getBucketName() + File.separator + getBlobName()).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
-        metadataVO.setBucket(getBucketName());
-        metadataVO.setObject(getBlobName());
-        metadataVO.setIsDir(true);
-        // file is not directory
-        if (!file.isDirectory()) {
-            metadataVO.setIsDir(false);
-            metadataVO.setFilename(file.getName());
-            metadataVO.setSize(FileUtil.readableFileSize(file));
-            Instant fileInstant = Files.getLastModifiedTime(Objects.requireNonNull(file.toPath(), "file")).toInstant();
-            metadataVO.setLastModified(ZonedDateTime.ofInstant(fileInstant, ZoneId.of("Asia/Shanghai")));
+        try {
+            File file = new File(new String((topPath + File.separator + getBucketName() + File.separator + getBlobName()).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
+            metadataVO.setBucket(getBucketName());
+            metadataVO.setObject(getBlobName());
+            metadataVO.setIsDir(true);
+            if (!file.isDirectory()) {
+                metadataVO.setIsDir(false);
+                metadataVO.setFilename(file.getName());
+                metadataVO.setSize(FileUtil.readableFileSize(file));
+                Instant fileInstant = Files.getLastModifiedTime(Objects.requireNonNull(file.toPath(), "file")).toInstant();
+                metadataVO.setLastModified(ZonedDateTime.ofInstant(fileInstant, ZoneId.of("Asia/Shanghai")));
+            }
+            return Optional.of(metadataVO);
+        } catch (Exception e) {
+            log.error(UniLocalConstants.FILE_ERROR, ExceptionUtils.getStackTrace(e));
+            return Optional.empty();
         }
-        return Optional.of(metadataVO);
     }
 
     @NotNull
@@ -108,11 +112,16 @@ public class UniLocalStorageUniResource extends AbstractUniResource {
     }
 
     @Override
-    public boolean putObject() throws IOException {
-        byte[] bytes = IOUtils.toByteArray(getObjectStream());
-        Path path = Paths.get(topPath, getBucketName(), getBlobName());
-        Files.write(path, bytes);
-        return true;
+    public boolean putObject() {
+        try {
+            byte[] bytes = IOUtils.toByteArray(getObjectStream());
+            Path path = Paths.get(topPath, getBucketName(), getBlobName());
+            Files.write(path, bytes);
+            return true;
+        } catch (Exception e) {
+            log.error(UniLocalConstants.FILE_ERROR, ExceptionUtils.getStackTrace(e));
+            return false;
+        }
     }
 
     @Override
@@ -126,7 +135,7 @@ public class UniLocalStorageUniResource extends AbstractUniResource {
     }
 
     @Override
-    public boolean uploadSnowballObjects(@NotNull List<Resource> otherResources) {
+    public boolean uploadSnowballObjects() {
         throw new UnsupportedOperationException(UniLocalConstants.FILE_ERROR);
     }
 

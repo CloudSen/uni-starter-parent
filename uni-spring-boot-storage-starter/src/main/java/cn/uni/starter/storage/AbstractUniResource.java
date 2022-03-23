@@ -4,10 +4,10 @@ import cn.uni.starter.storage.minio.UniMinioConstants;
 import cn.uni.starter.storage.model.vo.FileMetadataVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.io.AbstractResource;
-import org.springframework.core.io.Resource;
 import org.springframework.lang.Nullable;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -15,10 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents the customized resource, which extends {@link AbstractResource},
@@ -32,7 +30,6 @@ import java.util.Optional;
 public abstract class AbstractUniResource extends AbstractResource {
 
     private final UniLocation location;
-
     /**
      * Must set this when upload an object
      *
@@ -41,6 +38,8 @@ public abstract class AbstractUniResource extends AbstractResource {
      */
     @Nullable
     private InputStream objectStream;
+    @Nullable
+    private Set<AbstractUniResource> relatedResources;
 
     /**
      * Check location is a bucket
@@ -187,8 +186,7 @@ public abstract class AbstractUniResource extends AbstractResource {
      * @return InputStream
      */
     public InputStream getObjectStream() {
-        assert objectStream != null;
-        return objectStream;
+        return objectStream == null ? InputStream.nullInputStream() : objectStream;
     }
 
     /**
@@ -200,83 +198,86 @@ public abstract class AbstractUniResource extends AbstractResource {
         this.objectStream = objectStream;
     }
 
+    public Set<AbstractUniResource> getRelatedResources() {
+        return CollectionUtils.isEmpty(relatedResources) ? Collections.emptySet() : relatedResources;
+    }
+
+    public void setRelatedResources(Set<AbstractUniResource> relatedResources) {
+        Set<String> schemas = relatedResources.stream().map(r -> r.getURI().getScheme()).collect(Collectors.toSet());
+        if (schemas.size() != 1) {
+            throw new UnsupportedOperationException(UniMinioConstants.MULTI_SCHEMA_ERROR);
+        }
+        this.relatedResources = relatedResources;
+    }
+
     //<editor-fold desc="need to customize">
 
     /**
      * Gets the underlying storage object metadata in storage.
      *
      * @return the storage object metadata, will be null if it does not exist in storage.
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract Optional<FileMetadataVO> getObjectMetadata() throws Exception; // NOSONAR java:S112
+    public abstract Optional<FileMetadataVO> getObjectMetadata();
 
     /**
      * Creates an object by server-side copying data from another object.
      *
      * @return copied object metadata
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract Optional<FileMetadataVO> copyObject() throws Exception; // NOSONAR java:S112
+    public abstract Optional<FileMetadataVO> copyObject();
 
     /**
      * Gets pre-signed URL of an object for HTTP PUT method, expiry time and custom request parameters.
      *
      * @return pre-signed PUT URL to upload
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract String getPreSignedUploadUrl() throws Exception; // NOSONAR java:S112
+    public abstract String getPreSignedUploadUrl();
 
     /**
      * Gets form-data of PostPolicy of an object to upload its data using POST method.
      * Used to directly upload big file from front-end
      *
      * @return form-data map
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract Map<String, String> getPreSignedPostFormData() throws Exception; // NOSONAR java:S112
+    public abstract Map<String, String> getPreSignedPostFormData();
 
     /**
      * Uploads given stream as object in bucket, and then return the object metadata.
      * Used to upload normal object stream from backend.
      *
      * @return the uploaded object metadata
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract FileMetadataVO putThenReturnObject() throws Exception; // NOSONAR java:S112
+    public abstract FileMetadataVO putThenReturnObject();
 
     /**
      * Uploads given stream as object in bucket.
      * Used to upload normal file stream from backend.
+     * NOTICE this method support sharding upload, part size defaults 5Mb.
      *
      * @return return true if success to upload an object
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract boolean putObject() throws Exception; // NOSONAR java:S112
+    public abstract boolean putObject();
 
     /**
      * Removes an object.
      *
      * @return return true if success to remove an object
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract boolean removeObject() throws Exception; // NOSONAR java:S112
+    public abstract boolean removeObject();
 
     /**
      * Removes multiple objects.
      *
      * @return return true if success to remove all object
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract boolean removeObjects() throws Exception; // NOSONAR java:S112
+    public abstract boolean removeObjects();
 
     /**
      * Uploads multiple objects
      *
-     * @param otherResources other resources
      * @return return true if success to upload
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract boolean uploadSnowballObjects(List<Resource> otherResources) throws Exception; // NOSONAR java:S112
+    public abstract boolean uploadSnowballObjects();
 
     /**
      * Check bucket exists.
@@ -289,9 +290,10 @@ public abstract class AbstractUniResource extends AbstractResource {
      * Lists object information of a bucket.
      *
      * @return object metadata list
-     * @throws Exception if any issue occurs operating the object
      */
-    public abstract List<FileMetadataVO> listObjects() throws Exception; // NOSONAR java:S112
+    public abstract List<FileMetadataVO> listObjects();
+
+    //</editor-fold>
 
     @Override
     public boolean equals(Object o) {
@@ -312,6 +314,4 @@ public abstract class AbstractUniResource extends AbstractResource {
     public int hashCode() {
         return Objects.hash(super.hashCode(), location, objectStream);
     }
-
-    //</editor-fold>
 }
