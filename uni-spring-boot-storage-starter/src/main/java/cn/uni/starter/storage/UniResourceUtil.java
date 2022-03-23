@@ -1,5 +1,7 @@
 package cn.uni.starter.storage;
 
+import cn.uni.starter.storage.local.UniLocalStorageProtocolResolver;
+import cn.uni.starter.storage.minio.UniMinioStorageProtocolResolver;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
@@ -28,5 +30,25 @@ public final class UniResourceUtil {
             throw new UnsupportedOperationException("Current resource can not found any AbstractUniResource implementation, plz check the location schema!");
         }
         return (AbstractUniResource) resource;
+    }
+
+    /**
+     * build minio resource location
+     *
+     * @param path storage path bucketName/objectName
+     * @return minio resource location string
+     */
+    public static String buildMinioLocation(String path) {
+        return UniMinioStorageProtocolResolver.PROTOCOL + path;
+    }
+
+    /**
+     * build local resource location
+     *
+     * @param path storage path bucketName/objectName
+     * @return local resource location string
+     */
+    public static String buildLocalLocation(String path) {
+        return UniLocalStorageProtocolResolver.PROTOCOL + path;
     }
 }
