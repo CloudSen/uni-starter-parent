@@ -24,6 +24,8 @@ public class LogAbstractUtil {
     public static void addRequestInfoToLog(ReHttpServletRequestWrapper request, UniLogAbstract uniLogAbstract) {
         if (!ObjectUtils.isEmpty(request)) {
             uniLogAbstract.setRemoteIp(WebUtil.getIp(request));
+            //新版本日志服务用户信息暂时设定为空
+            uniLogAbstract.setUsername("");
             uniLogAbstract.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
             uniLogAbstract.setMethod(request.getMethod());
             if ("POST".equals(request.getMethod())) {

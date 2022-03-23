@@ -67,4 +67,9 @@ public class UniLogAbstract implements Serializable {
      */
     private String params;
 
+    /**
+     * 用户authId
+     */
+    private String username;
+
 }
