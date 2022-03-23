@@ -5,6 +5,9 @@ import cn.uni.starter.log.constant.LogConstant;
 import cn.uni.starter.log.dto.UniLogAbstract;
 import cn.uni.starter.log.filter.ReHttpServletRequestWrapper;
 import cn.uni.starter.log.server.ServerInfo;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -23,6 +26,16 @@ public class LogAbstractUtil {
      */
     public static void addRequestInfoToLog(ReHttpServletRequestWrapper request, UniLogAbstract uniLogAbstract) {
         if (!ObjectUtils.isEmpty(request)) {
+            //获取用户信息,设置authId
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null) {
+                OAuth2Authentication authenticationToken = (OAuth2Authentication) authentication;
+                if (!ObjectUtils.isEmpty(authenticationToken.getPrincipal())) {
+                    uniLogAbstract.setUsername(authenticationToken.getPrincipal().toString());
+                } else {
+                    uniLogAbstract.setUsername("");
+                }
+            }
             uniLogAbstract.setRemoteIp(WebUtil.getIp(request));
             uniLogAbstract.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
             uniLogAbstract.setMethod(request.getMethod());
@@ -35,6 +48,7 @@ public class LogAbstractUtil {
 
         }
     }
+
 
     /**
      * 向log中添加补齐其他的信息
