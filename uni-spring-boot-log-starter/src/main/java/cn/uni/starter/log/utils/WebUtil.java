@@ -1,7 +1,6 @@
 package cn.uni.starter.log.utils;
 
 import cn.uni.starter.log.constant.LogConstant;
-import cn.uni.starter.log.filter.ReHttpServletRequestWrapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
@@ -11,7 +10,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -146,7 +144,7 @@ public class WebUtil extends WebUtils {
      * @param request
      * @return
      */
-    public static String getBodyString(final ServletRequest request) {
+    public static String getBodyString(final HttpServletRequest request) {
         StringBuilder sb = new StringBuilder();
         InputStream inputStream = null;
         BufferedReader reader = null;
@@ -164,24 +162,24 @@ public class WebUtil extends WebUtils {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e.getStackTrace());
                 }
             }
-            if (reader != null) {
+            /*if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                   log.error(e.getStackTrace());
                 }
-            }
+            }*/
         }
         return sb.toString();
     }
 
 
-    public static ReHttpServletRequestWrapper getRequest() {
+    public static HttpServletRequest getRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        return (requestAttributes == null) ? null : (ReHttpServletRequestWrapper) ((ServletRequestAttributes) requestAttributes).getRequest();
+        return (requestAttributes == null) ? null : ((ServletRequestAttributes) requestAttributes).getRequest();
     }
 
 }
