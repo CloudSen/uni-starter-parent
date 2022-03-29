@@ -284,14 +284,10 @@ public class XssAndSqlHttpServletRequestWrapper extends HttpServletRequestWrappe
         }
         for (String keyword : KEYWORD_BLACKLIST) {
             boolean invalid = value.length() > keyword.length() + 4
-                && (value.contains(" " + keyword)
-                || value.contains(keyword + " ")
-                || value.contains(" " + keyword + " "));
-            boolean invalid2 = value.length() > keyword.length() + 4
-                && (value.contains(" " + keyword.toUpperCase())
-                || value.contains(keyword.toUpperCase() + " ")
-                || value.contains(" " + keyword.toUpperCase() + " "));
-            if (invalid || invalid2) {
+                && (value.toLowerCase().contains(" " + keyword)
+                || value.toLowerCase().contains(keyword + " ")
+                || value.toLowerCase().contains(" " + keyword + " "));
+            if (invalid) {
                 log.error(this.getRequestURI() + "参数中包含不允许sql的关键词(" + keyword + ")");
                 return true;
             }
