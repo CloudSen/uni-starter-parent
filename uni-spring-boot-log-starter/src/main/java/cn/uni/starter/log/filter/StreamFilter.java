@@ -1,9 +1,11 @@
 package cn.uni.starter.log.filter;
 
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Component;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -13,10 +15,8 @@ import java.io.IOException;
  * @author <bailong>
  * @date 2022-03-22
  */
-@Component
 @Log4j2
-public class StreamFilter implements Filter {
-    @Override
+public class StreamFilter /*implements Filter*/ {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         //重新构建request
         ReHttpServletRequestWrapper requestWrapper = new ReHttpServletRequestWrapper((HttpServletRequest) servletRequest);
