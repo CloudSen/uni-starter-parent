@@ -287,7 +287,11 @@ public class XssAndSqlHttpServletRequestWrapper extends HttpServletRequestWrappe
                 && (value.contains(" " + keyword)
                 || value.contains(keyword + " ")
                 || value.contains(" " + keyword + " "));
-            if (invalid) {
+            boolean invalid2 = value.length() > keyword.length() + 4
+                && (value.contains(" " + keyword.toUpperCase())
+                || value.contains(keyword.toUpperCase() + " ")
+                || value.contains(" " + keyword.toUpperCase() + " "));
+            if (invalid || invalid2) {
                 log.error(this.getRequestURI() + "参数中包含不允许sql的关键词(" + keyword + ")");
                 return true;
             }
